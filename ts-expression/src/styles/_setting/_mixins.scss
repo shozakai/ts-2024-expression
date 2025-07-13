@@ -1,5 +1,58 @@
 @use 'variables' as *;
 
+
+// clamp関数
+@mixin clampMax($property: 'font-size', $minBp: 1920 , $minVal: 18, $maxVal: 24, $unit: 'px', $important: false) {
+  $vw: calc(#{$minVal} / 1366 * 100vw);
+  
+  @if $important {
+      #{$property}: clamp(#{$minVal}#{$unit}, #{$vw}, #{$maxVal}#{$unit}) !important;
+  } @else {
+      #{$property}: clamp(#{$minVal}#{$unit}, #{$vw}, #{$maxVal}#{$unit});
+  }
+}
+
+
+// メディアクエリ
+@mixin mediaQuery($size) {
+  @media #{map-get($breakpoints, $size)} {
+      @content;
+  }
+}
+
+// ホバー分岐
+@mixin mediaHover() {
+  @media (hover: hover) and (pointer: fine) {
+      @content;
+  }
+}
+
+// font-sizeをpx→vwに変換
+@mixin fz-vw($font-size: 13, $viewport: $site-w-pc){
+  $font-size: strip-unit($font-size);
+  $viewport: strip-unit($viewport);
+  font-size: get_vw($font-size, $viewport);
+  @media screen and (min-width: $site-w-pc) {
+      font-size: $font-size * 1px;
+  }
+}
+
+// 10px未満のfont-size指定
+@mixin fz-small($scale: .8, $origin: left top){
+  font-size: 10px;
+  transform: scale($scale);
+  transform-origin: $origin;
+  width: 10 / $scale * 10 * 1%;
+}
+
+// transition
+@mixin transition($property: all, $duration: .2s, $delay: 0, $ease: $ease-1){
+  transition-property: $property;
+  transition-duration: $duration;
+  transition-delay: $delay;
+  transition-timing-function: $ease;
+}
+
 // ボタンのミックスイン
 @mixin button-base {
   display: flex;

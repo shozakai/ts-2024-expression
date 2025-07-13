@@ -6,12 +6,15 @@ html {
     font-size: 62.5%;
 }
 
-
 // 基本的なボディスタイル（reset.scssの後に適用）
 body {
-  font-family: $font-family-base;
-  width: 100%;
-  height: 100%;
-  color: $text-color;
-  background-color: $bg-color;
+    min-width: $site-w-min;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    // Tailwindのtext-sクラスを適用
+    @apply text-text-s;
+    @apply text-text-black;
+    @apply bg-bg-white;
 }

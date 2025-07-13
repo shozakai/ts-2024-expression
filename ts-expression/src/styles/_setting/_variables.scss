@@ -1,4 +1,24 @@
-// 色の変数
+// ---------- size ----------
+$site-w-min: 320px;
+$site-w-sp: 375px;
+$breakPoint: 768px;
+$site-w-tb: 1024px;
+$site-w-pc: 1366px;
+$site-w-pc-m: 1536px;
+$site-w-pc-l: 1920px;
+$breakpoints: (
+    'sm': 'screen and (max-width: #{$site-w-min})',
+    'sp': 'screen and (max-width: #{$site-w-sp})',
+    'breakpoint': 'screen and (max-width: #{$breakPoint})',
+    'tb': 'screen and (max-width: #{$site-w-tb})',
+    'pc': 'screen and (max-width: #{$site-w-pc})',
+    'pc-add1': 'screen and (min-width: #{$site-w-pc + 1})',
+    'pc-m': 'screen and (min-width: #{$site-w-pc-m})',
+    'pc-l': 'screen and (min-width: #{$site-w-pc-l})',
+);
+
+
+// ---------- default ----------
 $color-black: #111;
 $color-white: #fff;
 

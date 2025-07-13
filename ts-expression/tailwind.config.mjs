@@ -6,7 +6,20 @@ export default {
     preflight: false,
   },
   theme: {
-    extend: {},
+    extend: {
+      fontSize: {
+        'text-s': ['1.4rem', '1.3'],
+        'text-l-b': ['2.4rem', '1.6'],
+      },
+      colors: {
+        'text-white': '#ffffff',
+        'text-black': '#111111',
+      },
+      backgroundColor: {
+        'bg-white': '#ffffff',
+        'bg-black': '#111111',
+      }
+    },
   },
   plugins: [],
-} 
+}
