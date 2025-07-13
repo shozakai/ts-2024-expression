@@ -87,6 +87,18 @@ const meta = {
                                 <li>• デジタル表示に最適化</li>
                             </ul>
                         </div>
+                        <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                            <h4 class="font-medium text-blue-800 mb-2">Tailwind CSSクラス例</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="font-public-sans font-thin">font-public-sans font-thin</div>
+                                <div class="font-public-sans font-light">font-public-sans font-light</div>
+                                <div class="font-public-sans font-normal">font-public-sans font-normal</div>
+                                <div class="font-public-sans font-medium">font-public-sans font-medium</div>
+                                <div class="font-public-sans font-semibold">font-public-sans font-semibold</div>
+                                <div class="font-public-sans font-bold">font-public-sans font-bold</div>
+                                <div class="font-public-sans font-black">font-public-sans font-black</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -171,9 +183,16 @@ const meta = {
                 <h2 class="text-2xl font-semibold text-gray-900 mb-6">使用方法</h2>
                 <div class="space-y-4">
                     <div>
-                        <h3 class="font-medium text-gray-800 mb-2">HTML/Astro</h3>
+                        <h3 class="font-medium text-gray-800 mb-2">HTML/Astro（SCSSクラス）</h3>
                         <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>{`<div class="font-public-sans">Public Sans Font</div>
 <div class="font-graphyne">Custom Graphyne Font</div>`}</code></pre>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-gray-800 mb-2">HTML/Astro（Tailwindクラス）</h3>
+                        <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>{`<div class="font-public-sans">Public Sans Font</div>
+<div class="font-graphyne">Custom Graphyne Font</div>
+<p class="font-sans font-medium">Default Sans with Medium Weight</p>
+<h1 class="font-public-sans font-bold">Bold Public Sans Heading</h1>`}</code></pre>
                     </div>
                     <div>
                         <h3 class="font-medium text-gray-800 mb-2">SCSS</h3>
@@ -183,6 +202,28 @@ const meta = {
 
 .my-custom-text {
     font-family: var(--font-family-graphyne);
+}`}</code></pre>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-gray-800 mb-2">Tailwind CSS設定</h3>
+                        <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>{`// tailwind.config.mjs
+theme: {
+  extend: {
+    fontFamily: {
+      'public-sans': ['Public Sans', 'sans-serif'],
+      'graphyne': ['Graphyne', 'sans-serif'],
+      'sans': ['Public Sans', 'sans-serif'], // デフォルト
+    },
+    fontWeight: {
+      'thin': '100',
+      'light': '300',
+      'normal': '400',
+      'medium': '500',
+      'semibold': '600',
+      'bold': '700',
+      'black': '900',
+    }
+  }
 }`}</code></pre>
                     </div>
                 </div>

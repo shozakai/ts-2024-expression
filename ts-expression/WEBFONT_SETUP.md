@@ -66,14 +66,34 @@ ts-expression/
 
 ## 使用可能なフォントクラス
 
-### 基本クラス
+### SCSSクラス
 
 ```scss
 .font-public-sans  // Public Sans フォント
 .font-graphyne     // カスタムフォント
 ```
 
-### 最適化クラス
+### Tailwind CSSクラス
+
+```scss
+// フォントファミリー
+.font-public-sans  // Public Sans フォント
+.font-graphyne     // Graphyne カスタムフォント
+.font-sans         // デフォルトサンセリフ（Public Sans）
+
+// フォントウェイト（Public Sans可変フォント対応）
+.font-thin         // 100
+.font-extralight   // 200
+.font-light        // 300
+.font-normal       // 400
+.font-medium       // 500
+.font-semibold     // 600
+.font-bold         // 700
+.font-extrabold    // 800
+.font-black        // 900
+```
+
+### 最適化クラス（SCSS）
 
 ```scss
 .font-display-swap    // フォント表示最適化
@@ -82,11 +102,20 @@ ts-expression/
 
 ## 使用例
 
-### HTML/Astro での使用
+### HTML/Astro での使用（SCSSクラス）
 
 ```astro
 <div class="font-public-sans">Public Sans text</div>
 <div class="font-graphyne">Custom font</div>
+```
+
+### HTML/Astro での使用（Tailwind CSS）
+
+```astro
+<div class="font-public-sans">Public Sans Font</div>
+<div class="font-graphyne">Custom Graphyne Font</div>
+<p class="font-sans font-medium">Default Sans with Medium Weight</p>
+<h1 class="font-public-sans font-bold">Bold Public Sans Heading</h1>
 ```
 
 ### SCSS での使用
@@ -98,6 +127,32 @@ ts-expression/
 
 .my-custom-text {
     font-family: var(--font-family-graphyne);
+}
+```
+
+### Tailwind CSS設定
+
+```js
+// tailwind.config.mjs
+theme: {
+  extend: {
+    fontFamily: {
+      'public-sans': ['Public Sans', 'sans-serif'],
+      'graphyne': ['Graphyne', 'sans-serif'],
+      'sans': ['Public Sans', 'sans-serif'], // デフォルト
+    },
+    fontWeight: {
+      'thin': '100',
+      'extralight': '200',
+      'light': '300',
+      'normal': '400',
+      'medium': '500',
+      'semibold': '600',
+      'bold': '700',
+      'extrabold': '800',
+      'black': '900',
+    }
+  }
 }
 ```
 

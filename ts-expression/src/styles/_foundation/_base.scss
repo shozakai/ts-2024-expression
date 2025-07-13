@@ -17,6 +17,16 @@ body {
     overflow-wrap: break-word;
     // Tailwindのtext-sクラスを適用
     @apply text-text-s;
-    @apply text-text-black;
-    @apply bg-bg-white;
+    @apply text-text-white;
+    @apply bg-bg-black;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+    height: auto;
 }

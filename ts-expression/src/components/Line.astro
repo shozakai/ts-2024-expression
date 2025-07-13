@@ -1,0 +1,39 @@
+---
+export interface Props {
+  type: 'horizontal' | 'vertical';
+  duration?: number;
+  ease?: string;
+}
+
+const { type, duration = 1, ease = "power2.out" } = Astro.props;
+---
+
+
+<div class={`line line-${type}`} data-line={type} data-duration={duration} data-ease={ease}></div>
+
+
+<style lang="scss">
+  .line {
+    background-color: white;
+    transform-origin: left center;
+    
+    &-horizontal {
+      width: 100%;
+      height: 1px;
+      transform: scaleX(0);
+    }
+    
+    &-vertical {
+      width: 1px;
+      height: 100%;
+      transform: scaleY(0);
+    }
+  }
+</style>
+
+
+<script>
+  import('../scripts/lineAnimation.ts');
+</script>
+
+

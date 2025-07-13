@@ -1,11 +1,42 @@
 ---
+const currentPath = Astro.url.pathname;
 import Inner from '../layouts/Inner.astro'
+import Column from '../layouts/Column.astro'
+import Line from './Line.astro'
+import Text from './Text.astro'
 ---
 
 
 <header id="header" class="c-header">
     <Inner>
+        <div class="c-header__inner">
+            <Column>
+                <p data-col-span="3" >
+                    <a href="/">
+                        <Text text="■ INDEX" tag="span" />
+                    </a>
+                </p>
+    
+                <p data-col-span="3" >
+                    <a href="/">
+                        <Text text="WORK" tag="span" />
+                    </a>
+                </p>
+                    
+                <div data-col-span="3" class="flex justify-between gap-[8px]">
+                    <p class="hoge">
+                        <a href="/">
+                            <Text text="EXPLORATION" tag="span" />
+                        </a>
+                    </p>
+                    <p>
+                        <Text text="© 2025 NS" tag="span" />
+                    </p>
+                </div>
+            </Column>
+        </div>
 
+        <Line type="horizontal" />
     </Inner>
 </header>
 
@@ -15,6 +46,14 @@ import Inner from '../layouts/Inner.astro'
     @use '../styles/_setting/_variables' as *;
     
     .c-header {
-
+        position: fixed;
+        top: 16px;
+        left: 0;
+        width: 100%;
+        color: $color-white;
+        
+        &__inner {
+            padding-bottom: 4px;
+        }
     }
 </style>

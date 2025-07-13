@@ -1,0 +1,49 @@
+---
+export interface Props {
+  text: string;
+  tag?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span' | 'div';
+  duration?: number;
+  ease?: string;
+  delay?: number;
+  class?: string;
+}
+
+const { 
+  text, 
+  tag = 'p', 
+  duration = 1, 
+  ease = "power2.out", 
+  delay = 0,
+  class: className = '' 
+} = Astro.props;
+
+const Tag = tag;
+---
+
+<span class={`text-animation-wrapper ${className}`}>
+  <Tag 
+    class="text-animation" 
+    data-text-animation 
+    data-duration={duration} 
+    data-ease={ease}
+    data-delay={delay}
+  >
+    {text}
+  </Tag>
+</span>
+
+<style lang="scss">
+  .text-animation-wrapper {
+    display: block;
+    overflow: hidden;
+    
+    .text-animation {
+      display: block;
+      transform: translateY(100%);
+    }
+  }
+</style>
+
+<script>
+  import('../scripts/textAnimation.ts');
+</script>

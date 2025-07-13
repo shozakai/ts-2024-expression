@@ -7,6 +7,22 @@ export default {
   },
   theme: {
     extend: {
+      fontFamily: {
+        'public-sans': ['Public Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        'graphyne': ['Graphyne', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        'sans': ['Public Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'], // デフォルトサンセリフ
+      },
+      fontWeight: {
+        'thin': '100',
+        'extralight': '200',
+        'light': '300',
+        'normal': '400',
+        'medium': '500',
+        'semibold': '600',
+        'bold': '700',
+        'extrabold': '800',
+        'black': '900',
+      },
       fontSize: {
         'text-s': ['1.4rem', '1.3'],
         'text-l-b': ['2.4rem', '1.6'],
