@@ -1,0 +1,19 @@
+---
+import Welcome from '../components/Welcome.astro';
+import SassDemo from '../components/SassDemo.astro';
+import Layout from '../layouts/Layout.astro';
+import type { MetaInfo } from '@/types/meta';
+
+const meta: MetaInfo = {
+  title: 'ホーム - Astro TypeScript Expression',
+  description: 'Astro、TypeScript、TailwindCSS、SASSを使用したモダンなWebサイトのホームページです。',
+  keywords: ['Astro', 'TypeScript', 'TailwindCSS', 'SASS', 'ホーム', 'Web Development'],
+  type: 'website',
+  author: 'Developer',
+};
+---
+
+<Layout {meta}>
+  <Welcome />
+  <SassDemo />
+</Layout>

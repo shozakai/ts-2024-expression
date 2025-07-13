@@ -1,0 +1,116 @@
+---
+// SassDemo.astro - Sassの機能を実演するコンポーネント
+---
+
+<div class="sass-demo">
+  <h2>Sass Demo</h2>
+  <p>このコンポーネントはSassの機能を実演します。</p>
+  
+  <div class="demo-section">
+    <h3>変数とミックスインの使用例</h3>
+    <button class="demo-button primary">プライマリボタン</button>
+    <button class="demo-button secondary">セカンダリボタン</button>
+  </div>
+  
+  <div class="demo-section">
+    <h3>ネストとレスポンシブデザイン</h3>
+    <div class="demo-card">
+      <h4>カードタイトル</h4>
+      <p>このカードはSassのネスト機能を使用しています。</p>
+      <div class="demo-card__actions">
+        <button class="demo-card__button">アクション1</button>
+        <button class="demo-card__button">アクション2</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  // 変数とミックスインをインポート
+  @import '../styles/variables';
+  @import '../styles/mixins';
+  
+  .sass-demo {
+    padding: $spacing-large;
+    max-width: 800px;
+    margin: 0 auto;
+    
+    h2 {
+      color: $primary-color;
+      margin-bottom: $spacing-medium;
+    }
+    
+    .demo-section {
+      margin-bottom: $spacing-large;
+      
+      h3 {
+        color: $text-color;
+        margin-bottom: $spacing-medium;
+      }
+    }
+    
+    .demo-button {
+      margin-right: $spacing-small;
+      padding: 12px $spacing-medium;
+      border: none;
+      border-radius: $border-radius-button;
+      cursor: pointer;
+      transition: all 0.2s;
+      
+      &.primary {
+        background: $gradient-primary;
+        color: $white;
+        
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba($primary-color, 0.3);
+        }
+      }
+      
+      &.secondary {
+        background: transparent;
+        color: $text-color;
+        border: 2px solid $primary-color;
+        
+        &:hover {
+          background: $primary-color;
+          color: $white;
+        }
+      }
+    }
+    
+    .demo-card {
+      @include box-style;
+      background: linear-gradient(135deg, rgba($primary-color, 0.1), rgba($secondary-color, 0.1));
+      border: 1px solid rgba($primary-color, 0.2);
+      
+      h4 {
+        color: $text-color;
+        margin-bottom: $spacing-small;
+      }
+      
+      p {
+        margin-bottom: $spacing-medium;
+      }
+      
+      &__actions {
+        display: flex;
+        gap: $spacing-small;
+        
+        @include mobile {
+          flex-direction: column;
+        }
+      }
+      
+      &__button {
+        @include button-secondary;
+        background: rgba($primary-color, 0.1);
+        border: 1px solid rgba($primary-color, 0.3);
+        
+        &:hover {
+          background: rgba($primary-color, 0.2);
+        }
+      }
+    }
+  }
+</style> 

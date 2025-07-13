@@ -1,0 +1,210 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import type { MetaInfo } from '@/types/meta';
+
+const meta: MetaInfo = {
+  title: 'メタ情報デモ - SEO & SNS最適化',
+  description: 'Astroプロジェクトでのメタ情報設定のデモページです。SEO、Open Graph、Twitterカードの設定を確認できます。',
+  keywords: ['メタ情報', 'SEO', 'Open Graph', 'Twitter Card', 'Astro'],
+  type: 'website',
+  author: 'Developer',
+  image: '/images/meta-demo.jpg',
+  imageAlt: 'メタ情報とSEO最適化のデモ',
+};
+
+// 各ページのメタ情報例
+const pageExamples = [
+  {
+    name: 'ホームページ',
+    url: '/',
+    type: 'website',
+    description: 'サイトのメインページ'
+  },
+  {
+    name: 'テストページ',
+    url: '/test',
+    type: 'website',
+    description: '開発環境セットアップのデモ'
+  },
+  {
+    name: '記事ページ',
+    url: '/article',
+    type: 'article',
+    description: 'ブログ記事や技術記事用のページ'
+  },
+  {
+    name: 'メタ情報デモ',
+    url: '/meta-demo',
+    type: 'website',
+    description: 'このページ'
+  }
+];
+---
+
+<Layout {meta}>
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">
+        メタ情報設定デモ
+      </h1>
+      <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+        各ページで動的にメタ情報を設定し、SEO最適化とSNS共有を改善します
+      </p>
+    </div>
+
+    <!-- 現在のページのメタ情報 -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+        <Icon name="mdi:information" class="w-6 h-6 mr-2 text-blue-500" />
+        現在のページのメタ情報
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md border">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">基本情報</h3>
+          <div class="space-y-2">
+            <div><strong>タイトル:</strong> {meta.title}</div>
+            <div><strong>説明:</strong> {meta.description}</div>
+            <div><strong>タイプ:</strong> {meta.type}</div>
+            <div><strong>著者:</strong> {meta.author}</div>
+            <div><strong>言語:</strong> ja_JP</div>
+          </div>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md border">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">SEO情報</h3>
+          <div class="space-y-2">
+            <div><strong>キーワード:</strong> {meta.keywords?.join(', ')}</div>
+            <div><strong>Robots:</strong> index, follow</div>
+            <div><strong>画像:</strong> {meta.image}</div>
+            <div><strong>画像Alt:</strong> {meta.imageAlt}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 生成されるメタタグ -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+        <Icon name="mdi:code-tags" class="w-6 h-6 mr-2 text-green-500" />
+        生成されるメタタグ
+      </h2>
+      
+      <div class="bg-gray-900 text-gray-100 p-6 rounded-lg overflow-x-auto">
+        <pre class="text-sm"><code>{`<!-- Primary Meta Tags -->
+<title>${meta.title}</title>
+<meta name="description" content="${meta.description}" />
+<meta name="keywords" content="${meta.keywords?.join(', ')}" />
+<meta name="author" content="${meta.author}" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="${meta.type}" />
+<meta property="og:title" content="${meta.title}" />
+<meta property="og:description" content="${meta.description}" />
+<meta property="og:image" content="${meta.image}" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="${meta.title}" />
+<meta property="twitter:description" content="${meta.description}" />
+<meta property="twitter:image" content="${meta.image}" />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "${meta.title}",
+  "description": "${meta.description}",
+  "author": { "@type": "Person", "name": "${meta.author}" }
+}
+</script>`}</code></pre>
+      </div>
+    </section>
+
+    <!-- ページタイプ別の例 -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+        <Icon name="mdi:file-multiple" class="w-6 h-6 mr-2 text-purple-500" />
+        ページタイプ別の設定例
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {pageExamples.map((example) => (
+          <div class="bg-white p-6 rounded-lg shadow-md border hover:shadow-lg transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">{example.name}</h3>
+            <p class="text-gray-600 mb-4">{example.description}</p>
+            <div class="space-y-2 text-sm">
+              <div><strong>URL:</strong> <code class="bg-gray-100 px-2 py-1 rounded">{example.url}</code></div>
+              <div><strong>タイプ:</strong> <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">{example.type}</span></div>
+            </div>
+            <a href={example.url} class="inline-block mt-4 text-blue-600 hover:text-blue-800 transition-colors">
+              ページを見る →
+            </a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 使用方法 -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+        <Icon name="mdi:book-open" class="w-6 h-6 mr-2 text-orange-500" />
+        使用方法
+      </h2>
+      
+      <div class="bg-white p-6 rounded-lg shadow-md border">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">1. メタ情報を定義</h3>
+        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+          <pre class="text-sm"><code>{`import type { MetaInfo } from '@/types/meta';
+
+const meta: MetaInfo = {
+  title: 'ページタイトル',
+  description: 'ページの説明',
+  keywords: ['キーワード1', 'キーワード2'],
+  type: 'website', // または 'article'
+  author: '著者名',
+  image: '/images/og-image.jpg',
+  imageAlt: '画像の説明',
+};`}</code></pre>
+        </div>
+        
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">2. Layoutに渡す</h3>
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <pre class="text-sm"><code>{`<Layout {meta}>
+  <!-- ページコンテンツ -->
+</Layout>`}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEO効果 -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+        <Icon name="mdi:chart-line" class="w-6 h-6 mr-2 text-red-500" />
+        SEO効果
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md border text-center">
+          <Icon name="mdi:google" class="w-12 h-12 mx-auto mb-4 text-blue-500" />
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">検索エンジン最適化</h3>
+          <p class="text-gray-600">適切なメタタグでGoogleなどの検索エンジンでの表示を改善</p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md border text-center">
+          <Icon name="mdi:facebook" class="w-12 h-12 mx-auto mb-4 text-blue-600" />
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">SNS共有最適化</h3>
+          <p class="text-gray-600">FacebookやTwitterでの共有時の表示を美しく</p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md border text-center">
+          <Icon name="mdi:robot" class="w-12 h-12 mx-auto mb-4 text-gray-500" />
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">構造化データ</h3>
+          <p class="text-gray-600">JSON-LDで検索エンジンに詳細な情報を提供</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout> 

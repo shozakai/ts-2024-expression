@@ -1,0 +1,30 @@
+// 色の変数
+$primary-color: #3245ff;
+$secondary-color: #bc52ee;
+$text-color: #111827;
+$text-muted: #4b5563;
+$white: #ffffff;
+$gray-hover: rgb(78, 80, 86);
+$gray-light: rgb(230, 230, 230);
+
+// フォント変数
+$font-family-base: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+$font-family-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+
+// サイズ変数
+$border-radius-base: 8px;
+$border-radius-large: 16px;
+$border-radius-button: 10px;
+$spacing-small: 8px;
+$spacing-medium: 16px;
+$spacing-large: 24px;
+
+// ブレークポイント
+$breakpoint-tablet: 768px;
+$breakpoint-mobile: 368px;
+
+// グラデーション
+$gradient-primary: linear-gradient(83.21deg, $primary-color 0%, $secondary-color 100%);
+$gradient-code: linear-gradient(14deg, #d83333 0%, #f041ff 100%);
+$gradient-code-bg: linear-gradient(66.77deg, #f3cddd 0%, #f5cee7 100%);
+$gradient-code-border: linear-gradient(155deg, #d83333 0%, #f041ff 18%, #f5cee7 45%); 
