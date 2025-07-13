@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Inner from '../layouts/Inner.astro'
+import Column from '../layouts/Column.astro'
+import Line from '../components/Line.astro'
+import SplitText from '../components/SplitText.astro'
+import SplitTextLines from '../components/SplitTextLines.astro'
+import Text from '../components/Text.astro'
+import styles from '../styles/_pages/work.module.scss'
+import type { MetaInfo } from '@/types/meta'
+
+const meta: MetaInfo = {
+    title: 'WORK',
+    description:
+        '',
+    keywords: [],
+    type: 'website',
+    author: 'Developer',
+}
+---
+
+<Layout {meta} pageId="work">
+    <div class={styles.workVisual}>
+        <Inner>
+            <Column>
+                <div data-col-span="3">
+                    <p>20 Results</p>
+                </div>
+                <div data-col-span="6">
+                    <Line type="vertical" />
+                    <h1 class="text-text-h2 font-graphyne relative z-10">
+                        <Text text="WORK" tag="span" delay={0.3}/>
+                    </h1>
+                </div>
+            </Column>
+        </Inner>
+    </div>
+</Layout>

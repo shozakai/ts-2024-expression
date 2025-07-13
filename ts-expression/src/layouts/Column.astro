@@ -20,6 +20,7 @@ const { class: className } = Astro.props;
         width: 100%;
 
         :global(*) {
+            position: relative;
             // data-col-span属性の値に応じてgrid-columnを設定
             &[data-col-span="1"] { grid-column: span 1; }
             &[data-col-span="2"] { grid-column: span 2; }

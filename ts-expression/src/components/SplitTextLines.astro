@@ -33,17 +33,18 @@ const Tag = tag;
 />
 
 <style lang="scss">
-  .split-text-lines {
+.split-text-lines {
+    opacity: 0;
     .split-line {
-      overflow: hidden;
+        overflow: hidden;
       
-      .split-line-inner {
-        display: block;
-        transform: translateY(100%);
-        opacity: 0;
-      }
+        .split-line-inner {
+            display: block;
+            transform: translateY(100%);
+            opacity: 0;
+        }
     }
-  }
+}
 </style>
 
 <script>

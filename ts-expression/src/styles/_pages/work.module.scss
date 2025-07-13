@@ -1,0 +1,30 @@
+// ホームページ専用のスタイル
+@use '../_setting/_variables' as *;
+@use '../_setting/_mixins' as *;
+
+.page-work {}
+
+.workVisual {
+    position: relative;
+    z-index: 10;
+    // min-height: 420px;
+    padding-top: 40px;
+    background: $color-white;
+    color: $color-black;
+    
+
+    :global(.l-inner) {
+        // height: 100%;
+    }
+
+    :global(.l-column) {
+        min-height: 420px;
+    }
+
+    :global(.line) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: $color-black;
+    }
+}

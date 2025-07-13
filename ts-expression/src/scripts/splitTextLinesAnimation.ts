@@ -13,6 +13,10 @@ splitTextLinesElements.forEach((element) => {
   const ease = htmlElement.dataset.ease || 'power2.out';
   const stagger = parseFloat(htmlElement.dataset.stagger || '0.1');
   const delay = parseFloat(htmlElement.dataset.delay || '0');
+
+  gsap.set(element, {
+    opacity: 1
+  });
   
   // SplitTextで行ごとに分割
   const splitText = new SplitText(element, {

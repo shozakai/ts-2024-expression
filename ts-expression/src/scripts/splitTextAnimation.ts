@@ -14,6 +14,7 @@ splitTextElements.forEach((element) => {
   gsap.to(chars, {
     y: 0,
     // opacity: 1,
+    autoAlpha: 1,
     duration: duration,
     ease: ease,
     stagger: stagger,
