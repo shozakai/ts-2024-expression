@@ -2,6 +2,7 @@
 import Welcome from '../components/Welcome.astro';
 import SassDemo from '../components/SassDemo.astro';
 import Layout from '../layouts/Layout.astro';
+import styles from '../styles/_pages/index.module.scss';
 import type { MetaInfo } from '@/types/meta';
 
 const meta: MetaInfo = {
@@ -13,7 +14,8 @@ const meta: MetaInfo = {
 };
 ---
 
-<Layout {meta}>
+<Layout {meta} pageId="home">
   <Welcome />
   <SassDemo />
+  <h1 class={`text-3xl ${styles.homeVisual}`}>Hello World</h1>
 </Layout>

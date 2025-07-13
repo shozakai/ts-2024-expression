@@ -1,0 +1,12 @@
+// ホームページ専用のスタイル
+@use '../_setting/_variables' as *;
+@use '../_setting/_mixins' as *;
+
+
+.page-home {}
+
+
+.homeVisual {
+    font-size: 4rem;
+    color: $color-black;
+}

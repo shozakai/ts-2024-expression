@@ -1,13 +1,17 @@
 ---
 import type { LayoutProps } from '@/types/meta';
 import { defaultMeta } from '@/types/meta';
+// import '../styles/_foundation/_reset.scss';
+import '../styles/main.scss';
+
 
 interface Props extends LayoutProps {
   title?: string;
   description?: string;
+  pageId?: string; // ページ固有のID（例：'home', 'about', 'contact'）
 }
 
-const { meta, lang = 'ja', class: className = '', title, description } = Astro.props;
+const { meta, lang = 'ja', class: className = '', title, description, pageId } = Astro.props;
 
 // titleとdescriptionの直接的な指定をサポート（後方互換性のため）
 const finalMeta = {
@@ -27,6 +31,10 @@ const imageUrl = finalMeta.image
     ? finalMeta.image 
     : new URL(finalMeta.image, Astro.site).toString()
   : null;
+
+// ページ固有のクラス名を生成
+const pageClass = pageId ? `page-${pageId}` : '';
+const bodyClasses = [pageClass, className].filter(Boolean).join(' ');
 ---
 
 <!doctype html>
@@ -109,12 +117,7 @@ const imageUrl = finalMeta.image
       })}
     </script>
   </head>
-  <body class={className}>
+  <body class={bodyClasses}>
     <slot />
   </body>
 </html>
-
-<style lang="scss">
-  // メインのSassファイルをインポート
-  @import '../styles/main.scss';
-</style>

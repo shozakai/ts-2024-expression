@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 // ボタンのミックスイン
 @mixin button-base {
   display: flex;

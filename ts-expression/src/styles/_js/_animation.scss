@@ -1,0 +1,275 @@
+// アニメーション関連のスタイル
+@use '../_setting/_variables' as *;
+
+// 基本的なトランジション
+.j-transition-all {
+  transition: all 0.3s ease;
+}
+
+.j-transition-fast {
+  transition: all 0.15s ease;
+}
+
+.j-transition-slow {
+  transition: all 0.5s ease;
+}
+
+// フェードイン・フェードアウト
+@keyframes j-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes j-fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.j-fade-in {
+  animation: j-fadeIn 0.3s ease-in-out;
+}
+
+.j-fade-out {
+  animation: j-fadeOut 0.3s ease-in-out;
+}
+
+// スライドアニメーション
+@keyframes j-slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes j-slideInDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes j-slideInLeft {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes j-slideInRight {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.j-slide-in-up {
+  animation: j-slideInUp 0.5s ease-out;
+}
+
+.j-slide-in-down {
+  animation: j-slideInDown 0.5s ease-out;
+}
+
+.j-slide-in-left {
+  animation: j-slideInLeft 0.5s ease-out;
+}
+
+.j-slide-in-right {
+  animation: j-slideInRight 0.5s ease-out;
+}
+
+// スケールアニメーション
+@keyframes j-scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes j-scaleOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+.j-scale-in {
+  animation: j-scaleIn 0.3s ease-out;
+}
+
+.j-scale-out {
+  animation: j-scaleOut 0.3s ease-in;
+}
+
+// 回転アニメーション
+@keyframes j-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.j-rotate {
+  animation: j-rotate 1s linear infinite;
+}
+
+// パルスアニメーション
+@keyframes j-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.j-pulse {
+  animation: j-pulse 2s infinite;
+}
+
+// バウンスアニメーション
+@keyframes j-bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40%, 43% {
+    transform: translateY(-10px);
+  }
+  70% {
+    transform: translateY(-5px);
+  }
+  90% {
+    transform: translateY(-2px);
+  }
+}
+
+.j-bounce {
+  animation: j-bounce 1s infinite;
+}
+
+// シェイクアニメーション
+@keyframes j-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+.j-shake {
+  animation: j-shake 0.5s;
+}
+
+// ホバーエフェクト
+.j-hover-lift {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.j-hover-scale {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.j-hover-rotate {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: rotate(5deg);
+  }
+}
+
+// ローディングアニメーション
+.j-loading {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid $primary-color;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: j-rotate 1s linear infinite;
+  }
+}
+
+// アニメーション遅延クラス
+.j-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.j-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.j-delay-3 {
+  animation-delay: 0.3s;
+}
+
+.j-delay-4 {
+  animation-delay: 0.4s;
+}
+
+.j-delay-5 {
+  animation-delay: 0.5s;
+}
+
+// アニメーションの無効化（アクセシビリティ対応）
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+} 

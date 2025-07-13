@@ -1,0 +1,236 @@
+// ヘッダーコンポーネントのスタイル
+@use '../_setting/_variables' as *;
+@use '../_setting/_mixins' as *;
+
+.c-header {
+  background-color: $bg-color;
+  border-bottom: 1px solid $border-color;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-medium;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  &__logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $primary-color;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: $spacing-small;
+
+    &:hover {
+      color: $secondary-color;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: $spacing-large;
+
+    @media (max-width: $breakpoint-tablet) {
+      display: none;
+    }
+  }
+
+  &__nav-item {
+    color: $text-color;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $primary-color;
+    }
+
+    &--active {
+      color: $primary-color;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-small;
+  }
+
+  &__button {
+    @include button-primary;
+    padding: $spacing-small $spacing-medium;
+    font-size: 0.9rem;
+  }
+
+  &__menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: $spacing-small;
+    color: $text-color;
+
+    @media (max-width: $breakpoint-tablet) {
+      display: block;
+    }
+  }
+}
+
+// モバイルメニュー
+.c-mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: $bg-color;
+  z-index: 1001;
+  padding: $spacing-large;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+
+  &--open {
+    transform: translateX(0);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-large;
+  }
+
+  &__logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $primary-color;
+    text-decoration: none;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: $text-color;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-medium;
+  }
+
+  &__nav-item {
+    color: $text-color;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.125rem;
+    padding: $spacing-small 0;
+    border-bottom: 1px solid $border-light;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $primary-color;
+    }
+
+    &--active {
+      color: $primary-color;
+    }
+  }
+
+  &__actions {
+    margin-top: $spacing-large;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-small;
+  }
+
+  &__button {
+    @include button-primary;
+    padding: $spacing-medium;
+    text-align: center;
+    text-decoration: none;
+  }
+}
+
+// ヘッダーのスクロール効果
+.c-header--scrolled {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+// ヘッダーのアニメーション
+.c-header {
+  transition: all 0.3s ease;
+}
+
+.c-header__nav-item {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: $primary-color;
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after,
+  &--active::after {
+    width: 100%;
+  }
+}
+
+// ドロップダウンメニュー（将来的に使用）
+.c-dropdown {
+  position: relative;
+
+  &__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: $bg-color;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-base;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: $spacing-small 0;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+  }
+
+  &:hover &__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  &__item {
+    display: block;
+    padding: $spacing-small $spacing-medium;
+    color: $text-color;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: $bg-secondary;
+      color: $primary-color;
+    }
+  }
+} 

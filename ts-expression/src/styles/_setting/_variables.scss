@@ -1,4 +1,8 @@
 // 色の変数
+$color-black: #111;
+$color-white: #fff;
+
+
 $primary-color: #3245ff;
 $secondary-color: #bc52ee;
 $text-color: #111827;
@@ -6,6 +10,16 @@ $text-muted: #4b5563;
 $white: #ffffff;
 $gray-hover: rgb(78, 80, 86);
 $gray-light: rgb(230, 230, 230);
+
+// 背景色
+$bg-color: #ffffff;
+$bg-secondary: #f9fafb;
+$bg-gray: #f3f4f6;
+
+// ボーダー色
+$border-color: #e5e7eb;
+$border-light: #f3f4f6;
+$border-dark: #d1d5db;
 
 // フォント変数
 $font-family-base: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
