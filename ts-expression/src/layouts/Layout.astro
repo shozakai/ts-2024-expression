@@ -1,6 +1,8 @@
 ---
 import type { LayoutProps } from '@/types/meta'
 import { defaultMeta } from '@/types/meta'
+import Header from '@/components/Header.astro'
+
 import '../styles/main.scss'
 
 interface Props extends LayoutProps {
@@ -64,6 +66,14 @@ const bodyClasses = [pageClass, className].filter(Boolean).join(' ')
         {finalMeta.author && <meta name="author" content={finalMeta.author} />}
         <meta name="robots" content={finalMeta.robots} />
         <link rel="canonical" href={canonicalUrl} />
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
 
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content={finalMeta.type} />
@@ -146,6 +156,7 @@ const bodyClasses = [pageClass, className].filter(Boolean).join(' ')
         />
     </head>
     <body class={bodyClasses}>
+        <Header />
         <slot />
     </body>
 </html>

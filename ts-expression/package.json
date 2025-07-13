@@ -15,10 +15,13 @@
     "dependencies": {
         "@astrojs/tailwind": "^6.0.2",
         "astro": "^5.11.0",
-        "astro-icon": "^1.1.5"
+        "astro-icon": "^1.1.5",
+        "gsap": "^3.13.0",
+        "three": "^0.178.0"
     },
     "devDependencies": {
         "@types/node": "^24.0.13",
+        "@types/three": "^0.178.1",
         "@typescript-eslint/eslint-plugin": "^8.36.0",
         "@typescript-eslint/parser": "^8.36.0",
         "eslint": "^9.31.0",

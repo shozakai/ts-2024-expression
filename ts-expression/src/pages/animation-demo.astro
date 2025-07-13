@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro'
+import ThreeDemo from '../components/ThreeDemo.astro'
+import GSAPDemo from '../components/GSAPDemo.astro'
+
+const meta = {
+    title: 'Animation Demo - GSAP & Three.js',
+    description: 'GSAPとThree.jsのアニメーションデモページ',
+    type: 'website' as const,
+}
+---
+
+<Layout pageId="animation-demo" meta={meta}>
+    <main class="min-h-screen bg-gray-50">
+        <!-- Header -->
+        <div class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <h1 class="text-3xl font-bold text-gray-900">
+                    アニメーションライブラリデモ
+                </h1>
+                <p class="mt-2 text-gray-600">
+                    GSAP (GreenSock Animation Platform) と Three.js の最新バージョンを使用したアニメーションデモです
+                </p>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <!-- Version Info -->
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">インストール済みライブラリ</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <span class="text-gray-700">GSAP v3.13.0</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        <span class="text-gray-700">Three.js v0.178.0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Three.js Demo -->
+            <section class="bg-white rounded-lg shadow-sm p-6 mb-8">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-4">Three.js デモ</h2>
+                <p class="text-gray-600 mb-6">
+                    3Dライブラリ「Three.js」を使用した回転するキューブのデモです。
+                </p>
+                <ThreeDemo />
+            </section>
+
+            <!-- GSAP Demo -->
+            <section class="bg-white rounded-lg shadow-sm p-6 mb-8">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-4">GSAP デモ</h2>
+                <p class="text-gray-600 mb-6">
+                    高性能アニメーションライブラリ「GSAP」を使用した様々なアニメーション効果のデモです。
+                </p>
+                <GSAPDemo />
+            </section>
+
+            <!-- Usage Guide -->
+            <section class="bg-white rounded-lg shadow-sm p-6">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-4">使用方法</h2>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-semibold text-gray-800 mb-2">GSAP の使用例</h3>
+                        <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>{`import { gsap } from 'gsap'
+import { GSAPSetup } from '../utils/gsap-setup'
+
+// 基本的なアニメーション
+gsap.to('.element', { x: 100, duration: 1 })
+
+// ユーティリティクラスの使用
+GSAPSetup.fadeIn(element, 1)
+GSAPSetup.slideUp(element, 1.5)`}</code></pre>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800 mb-2">Three.js の使用例</h3>
+                        <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>{`import { ThreeSetup } from '../utils/three-setup'
+
+// 3Dシーンの初期化
+const container = document.getElementById('three-container')
+const threeSetup = new ThreeSetup(container)
+threeSetup.animate()`}</code></pre>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    code {
+        color: #e11d48;
+        font-family: 'Courier New', monospace;
+    }
+</style> 

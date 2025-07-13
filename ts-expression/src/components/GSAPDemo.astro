@@ -1,0 +1,132 @@
+---
+// GSAP Demo Component
+---
+
+<div class="gsap-demo-container">
+    <h2 class="demo-title">GSAP Animation Demo</h2>
+    <div class="demo-grid">
+        <div class="demo-box fade-in">Fade In</div>
+        <div class="demo-box slide-up">Slide Up</div>
+        <div class="demo-box scale-in">Scale In</div>
+        <div class="demo-box rotate-in">Rotate In</div>
+    </div>
+    <div class="batch-demo">
+        <div class="batch-item">Item 1</div>
+        <div class="batch-item">Item 2</div>
+        <div class="batch-item">Item 3</div>
+        <div class="batch-item">Item 4</div>
+    </div>
+    <button id="replay-btn" class="replay-button">Replay Animations</button>
+</div>
+
+<script>
+    import { GSAPSetup } from '../utils/gsap-setup'
+    import { gsap } from 'gsap'
+
+    function initAnimations() {
+        const fadeInEl = document.querySelector('.fade-in') as HTMLElement
+        const slideUpEl = document.querySelector('.slide-up') as HTMLElement
+        const scaleInEl = document.querySelector('.scale-in') as HTMLElement
+        const rotateInEl = document.querySelector('.rotate-in') as HTMLElement
+        const batchItems = document.querySelectorAll(
+            '.batch-item'
+        ) as NodeListOf<HTMLElement>
+
+        if (fadeInEl) GSAPSetup.fadeIn(fadeInEl, 1)
+        if (slideUpEl) GSAPSetup.slideUp(slideUpEl, 1)
+        if (scaleInEl) GSAPSetup.scaleIn(scaleInEl, 1)
+        if (rotateInEl) GSAPSetup.rotateIn(rotateInEl, 1)
+
+        if (batchItems.length > 0) {
+            GSAPSetup.batch(Array.from(batchItems), 'fadeIn')
+        }
+    }
+
+    // Initialize animations on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        initAnimations()
+
+        // Replay button functionality
+        const replayBtn = document.getElementById('replay-btn')
+        if (replayBtn) {
+            replayBtn.addEventListener('click', () => {
+                // Reset all elements
+                gsap.set('.demo-box, .batch-item', { opacity: 1, scale: 1, rotation: 0, y: 0 })
+                
+                // Replay animations
+                setTimeout(() => {
+                    initAnimations()
+                }, 100)
+            })
+        }
+    })
+</script>
+
+<style>
+    .gsap-demo-container {
+        padding: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .demo-title {
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #1f2937;
+    }
+
+    .demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .demo-box {
+        padding: 2rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-align: center;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .batch-demo {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 2rem;
+    }
+
+    .batch-item {
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .replay-button {
+        display: block;
+        margin: 0 auto;
+        padding: 0.75rem 2rem;
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    .replay-button:hover {
+        transform: scale(1.05);
+    }
+
+    .replay-button:active {
+        transform: scale(0.95);
+    }
+</style> 

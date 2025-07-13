@@ -1,0 +1,65 @@
+// ==========================================================================
+// フォント設定
+// ==========================================================================
+
+// Google Fonts は Layout.astro で読み込み済み
+// - Public Sans (メインフォント)
+
+// ローカルフォント: Graphyne (Regular)
+@font-face {
+    font-family: 'Graphyne';
+    src: url('/fonts/a66e71dad627fbd29f19a5ef10dafbb4.eot'); /* IE9 Compat Modes */
+    src: url('/fonts/a66e71dad627fbd29f19a5ef10dafbb4.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('/fonts/a66e71dad627fbd29f19a5ef10dafbb4.woff2') format('woff2'), /* Super Modern Browsers */
+         url('/fonts/a66e71dad627fbd29f19a5ef10dafbb4.woff') format('woff'), /* Pretty Modern Browsers */
+         url('/fonts/a66e71dad627fbd29f19a5ef10dafbb4.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('/fonts/a66e71dad627fbd29f19a5ef10dafbb4.svg#Graphyne-Regular') format('svg'); /* Legacy iOS */
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+// フォント変数の定義
+:root {
+    // メインフォント: Public Sans
+    --font-family-public-sans: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    // カスタムフォント: Graphyne
+    --font-family-graphyne: 'Graphyne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    // デフォルトフォント（Public Sans）
+    --font-family-default: var(--font-family-public-sans);
+}
+
+// SASS変数での定義（後方互換性）
+$font-family-public-sans: var(--font-family-public-sans);
+$font-family-graphyne: var(--font-family-graphyne);
+$font-family-default: var(--font-family-default);
+
+// フォントウェイト
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// フォント最適化用のユーティリティクラス
+.font-public-sans {
+    font-family: var(--font-family-public-sans);
+}
+
+.font-graphyne {
+    font-family: var(--font-family-graphyne);
+}
+
+// フォント表示最適化
+.font-display-swap {
+    font-display: swap;
+}
+
+// 日本語テキストの最適化
+.text-optimize-jp {
+    font-feature-settings: 'palt' 1; // プロポーショナルメトリクス
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+} 

@@ -1,0 +1,206 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+const meta = {
+    title: 'フォントデモ - Webフォント設定',
+    description: 'プロジェクトで使用可能なWebフォントのデモページです',
+    type: 'website' as const,
+}
+---
+
+<Layout pageId="font-demo" meta={meta}>
+    <main class="min-h-screen bg-gray-50">
+        <!-- Header -->
+        <div class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <h1 class="text-3xl font-bold text-gray-900">
+                    Webフォントデモ
+                </h1>
+                <p class="mt-2 text-gray-600">
+                    このプロジェクトで使用可能なWebフォントの一覧と使用例です
+                </p>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            
+            <!-- フォント設定情報 -->
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">現在の設定</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                        <h3 class="font-medium text-green-800">Public Sans</h3>
+                        <p class="text-sm text-green-600">メインフォント</p>
+                    </div>
+                    <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <h3 class="font-medium text-blue-800">Graphyne</h3>
+                        <p class="text-sm text-blue-600">カスタムフォント</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Public Sans フォントデモ -->
+            <section class="bg-white rounded-lg shadow-sm p-6 mb-8 border border-green-200">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-6">Public Sans フォント (.font-public-sans)</h2>
+                <div class="space-y-4">
+                    <div class="font-public-sans">
+                        <h3 class="text-xl font-bold mb-2">Public Sans Font Example</h3>
+                        <p class="text-base mb-4">
+                            This is a sample text using the "Public Sans" font family.
+                            Public Sans is a strong, neutral, and friendly typeface for text or display.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">Character Showcase</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>Lowercase: abcdefghijklmnopqrstuvwxyz</li>
+                                    <li>Uppercase: ABCDEFGHIJKLMNOPQRSTUVWXYZ</li>
+                                    <li>Numbers: 0123456789</li>
+                                    <li>Symbols: !@#$%^&*()</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">Font Weights (100-900)</h4>
+                                <div class="space-y-1 text-sm">
+                                    <div style="font-weight: 100;">Thin (100)</div>
+                                    <div style="font-weight: 200;">Extra Light (200)</div>
+                                    <div style="font-weight: 300;">Light (300)</div>
+                                    <div style="font-weight: 400;">Normal (400)</div>
+                                    <div style="font-weight: 500;">Medium (500)</div>
+                                    <div style="font-weight: 600;">Semibold (600)</div>
+                                    <div style="font-weight: 700;">Bold (700)</div>
+                                    <div style="font-weight: 800;">Extra Bold (800)</div>
+                                    <div style="font-weight: 900;">Black (900)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                            <h4 class="font-medium text-green-800 mb-2">フォント特徴</h4>
+                            <ul class="text-sm space-y-1 text-green-700">
+                                <li>• 可変フォント技術対応（100-900のウェイト）</li>
+                                <li>• イタリック体も含む</li>
+                                <li>• 高いレジビリティ（読みやすさ）</li>
+                                <li>• ニュートラルで親しみやすいデザイン</li>
+                                <li>• デジタル表示に最適化</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <!-- カスタムフォント: Graphyne デモ -->
+            <section class="bg-white rounded-lg shadow-sm p-6 mb-8 border border-blue-200">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-6">カスタムフォント: Graphyne (.font-graphyne)</h2>
+                <div class="space-y-4">
+                    <div class="font-graphyne">
+                        <h3 class="text-xl font-bold mb-2">Graphyne Font Display</h3>
+                        <p class="text-base mb-4">
+                            This is a custom font called "Graphyne" by Surplus Type Co.
+                            このフォントは独特な文字デザインが特徴的です。
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">Character Showcase</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="text-2xl">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+                                    <div class="text-2xl">abcdefghijklmnopqrstuvwxyz</div>
+                                    <div class="text-2xl">0123456789</div>
+                                    <div class="text-2xl">!@#$%^&*()</div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">サイズ変化</h4>
+                                <div class="space-y-2">
+                                    <div class="text-sm">Small Text (14px)</div>
+                                    <div class="text-base">Regular Text (16px)</div>
+                                    <div class="text-lg">Large Text (18px)</div>
+                                    <div class="text-xl">Extra Large (20px)</div>
+                                    <div class="text-2xl">Title Size (24px)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                            <h4 class="font-medium text-blue-800 mb-2">フォント情報</h4>
+                            <ul class="text-sm space-y-1 text-blue-700">
+                                <li>• フォント名: Graphyne</li>
+                                <li>• 作成者: Surplus Type Co.</li>
+                                <li>• ウェイト: Regular (400)</li>
+                                <li>• 形式: WOFF2, WOFF, TTF, EOT, SVG</li>
+                                <li>• 最適化: font-display: swap</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- フォント最適化デモ -->
+            <section class="bg-white rounded-lg shadow-sm p-6 mb-8">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-6">フォント最適化クラス</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-800 mb-3">日本語最適化 (.text-optimize-jp)</h3>
+                        <div class="text-optimize-jp p-4 bg-gray-50 rounded-lg">
+                            <p class="text-base">
+                                この文章は日本語最適化クラスが適用されています。
+                                プロポーショナルメトリクスにより、文字間隔が調整され、
+                                より読みやすい表示になります。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-800 mb-3">フォント表示最適化 (.font-display-swap)</h3>
+                        <div class="font-display-swap p-4 bg-gray-50 rounded-lg">
+                            <p class="text-base">
+                                font-display: swap により、フォントの読み込み中も
+                                フォールバックフォントでテキストが表示されます。
+                                ページの表示速度向上に貢献します。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 使用方法 -->
+            <section class="bg-white rounded-lg shadow-sm p-6">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-6">使用方法</h2>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-medium text-gray-800 mb-2">HTML/Astro</h3>
+                        <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>{`<div class="font-public-sans">Public Sans Font</div>
+<div class="font-graphyne">Custom Graphyne Font</div>`}</code></pre>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-gray-800 mb-2">SCSS</h3>
+                        <pre class="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto"><code>{`.my-main-text {
+    font-family: var(--font-family-public-sans);
+}
+
+.my-custom-text {
+    font-family: var(--font-family-graphyne);
+}`}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</Layout>
+
+<style>
+    /* ページ固有のスタイル */
+    .page-font-demo {
+        font-family: var(--font-family-default);
+    }
+    
+    /* コードブロックのスタイル調整 */
+    pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+</style> 

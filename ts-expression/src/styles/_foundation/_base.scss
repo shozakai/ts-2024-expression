@@ -1,6 +1,7 @@
 // サイト全体の基本スタイル
 // 変数をインポート
 @use '../_setting/_variables' as *;
+@use '../_setting/_fonts' as *;
 
 html {
     font-size: 62.5%;
@@ -9,6 +10,7 @@ html {
 // 基本的なボディスタイル（reset.scssの後に適用）
 body {
     min-width: $site-w-min;
+    font-family: var(--font-family-default);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     word-wrap: break-word;

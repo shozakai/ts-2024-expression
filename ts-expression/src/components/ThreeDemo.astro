@@ -1,0 +1,33 @@
+---
+// Three.js Demo Component
+---
+
+<div id="three-container" class="w-full h-96 border-2 border-gray-300 rounded-lg"></div>
+
+<script>
+    import { ThreeSetup } from '../utils/three-setup'
+
+    const container = document.getElementById('three-container')
+    if (container) {
+        const threeSetup = new ThreeSetup(container)
+        threeSetup.animate()
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            threeSetup.dispose()
+        })
+    }
+</script>
+
+<style>
+    #three-container {
+        background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+        position: relative;
+        overflow: hidden;
+    }
+
+    #three-container canvas {
+        display: block;
+        border-radius: 0.5rem;
+    }
+</style> 
