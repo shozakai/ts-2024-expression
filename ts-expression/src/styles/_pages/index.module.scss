@@ -2,9 +2,27 @@
 @use '../_setting/_variables' as *;
 @use '../_setting/_mixins' as *;
 
-.page-home {
-}
+.page-home {}
 
 .homeVisual {
-    font-size: 4rem;
+}
+
+.homeCotent {
+    margin-top: 64px;
+    a {
+        @include underlineLink($color-white);
+    }
+}
+
+.homeTtl {
+    position: absolute;
+    bottom: 0;
+    left: calc(-12 / 1366 * 100vw);
+    display: block;
+    width: 101%;
+    overflow: hidden;
+    font-size: calc(255 / 1366 * 100vw);
+    font-family: var(--font-family-graphyne);
+    line-height: 0.7;
+    white-space: nowrap;
 }

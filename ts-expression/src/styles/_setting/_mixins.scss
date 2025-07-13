@@ -1,5 +1,24 @@
 @use 'variables' as *;
 
+// 下線のミックスイン
+@mixin underlineLink($color: $color-black) {
+    position: relative;
+    background-image: linear-gradient($color);
+    background-repeat: no-repeat;
+    background-size: 0 1px;
+    background-position: right bottom;
+    @include transition($property: background-size, $duration: .35s, $ease: $ease-power2-out);
+
+    @include mediaHover {
+        &:hover {
+            opacity: 1 !important;
+            background-size: 100% 1px;
+            background-position: left bottom;
+        }
+    }
+}
+
+
 // clamp関数
 @mixin clampMax(
     $property: 'font-size',

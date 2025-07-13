@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Inner from '../layouts/Inner.astro'
+import SplitText from '../components/SplitText.astro'
+import SplitTextLines from '../components/SplitTextLines.astro'
 import styles from '../styles/_pages/index.module.scss'
 import type { MetaInfo } from '@/types/meta'
 
@@ -22,7 +24,41 @@ const meta: MetaInfo = {
 ---
 
 <Layout {meta} pageId="home">
-    <Inner>
-        
-    </Inner>
+    <div class={styles.homeVisual}>
+        <Inner>
+            <div class={styles.homeCotent}>
+                <SplitTextLines
+                    text="My name is NS.<br>I'm a front engineer and project<br>director at Shed inc.<br>Nice to meet you."
+                    tag="p"
+                    class="text-text-l-b mb-[48px]"
+                    duration={0.8}
+                    stagger={0.1}
+                    delay={0.3}
+                    ease="power2.out"
+                />
+                <p class="text-text-l-b">
+                    <a href="/work">
+                        <SplitTextLines
+                        text="● Want to know more?"
+                        tag="span"
+                        class=""
+                        duration={0.8}
+                        stagger={0.1}
+                        delay={.9}
+                        ease="power2.out"
+                        />
+                    </a>
+                </p>
+            </div>
+        </Inner>
+    
+        <SplitText 
+            text="Hello World" 
+            tag="span" 
+            class={styles.homeTtl}
+            duration={0.6}
+            stagger={0.08}
+            ease="power3.out"
+        />
+    </div>
 </Layout>

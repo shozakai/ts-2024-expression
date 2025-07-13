@@ -1,0 +1,51 @@
+---
+export interface Props {
+  text: string;
+  tag?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span' | 'div';
+  duration?: number;
+  ease?: string;
+  stagger?: number;
+  delay?: number;
+  class?: string | undefined;
+}
+
+const { 
+  text, 
+  tag = 'p', 
+  duration = 0.8, 
+  ease = "power2.out", 
+  stagger = 0.1,
+  delay = 0,
+  class: className = '' 
+} = Astro.props;
+
+const Tag = tag;
+---
+
+<Tag 
+  class={`split-text-lines ${className}`} 
+  data-split-text-lines 
+  data-duration={duration} 
+  data-ease={ease} 
+  data-stagger={stagger}
+  data-delay={delay}
+  set:html={text}
+/>
+
+<style lang="scss">
+  .split-text-lines {
+    .split-line {
+      overflow: hidden;
+      
+      .split-line-inner {
+        display: block;
+        transform: translateY(100%);
+        opacity: 0;
+      }
+    }
+  }
+</style>
+
+<script>
+  import('../scripts/splitTextLinesAnimation.ts');
+</script> 
