@@ -5,6 +5,7 @@ export interface Props {
   duration?: number;
   ease?: string;
   stagger?: number;
+  delay?: number;
   class?: string | undefined;
 }
 
@@ -14,6 +15,7 @@ const {
   duration = 0.8, 
   ease = "power2.out", 
   stagger = 0.05,
+  delay = 0,
   class: className = '' 
 } = Astro.props;
 
@@ -21,7 +23,7 @@ const Tag = tag;
 const chars = text.split('');
 ---
 
-<Tag class={`split-text ${className}`} data-split-text data-duration={duration} data-ease={ease} data-stagger={stagger}>
+<Tag class={`split-text ${className}`} data-split-text data-duration={duration} data-ease={ease} data-stagger={stagger} data-delay={delay}>
   {chars.map((char, index) => (
     <span class="split-char" data-char-index={index}>
       {char === ' ' ? '\u00A0' : char}
@@ -34,7 +36,7 @@ const chars = text.split('');
     .split-char {
       display: inline-block;
       transform: translateY(100%);
-      opacity: 0;
+    //   opacity: 0;
       margin-left: calc(-10 / 1366 * 100vw);
       &:nth-child(1) {
         margin-left: 0;

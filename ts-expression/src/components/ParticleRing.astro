@@ -1,0 +1,122 @@
+---
+import type { ParticleRingOptions } from '../scripts/particleRing'
+
+export interface Props {
+    id?: string
+    class?: string
+    particleCount?: number
+    innerRadius?: number
+    scatterIntensity?: number
+    ringSharpness?: number
+    backgroundColor?: number
+    opacity?: number
+    rotationSpeed?: number
+    enableMouseInteraction?: boolean
+    enableControls?: boolean
+    enableBigBangAnimation?: boolean
+    animationDuration?: number
+    animationDelay?: number
+    width?: string
+    height?: string
+}
+
+const {
+    id = 'particle-ring',
+    class: className = '',
+    particleCount = 8000,
+    innerRadius = 150,
+    scatterIntensity = 80,
+    ringSharpness = 4,
+    backgroundColor = 0x000000,
+    opacity = 0.1,
+    rotationSpeed = 0.001,
+    enableMouseInteraction = true,
+    enableControls = false,
+    enableBigBangAnimation = false,
+    animationDuration = 3.0,
+    animationDelay = 0.5,
+    width = '100vw',
+    height = '100vh',
+} = Astro.props
+---
+
+<div 
+    id={id} 
+    class={`particle-ring-container ${className}`}
+    data-particle-count={particleCount}
+    data-inner-radius={innerRadius}
+    data-scatter-intensity={scatterIntensity}
+    data-ring-sharpness={ringSharpness}
+    data-background-color={backgroundColor}
+    data-opacity={opacity}
+    data-rotation-speed={rotationSpeed}
+    data-enable-mouse-interaction={enableMouseInteraction}
+    data-enable-controls={enableControls}
+    data-enable-big-bang-animation={enableBigBangAnimation}
+    data-animation-duration={animationDuration}
+    data-animation-delay={animationDelay}
+>
+    {enableControls && (
+        <div class="particle-controls">
+            <label>
+                パーティクル数: <span id="particle-count">{particleCount}</span>
+            </label>
+            <input type="range" id="particle-slider" min="3000" max="15000" value={particleCount} />
+            
+            <label>
+                光の輪の半径: <span id="inner-radius">{innerRadius}</span>
+            </label>
+            <input type="range" id="inner-radius-slider" min="80" max="300" value={innerRadius} />
+            
+            <label>
+                輪の鋭さ: <span id="ring-sharpness">{ringSharpness}</span>
+            </label>
+            <input type="range" id="sharpness-slider" min="2" max="12" value={ringSharpness} />
+            
+            <label>
+                散らばり強度: <span id="scatter-intensity">{scatterIntensity}</span>
+            </label>
+            <input type="range" id="scatter-slider" min="40" max="150" value={scatterIntensity} />
+        </div>
+    )}
+</div>
+
+<script>
+    import { initParticleRing } from '../scripts/particleRingInit'
+    
+    initParticleRing()
+</script>
+
+<style>
+    .particle-ring-container {
+        background-color: #111;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    .particle-ring-container canvas {
+        display: block;
+    }
+
+    .particle-controls {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 100;
+        color: white;
+        font-size: 12px;
+        font-family: Arial, sans-serif;
+    }
+
+    .particle-controls label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .particle-controls input[type="range"] {
+        width: 150px;
+        margin-bottom: 10px;
+    }
+</style> 
