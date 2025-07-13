@@ -30,79 +30,86 @@ src/styles/
 
 各フォルダーのクラス名には、混在を避けるために接頭辞を使用しています：
 
-| フォルダー | 接頭辞 | 例 |
-|-----------|--------|-----|
-| `_component/` | `c-` | `.c-header`, `.c-button` |
-| `_layout/` | `l-` | `.l-container`, `.l-grid` |
-| `_helper/` | `h-` | `.h-text-center`, `.h-mb-large` |
-| `_js/` | `j-` | `.j-fade-in`, `.j-slide-up` |
-| `_foundation/` | なし | `body`, `h1`, `a` |
-| `_pages/` | なし | `.hero`, `.features` |
-| `_setting/` | なし | 変数とミックスイン |
+| フォルダー     | 接頭辞 | 例                              |
+| -------------- | ------ | ------------------------------- |
+| `_component/`  | `c-`   | `.c-header`, `.c-button`        |
+| `_layout/`     | `l-`   | `.l-container`, `.l-grid`       |
+| `_helper/`     | `h-`   | `.h-text-center`, `.h-mb-large` |
+| `_js/`         | `j-`   | `.j-fade-in`, `.j-slide-up`     |
+| `_foundation/` | なし   | `body`, `h1`, `a`               |
+| `_pages/`      | なし   | `.hero`, `.features`            |
+| `_setting/`    | なし   | 変数とミックスイン              |
 
 ## 🎯 各フォルダーの役割
 
 ### 1. `_setting/`
+
 - **役割**: プロジェクト全体で使用される設定値を定義
 - **接頭辞**: なし
-- **内容**: 
-  - 変数（色、フォント、サイズ、ブレークポイント）
-  - ミックスイン（再利用可能なスタイル）
+- **内容**:
+    - 変数（色、フォント、サイズ、ブレークポイント）
+    - ミックスイン（再利用可能なスタイル）
 - **インポート順**: 最初
 
 ### 2. `_foundation/`
+
 - **役割**: サイト全体の基盤となるスタイル
 - **接頭辞**: なし
 - **内容**:
-  - CSS Reset（モダンなリセット）
-  - 基本的なタイポグラフィ
-  - 全体的なスタイル設定
+    - CSS Reset（モダンなリセット）
+    - 基本的なタイポグラフィ
+    - 全体的なスタイル設定
 - **インポート順**: 設定の後
 
 ### 3. `_layout/`
+
 - **役割**: レイアウト構造に関するスタイル
 - **接頭辞**: `l-`
 - **内容**:
-  - グリッドシステム（`.l-container`, `.l-row`）
-  - コンテナ（`.l-inner`, `.l-section`）
-  - ヘッダー・フッター（`.l-header`, `.l-footer`）
-  - サイドバー（`.l-sidebar`）
+    - グリッドシステム（`.l-container`, `.l-row`）
+    - コンテナ（`.l-inner`, `.l-section`）
+    - ヘッダー・フッター（`.l-header`, `.l-footer`）
+    - サイドバー（`.l-sidebar`）
 - **インポート順**: ファンデーションの後
 
 ### 4. `_component/`
+
 - **役割**: 再利用可能なコンポーネント
 - **接頭辞**: `c-`
 - **内容**:
-  - UIコンポーネント（`.c-header`, `.c-button`）
-  - 独立したスタイル
-  - BEM記法を推奨
+    - UIコンポーネント（`.c-header`, `.c-button`）
+    - 独立したスタイル
+    - BEM記法を推奨
 - **インポート順**: レイアウトの後
 
 ### 5. `_pages/`
+
 - **役割**: ページ固有のスタイル
 - **接頭辞**: なし
 - **内容**:
-  - ホームページ専用スタイル（`.hero`, `.features`）
-  - 各ページの特別なレイアウト
+    - ホームページ専用スタイル（`.hero`, `.features`）
+    - 各ページの特別なレイアウト
 - **インポート順**: コンポーネントの後
 
 ### 6. `_helper/`
+
 - **役割**: 補助的なユーティリティクラス
 - **接頭辞**: `h-`
 - **内容**:
-  - テキスト関連（`.h-text-center`, `.h-text-primary`）
-  - スペーシング（`.h-mb-large`, `.h-p-medium`）
-  - 表示・非表示（`.h-hide`, `.h-show`）
-  - フレックスボックス（`.h-flex-center`）
+    - テキスト関連（`.h-text-center`, `.h-text-primary`）
+    - スペーシング（`.h-mb-large`, `.h-p-medium`）
+    - 表示・非表示（`.h-hide`, `.h-show`）
+    - フレックスボックス（`.h-flex-center`）
 - **インポート順**: ページの後
 
 ### 7. `_js/`
+
 - **役割**: JavaScriptと連携するアニメーション
 - **接頭辞**: `j-`
 - **内容**:
-  - アニメーション定義（`.j-fade-in`, `.j-slide-up`）
-  - トランジション（`.j-transition-fast`）
-  - インタラクション効果（`.j-hover-lift`）
+    - アニメーション定義（`.j-fade-in`, `.j-slide-up`）
+    - トランジション（`.j-transition-fast`）
+    - インタラクション効果（`.j-hover-lift`）
 - **インポート順**: 最後
 
 ## 🔧 使用方法
@@ -116,16 +123,16 @@ src/styles/
 ```scss
 // _component/_button.scss
 .c-button {
-  @include button-primary;
-  
-  &--secondary {
-    @include button-secondary;
-  }
-  
-  &--large {
-    padding: $spacing-large;
-    font-size: 1.125rem;
-  }
+    @include button-primary;
+
+    &--secondary {
+        @include button-secondary;
+    }
+
+    &--large {
+        padding: $spacing-large;
+        font-size: 1.125rem;
+    }
 }
 ```
 
@@ -138,15 +145,15 @@ src/styles/
 ```scss
 // _pages/_about.scss
 .about {
-  &__hero {
-    background: $gradient-primary;
-    padding: $spacing-large * 2 0;
-  }
-  
-  &__content {
-    max-width: 800px;
-    margin: 0 auto;
-  }
+    &__hero {
+        background: $gradient-primary;
+        padding: $spacing-large * 2 0;
+    }
+
+    &__content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
 }
 ```
 
@@ -155,7 +162,7 @@ src/styles/
 ```html
 <!-- 接頭辞付きのヘルパークラス -->
 <div class="h-text-center h-mb-large">
-  <h1 class="h-text-primary">タイトル</h1>
+    <h1 class="h-text-primary">タイトル</h1>
 </div>
 ```
 
@@ -164,10 +171,10 @@ src/styles/
 ```html
 <!-- 接頭辞付きのレイアウトクラス -->
 <div class="l-container">
-  <div class="l-row">
-    <div class="l-col-2">コンテンツ</div>
-    <div class="l-col-2">コンテンツ</div>
-  </div>
+    <div class="l-row">
+        <div class="l-col-2">コンテンツ</div>
+        <div class="l-col-2">コンテンツ</div>
+    </div>
 </div>
 ```
 
@@ -175,26 +182,27 @@ src/styles/
 
 ```html
 <!-- 接頭辞付きのアニメーションクラス -->
-<div class="j-fade-in j-delay-2">
-  アニメーション要素
-</div>
+<div class="j-fade-in j-delay-2">アニメーション要素</div>
 ```
 
 ## 📋 命名規則
 
 ### ファイル名
+
 - すべて小文字
 - 単語区切りはハイフン `-`
 - プライベートファイルはアンダースコア `_` で始める
 
 ### クラス名
+
 - **接頭辞**: フォルダーに応じた接頭辞を使用
 - **BEM記法**: ブロック、エレメント、モディファイアの構造
-  - ブロック: `.c-component`
-  - エレメント: `.c-component__element`
-  - モディファイア: `.c-component--modifier`
+    - ブロック: `.c-component`
+    - エレメント: `.c-component__element`
+    - モディファイア: `.c-component--modifier`
 
 ### 変数名
+
 - ケバブケース: `$primary-color`
 - 意味のある名前: `$button-padding`
 
@@ -214,4 +222,4 @@ src/styles/
 4. コンポーネントは独立性を保つ
 5. ユーティリティクラスは汎用的に使えるものにする
 
-この構造により、効率的で保守性の高いスタイルシート管理が可能になります。 
+この構造により、効率的で保守性の高いスタイルシート管理が可能になります。

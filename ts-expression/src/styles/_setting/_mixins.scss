@@ -1,128 +1,137 @@
 @use 'variables' as *;
 
-
 // clamp関数
-@mixin clampMax($property: 'font-size', $minBp: 1920 , $minVal: 18, $maxVal: 24, $unit: 'px', $important: false) {
-  $vw: calc(#{$minVal} / 1366 * 100vw);
-  
-  @if $important {
-      #{$property}: clamp(#{$minVal}#{$unit}, #{$vw}, #{$maxVal}#{$unit}) !important;
-  } @else {
-      #{$property}: clamp(#{$minVal}#{$unit}, #{$vw}, #{$maxVal}#{$unit});
-  }
-}
+@mixin clampMax(
+    $property: 'font-size',
+    $minBp: 1920,
+    $minVal: 18,
+    $maxVal: 24,
+    $unit: 'px',
+    $important: false
+) {
+    $vw: calc(#{$minVal} / 1366 * 100vw);
 
+    @if $important {
+        #{$property}: clamp(
+            #{$minVal}#{$unit},
+            #{$vw},
+            #{$maxVal}#{$unit}
+        ) !important;
+    } @else {
+        #{$property}: clamp(#{$minVal}#{$unit}, #{$vw}, #{$maxVal}#{$unit});
+    }
+}
 
 // メディアクエリ
 @mixin mediaQuery($size) {
-  @media #{map-get($breakpoints, $size)} {
-      @content;
-  }
+    @media #{map-get($breakpoints, $size)} {
+        @content;
+    }
 }
 
 // ホバー分岐
 @mixin mediaHover() {
-  @media (hover: hover) and (pointer: fine) {
-      @content;
-  }
+    @media (hover: hover) and (pointer: fine) {
+        @content;
+    }
 }
 
 // font-sizeをpx→vwに変換
-@mixin fz-vw($font-size: 13, $viewport: $site-w-pc){
-  $font-size: strip-unit($font-size);
-  $viewport: strip-unit($viewport);
-  font-size: get_vw($font-size, $viewport);
-  @media screen and (min-width: $site-w-pc) {
-      font-size: $font-size * 1px;
-  }
+@mixin fz-vw($font-size: 13, $viewport: $site-w-pc) {
+    $font-size: strip-unit($font-size);
+    $viewport: strip-unit($viewport);
+    font-size: get_vw($font-size, $viewport);
+    @media screen and (min-width: $site-w-pc) {
+        font-size: $font-size * 1px;
+    }
 }
 
 // 10px未満のfont-size指定
-@mixin fz-small($scale: .8, $origin: left top){
-  font-size: 10px;
-  transform: scale($scale);
-  transform-origin: $origin;
-  width: 10 / $scale * 10 * 1%;
+@mixin fz-small($scale: 0.8, $origin: left top) {
+    font-size: 10px;
+    transform: scale($scale);
+    transform-origin: $origin;
+    width: 10 / $scale * 10 * 1%;
 }
 
 // transition
-@mixin transition($property: all, $duration: .2s, $delay: 0, $ease: $ease-1){
-  transition-property: $property;
-  transition-duration: $duration;
-  transition-delay: $delay;
-  transition-timing-function: $ease;
+@mixin transition($property: all, $duration: 0.2s, $delay: 0, $ease: $ease-1) {
+    transition-property: $property;
+    transition-duration: $duration;
+    transition-delay: $delay;
+    transition-timing-function: $ease;
 }
 
 // ボタンのミックスイン
 @mixin button-base {
-  display: flex;
-  align-items: center;
-  padding: 10px 12px;
-  text-decoration: none;
-  transition: color 0.2s;
-  border-radius: $border-radius-button;
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    text-decoration: none;
+    transition: color 0.2s;
+    border-radius: $border-radius-button;
 }
 
 @mixin button-primary {
-  @include button-base;
-  color: $white;
-  background: $gradient-primary;
-  box-shadow: 
-    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-    inset 0 -2px 0 rgba(0, 0, 0, 0.24);
-  
-  &:hover {
-    color: $gray-light;
-    box-shadow: none;
-  }
+    @include button-base;
+    color: $white;
+    background: $gradient-primary;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.24);
+
+    &:hover {
+        color: $gray-light;
+        box-shadow: none;
+    }
 }
 
 @mixin button-secondary {
-  @include button-base;
-  color: $text-color;
-  
-  &:hover {
-    color: $gray-hover;
-  }
+    @include button-base;
+    color: $text-color;
+
+    &:hover {
+        color: $gray-hover;
+    }
 }
 
 // フレックスボックスのミックスイン
 @mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @mixin flex-column {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 // ボックスのミックスイン
 @mixin box-style {
-  padding: $spacing-medium;
-  background: rgba($white, 1);
-  border-radius: $border-radius-large;
-  border: 1px solid $white;
+    padding: $spacing-medium;
+    background: rgba($white, 1);
+    border-radius: $border-radius-large;
+    border: 1px solid $white;
 }
 
 // テキストグラデーションのミックスイン
 @mixin text-gradient($gradient) {
-  background: $gradient;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+    background: $gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 // レスポンシブのミックスイン
 @mixin mobile {
-  @media screen and (max-width: $breakpoint-tablet) {
-    @content;
-  }
+    @media screen and (max-width: $breakpoint-tablet) {
+        @content;
+    }
 }
 
 @mixin mobile-height {
-  @media screen and (max-height: $breakpoint-mobile) {
-    @content;
-  }
-} 
+    @media screen and (max-height: $breakpoint-mobile) {
+        @content;
+    }
+}

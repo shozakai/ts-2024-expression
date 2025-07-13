@@ -4,136 +4,136 @@
 
 // コンテナ
 .l-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 $spacing-medium;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-medium;
 }
 
 .l-container-fluid {
-  width: 100%;
-  padding: 0 $spacing-medium;
+    width: 100%;
+    padding: 0 $spacing-medium;
 }
 
 // グリッドシステム
 .l-row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -#{$spacing-small};
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -#{$spacing-small};
 }
 
 .l-col {
-  flex: 1;
-  padding: 0 $spacing-small;
+    flex: 1;
+    padding: 0 $spacing-small;
 }
 
 .l-col-2 {
-  flex: 0 0 50%;
-  padding: 0 $spacing-small;
+    flex: 0 0 50%;
+    padding: 0 $spacing-small;
 }
 
 .l-col-3 {
-  flex: 0 0 33.333%;
-  padding: 0 $spacing-small;
+    flex: 0 0 33.333%;
+    padding: 0 $spacing-small;
 }
 
 .l-col-4 {
-  flex: 0 0 25%;
-  padding: 0 $spacing-small;
+    flex: 0 0 25%;
+    padding: 0 $spacing-small;
 }
 
 // セクション
 .l-section {
-  padding: $spacing-large 0;
+    padding: $spacing-large 0;
 }
 
 .l-section-large {
-  padding: $spacing-large * 2 0;
+    padding: $spacing-large * 2 0;
 }
 
 // ヘッダー・フッター
 .l-header {
-  background-color: $bg-color;
-  border-bottom: 1px solid $border-color;
-  padding: $spacing-medium 0;
+    background-color: $bg-color;
+    border-bottom: 1px solid $border-color;
+    padding: $spacing-medium 0;
 }
 
 .l-footer {
-  background-color: $bg-gray;
-  border-top: 1px solid $border-color;
-  padding: $spacing-large 0;
-  margin-top: auto;
+    background-color: $bg-gray;
+    border-top: 1px solid $border-color;
+    padding: $spacing-large 0;
+    margin-top: auto;
 }
 
 // インナーラッパー
 .l-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 $spacing-medium;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-medium;
 }
 
 .l-inner-narrow {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 $spacing-medium;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 $spacing-medium;
 }
 
 .l-inner-wide {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 $spacing-medium;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 $spacing-medium;
 }
 
 // サイドバー
 .l-sidebar {
-  width: 300px;
-  background-color: $bg-secondary;
-  padding: $spacing-medium;
-  border-right: 1px solid $border-color;
+    width: 300px;
+    background-color: $bg-secondary;
+    padding: $spacing-medium;
+    border-right: 1px solid $border-color;
 }
 
 .l-main-content {
-  flex: 1;
-  padding: $spacing-medium;
+    flex: 1;
+    padding: $spacing-medium;
 }
 
 .l-sidebar-layout {
-  display: flex;
-  min-height: 100vh;
+    display: flex;
+    min-height: 100vh;
 }
 
 // レスポンシブ
 @media (max-width: $breakpoint-tablet) {
-  .l-container {
-    padding: 0 $spacing-small;
-  }
+    .l-container {
+        padding: 0 $spacing-small;
+    }
 
-  .l-col-2,
-  .l-col-3,
-  .l-col-4 {
-    flex: 0 0 100%;
-  }
+    .l-col-2,
+    .l-col-3,
+    .l-col-4 {
+        flex: 0 0 100%;
+    }
 
-  .l-sidebar-layout {
-    flex-direction: column;
-  }
+    .l-sidebar-layout {
+        flex-direction: column;
+    }
 
-  .l-sidebar {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid $border-color;
-  }
+    .l-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid $border-color;
+    }
 }
 
 @media (max-width: 369px) {
-  .l-container {
-    padding: 0 $spacing-small;
-  }
+    .l-container {
+        padding: 0 $spacing-small;
+    }
 
-  .l-section {
-    padding: $spacing-medium 0;
-  }
+    .l-section {
+        padding: $spacing-medium 0;
+    }
 
-  .l-section-large {
-    padding: $spacing-large 0;
-  }
-} 
+    .l-section-large {
+        padding: $spacing-large 0;
+    }
+}

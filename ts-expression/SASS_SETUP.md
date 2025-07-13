@@ -27,6 +27,7 @@ src/
 ## 🎨 利用可能な機能
 
 ### 1. 変数 (`_variables.scss`)
+
 ```scss
 $primary-color: #3245ff;
 $secondary-color: #bc52ee;
@@ -35,30 +36,32 @@ $font-family-base: Inter, Roboto, sans-serif;
 ```
 
 ### 2. ミックスイン (`_mixins.scss`)
+
 ```scss
 @mixin button-primary {
-  // プライマリボタンのスタイル
+    // プライマリボタンのスタイル
 }
 
 @mixin mobile {
-  @media screen and (max-width: $breakpoint-tablet) {
-    @content;
-  }
+    @media screen and (max-width: $breakpoint-tablet) {
+        @content;
+    }
 }
 ```
 
 ### 3. ネスト機能
+
 ```scss
 .component {
-  padding: $spacing-medium;
-  
-  &:hover {
-    background: $primary-color;
-  }
-  
-  .child-element {
-    color: $text-color;
-  }
+    padding: $spacing-medium;
+
+    &:hover {
+        background: $primary-color;
+    }
+
+    .child-element {
+        color: $text-color;
+    }
 }
 ```
 
@@ -68,18 +71,18 @@ $font-family-base: Inter, Roboto, sans-serif;
 
 ```astro
 <style lang="scss">
-  // 変数とミックスインをインポート
-  @import '../styles/variables';
-  @import '../styles/mixins';
-  
-  .my-component {
-    @include button-primary;
-    color: $primary-color;
-    
-    &:hover {
-      color: $secondary-color;
+    // 変数とミックスインをインポート
+    @import '../styles/variables';
+    @import '../styles/mixins';
+
+    .my-component {
+        @include button-primary;
+        color: $primary-color;
+
+        &:hover {
+            color: $secondary-color;
+        }
     }
-  }
 </style>
 ```
 
@@ -114,4 +117,4 @@ npm run dev
 - **ミックスイン**: 再利用可能なスタイル
 - **ネスト**: 構造化されたCSS
 - **レスポンシブ**: メディアクエリの簡単な管理
-- **保守性**: よりクリーンで組織化されたコード 
+- **保守性**: よりクリーンで組織化されたコード

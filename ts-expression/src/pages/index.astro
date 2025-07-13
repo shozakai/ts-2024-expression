@@ -1,17 +1,28 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import styles from '../styles/_pages/index.module.scss';
-import type { MetaInfo } from '@/types/meta';
+import Layout from '../layouts/Layout.astro'
+import Inner from '../layouts/Inner.astro'
+import styles from '../styles/_pages/index.module.scss'
+import type { MetaInfo } from '@/types/meta'
 
 const meta: MetaInfo = {
     title: 'ホーム - Astro TypeScript Expression',
-    description: 'Astro、TypeScript、TailwindCSS、SASSを使用したモダンなWebサイトのホームページです。',
-    keywords: ['Astro', 'TypeScript', 'TailwindCSS', 'SASS', 'ホーム', 'Web Development'],
+    description:
+        'Astro、TypeScript、TailwindCSS、SASSを使用したモダンなWebサイトのホームページです。',
+    keywords: [
+        'Astro',
+        'TypeScript',
+        'TailwindCSS',
+        'SASS',
+        'ホーム',
+        'Web Development',
+    ],
     type: 'website',
     author: 'Developer',
-};
+}
 ---
 
 <Layout {meta} pageId="home">
-    <h1 class={`${styles.homeVisual}`}>Hello World</h1>
+    <Inner>
+        <h1 class={`${styles.homeVisual}`}>Hello World</h1>
+    </Inner>
 </Layout>

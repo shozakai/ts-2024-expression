@@ -5,163 +5,167 @@
 
 // テキスト関連
 .h-text-center {
-  text-align: center;
+    text-align: center;
 }
 
 .h-text-left {
-  text-align: left;
+    text-align: left;
 }
 
 .h-text-right {
-  text-align: right;
+    text-align: right;
 }
 
 .h-text-gradient {
-  @include text-gradient($gradient-code);
+    @include text-gradient($gradient-code);
 }
 
 .h-text-primary {
-  color: $primary-color;
+    color: $primary-color;
 }
 
 .h-text-secondary {
-  color: $secondary-color;
+    color: $secondary-color;
 }
 
 .h-text-muted {
-  color: $text-muted;
+    color: $text-muted;
 }
 
 .h-text-white {
-  color: $white;
+    color: $white;
 }
 
 // 表示関連
 .h-hide {
-  display: none;
+    display: none;
 }
 
 .h-show {
-  display: block;
+    display: block;
 }
 
 .h-invisible {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 .h-visible {
-  visibility: visible;
+    visibility: visible;
 }
 
 // スペーシング関連
 .h-mb-small {
-  margin-bottom: $spacing-small;
+    margin-bottom: $spacing-small;
 }
 
 .h-mb-medium {
-  margin-bottom: $spacing-medium;
+    margin-bottom: $spacing-medium;
 }
 
 .h-mb-large {
-  margin-bottom: $spacing-large;
+    margin-bottom: $spacing-large;
 }
 
 .h-mt-small {
-  margin-top: $spacing-small;
+    margin-top: $spacing-small;
 }
 
 .h-mt-medium {
-  margin-top: $spacing-medium;
+    margin-top: $spacing-medium;
 }
 
 .h-mt-large {
-  margin-top: $spacing-large;
+    margin-top: $spacing-large;
 }
 
 .h-p-small {
-  padding: $spacing-small;
+    padding: $spacing-small;
 }
 
 .h-p-medium {
-  padding: $spacing-medium;
+    padding: $spacing-medium;
 }
 
 .h-p-large {
-  padding: $spacing-large;
+    padding: $spacing-large;
 }
 
 // フレックスボックス関連
 .h-flex-center {
-  @include flex-center;
+    @include flex-center;
 }
 
 .h-flex-column {
-  @include flex-column;
+    @include flex-column;
 }
 
 .h-flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .h-flex-start {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .h-flex-end {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 // ボタン関連
 .h-button {
-  @include button-primary;
+    @include button-primary;
 }
 
 .h-button-secondary {
-  @include button-secondary;
+    @include button-secondary;
 }
 
 // ボックス関連
 .h-box {
-  @include box-style;
+    @include box-style;
 }
 
 .h-shadow {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .h-shadow-lg {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .h-rounded {
-  border-radius: $border-radius-base;
+    border-radius: $border-radius-base;
 }
 
 .h-rounded-large {
-  border-radius: $border-radius-large;
+    border-radius: $border-radius-large;
 }
 
 // レスポンシブ関連
 .h-mobile-only {
-  @media (min-width: #{$breakpoint-mobile + 1px}) {
-    display: none;
-  }
+    @media (min-width: #{$breakpoint-mobile + 1px}) {
+        display: none;
+    }
 }
 
 .h-tablet-up {
-  @media (max-width: $breakpoint-tablet) {
-    display: none;
-  }
+    @media (max-width: $breakpoint-tablet) {
+        display: none;
+    }
 }
 
 .h-desktop-only {
-  @media (max-width: $breakpoint-tablet) {
-    display: none;
-  }
-} 
+    @media (max-width: $breakpoint-tablet) {
+        display: none;
+    }
+}

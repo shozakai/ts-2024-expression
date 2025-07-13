@@ -15,7 +15,7 @@
 // #container {
 //   font-family: $font-family-base;
 //   height: 100%;
-  
+
 //   @include mobile {
 //     @include flex-column;
 //   }
@@ -31,7 +31,7 @@
 //   align-items: start;
 //   justify-content: center;
 //   padding: $spacing-medium;
-  
+
 //   @include mobile {
 //     display: block;
 //     padding-top: 10%;
@@ -41,7 +41,7 @@
 // h1 {
 //   font-size: 22px;
 //   margin-top: 0.25em;
-  
+
 //   @include mobile {
 //     line-height: 1.5;
 //   }
@@ -57,22 +57,22 @@
 // #links {
 //   display: flex;
 //   gap: $spacing-medium;
-  
+
 //   @include mobile {
 //     flex-wrap: wrap;
 //   }
-  
+
 //   a {
 //     @include button-secondary;
-    
+
 //     svg {
 //       height: 1em;
 //       margin-left: $spacing-small;
 //     }
-    
+
 //     &.button {
 //       @include button-primary;
-      
+
 //       @include mobile {
 //         padding: 14px 18px;
 //       }
@@ -112,19 +112,19 @@
 //   text-decoration: none;
 //   transition: background 0.2s;
 //   backdrop-filter: blur(50px);
-  
+
 //   &:hover {
 //     background: rgba($white, 0.55);
 //   }
-  
+
 //   @include mobile-height {
 //     display: none;
 //   }
-  
+
 //   @include mobile {
 //     right: $spacing-medium;
 //     left: $spacing-medium;
 //     bottom: 2.5rem;
 //     max-width: 100%;
 //   }
-// } 
+// }

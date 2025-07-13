@@ -1,123 +1,151 @@
 ---
-import type { LayoutProps } from '@/types/meta';
-import { defaultMeta } from '@/types/meta';
-// import '../styles/_foundation/_reset.scss';
-import '../styles/main.scss';
-
+import type { LayoutProps } from '@/types/meta'
+import { defaultMeta } from '@/types/meta'
+import '../styles/main.scss'
 
 interface Props extends LayoutProps {
-  title?: string;
-  description?: string;
-  pageId?: string; // ページ固有のID（例：'home', 'about', 'contact'）
+    title?: string
+    description?: string
+    pageId?: string // ページ固有のID（例：'home', 'about', 'contact'）
 }
 
-const { meta, lang = 'ja', class: className = '', title, description, pageId } = Astro.props;
+const {
+    meta,
+    lang = 'ja',
+    class: className = '',
+    title,
+    description,
+    pageId,
+} = Astro.props
 
 // titleとdescriptionの直接的な指定をサポート（後方互換性のため）
 const finalMeta = {
-  ...defaultMeta,
-  ...meta,
-  ...(title && { title }),
-  ...(description && { description }),
-};
+    ...defaultMeta,
+    ...meta,
+    ...(title && { title }),
+    ...(description && { description }),
+}
 
 // URLの設定
-const currentUrl = new URL(Astro.url.pathname, Astro.site);
-const canonicalUrl = finalMeta.canonicalUrl || currentUrl.toString();
+const currentUrl = new URL(Astro.url.pathname, Astro.site)
+const canonicalUrl = finalMeta.canonicalUrl || currentUrl.toString()
 
 // 画像URLの正規化
-const imageUrl = finalMeta.image 
-  ? finalMeta.image.startsWith('http') 
-    ? finalMeta.image 
-    : new URL(finalMeta.image, Astro.site).toString()
-  : null;
+const imageUrl = finalMeta.image
+    ? finalMeta.image.startsWith('http')
+        ? finalMeta.image
+        : new URL(finalMeta.image, Astro.site).toString()
+    : null
 
 // ページ固有のクラス名を生成
-const pageClass = pageId ? `page-${pageId}` : '';
-const bodyClasses = [pageClass, className].filter(Boolean).join(' ');
+const pageClass = pageId ? `page-${pageId}` : ''
+const bodyClasses = [pageClass, className].filter(Boolean).join(' ')
 ---
 
 <!doctype html>
 <html lang={lang}>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    
-    <!-- Primary Meta Tags -->
-    <title>{finalMeta.title}</title>
-    <meta name="title" content={finalMeta.title} />
-    <meta name="description" content={finalMeta.description} />
-    
-    <!-- Additional Meta Tags -->
-    {finalMeta.keywords && (
-      <meta name="keywords" content={finalMeta.keywords.join(', ')} />
-    )}
-    {finalMeta.author && (
-      <meta name="author" content={finalMeta.author} />
-    )}
-    <meta name="robots" content={finalMeta.robots} />
-    <link rel="canonical" href={canonicalUrl} />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content={finalMeta.type} />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={finalMeta.title} />
-    <meta property="og:description" content={finalMeta.description} />
-    <meta property="og:locale" content={finalMeta.locale} />
-    {finalMeta.siteName && (
-      <meta property="og:site_name" content={finalMeta.siteName} />
-    )}
-    {imageUrl && (
-      <>
-        <meta property="og:image" content={imageUrl} />
-        {finalMeta.imageAlt && (
-          <meta property="og:image:alt" content={finalMeta.imageAlt} />
-        )}
-      </>
-    )}
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content={finalMeta.twitterCard} />
-    <meta property="twitter:url" content={canonicalUrl} />
-    <meta property="twitter:title" content={finalMeta.title} />
-    <meta property="twitter:description" content={finalMeta.description} />
-    {imageUrl && (
-      <meta property="twitter:image" content={imageUrl} />
-    )}
-    
-    <!-- Article specific meta tags -->
-    {finalMeta.type === 'article' && (
-      <>
-        {finalMeta.publishedTime && (
-          <meta property="article:published_time" content={finalMeta.publishedTime} />
-        )}
-        {finalMeta.modifiedTime && (
-          <meta property="article:modified_time" content={finalMeta.modifiedTime} />
-        )}
-        {finalMeta.author && (
-          <meta property="article:author" content={finalMeta.author} />
-        )}
-      </>
-    )}
-    
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-      {JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": finalMeta.type === 'article' ? 'Article' : 'WebPage',
-        "name": finalMeta.title,
-        "description": finalMeta.description,
-        "url": canonicalUrl,
-        ...(imageUrl && { "image": imageUrl }),
-        ...(finalMeta.author && { "author": { "@type": "Person", "name": finalMeta.author } }),
-        ...(finalMeta.publishedTime && { "datePublished": finalMeta.publishedTime }),
-        ...(finalMeta.modifiedTime && { "dateModified": finalMeta.modifiedTime }),
-      })}
-    </script>
-  </head>
-  <body class={bodyClasses}>
-    <slot />
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+
+        <!-- Primary Meta Tags -->
+        <title>{finalMeta.title}</title>
+        <meta name="title" content={finalMeta.title} />
+        <meta name="description" content={finalMeta.description} />
+
+        <!-- Additional Meta Tags -->
+        {
+            finalMeta.keywords && (
+                <meta name="keywords" content={finalMeta.keywords.join(', ')} />
+            )
+        }
+        {finalMeta.author && <meta name="author" content={finalMeta.author} />}
+        <meta name="robots" content={finalMeta.robots} />
+        <link rel="canonical" href={canonicalUrl} />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content={finalMeta.type} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={finalMeta.title} />
+        <meta property="og:description" content={finalMeta.description} />
+        <meta property="og:locale" content={finalMeta.locale} />
+        {
+            finalMeta.siteName && (
+                <meta property="og:site_name" content={finalMeta.siteName} />
+            )
+        }
+        {
+            imageUrl && (
+                <>
+                    <meta property="og:image" content={imageUrl} />
+                    {finalMeta.imageAlt && (
+                        <meta
+                            property="og:image:alt"
+                            content={finalMeta.imageAlt}
+                        />
+                    )}
+                </>
+            )
+        }
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content={finalMeta.twitterCard} />
+        <meta property="twitter:url" content={canonicalUrl} />
+        <meta property="twitter:title" content={finalMeta.title} />
+        <meta property="twitter:description" content={finalMeta.description} />
+        {imageUrl && <meta property="twitter:image" content={imageUrl} />}
+
+        <!-- Article specific meta tags -->
+        {
+            finalMeta.type === 'article' && (
+                <>
+                    {finalMeta.publishedTime && (
+                        <meta
+                            property="article:published_time"
+                            content={finalMeta.publishedTime}
+                        />
+                    )}
+                    {finalMeta.modifiedTime && (
+                        <meta
+                            property="article:modified_time"
+                            content={finalMeta.modifiedTime}
+                        />
+                    )}
+                    {finalMeta.author && (
+                        <meta
+                            property="article:author"
+                            content={finalMeta.author}
+                        />
+                    )}
+                </>
+            )
+        }
+
+        <!-- JSON-LD Structured Data -->
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': finalMeta.type === 'article' ? 'Article' : 'WebPage',
+                name: finalMeta.title,
+                description: finalMeta.description,
+                url: canonicalUrl,
+                ...(imageUrl && { image: imageUrl }),
+                ...(finalMeta.author && {
+                    author: { '@type': 'Person', name: finalMeta.author },
+                }),
+                ...(finalMeta.publishedTime && {
+                    datePublished: finalMeta.publishedTime,
+                }),
+                ...(finalMeta.modifiedTime && {
+                    dateModified: finalMeta.modifiedTime,
+                }),
+            })}
+        />
+    </head>
+    <body class={bodyClasses}>
+        <slot />
+    </body>
 </html>

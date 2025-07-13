@@ -17,11 +17,9 @@ $breakpoints: (
     'pc-l': 'screen and (min-width: #{$site-w-pc-l})',
 );
 
-
 // ---------- default ----------
 $color-black: #111;
 $color-white: #fff;
-
 
 $primary-color: #3245ff;
 $secondary-color: #bc52ee;
@@ -42,8 +40,12 @@ $border-light: #f3f4f6;
 $border-dark: #d1d5db;
 
 // フォント変数
-$font-family-base: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
-$font-family-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+$font-family-base:
+    Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial,
+    sans-serif;
+$font-family-mono:
+    ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
+    'DejaVu Sans Mono', monospace;
 
 // サイズ変数
 $border-radius-base: 8px;
@@ -58,7 +60,16 @@ $breakpoint-tablet: 768px;
 $breakpoint-mobile: 368px;
 
 // グラデーション
-$gradient-primary: linear-gradient(83.21deg, $primary-color 0%, $secondary-color 100%);
+$gradient-primary: linear-gradient(
+    83.21deg,
+    $primary-color 0%,
+    $secondary-color 100%
+);
 $gradient-code: linear-gradient(14deg, #d83333 0%, #f041ff 100%);
 $gradient-code-bg: linear-gradient(66.77deg, #f3cddd 0%, #f5cee7 100%);
-$gradient-code-border: linear-gradient(155deg, #d83333 0%, #f041ff 18%, #f5cee7 45%); 
+$gradient-code-border: linear-gradient(
+    155deg,
+    #d83333 0%,
+    #f041ff 18%,
+    #f5cee7 45%
+);
