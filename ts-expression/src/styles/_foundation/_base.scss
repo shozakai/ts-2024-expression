@@ -31,3 +31,12 @@ img {
     width: 100%;
     height: auto;
 }
+
+::-moz-selection {
+    background: $color-white;
+    color: $color-black;
+}
+::selection {
+    background: $color-white;
+    color: $color-black;
+}
