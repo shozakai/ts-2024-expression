@@ -1,0 +1,1150 @@
+---
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+import Layout from '../layouts/Layout.astro'
+import Inner from '../layouts/Inner.astro'
+import Column from '../layouts/Column.astro'
+import Line from '../components/Line.astro'
+import Text from '../components/Text.astro'
+import styles from '../styles/_pages/exploration.module.scss'
+import type { MetaInfo } from '@/types/meta'
+
+
+
+const meta: MetaInfo = {
+    title: 'WORK',
+    description:
+        '',
+    keywords: [],
+    type: 'website',
+    author: 'Developer',
+}
+
+gsap.registerPlugin(ScrollTrigger);
+---
+
+<Layout {meta} pageId="exploration">
+    <section class={styles.explorationVisual}>
+        <Inner>
+            <Column>
+                <div data-col-span="3">
+                    <p>20 Results</p>
+                    <Line type="vertical" delay={0.1} />
+                </div>
+                <div data-col-span="6">
+                    <h1 class="text-text-h2 font-graphyne relative z-10">
+                        <Text text="EXPLORATION" tag="span" ease="power4.out" duration={0.8} delay={0.6}/>
+                    </h1>
+                </div>
+            </Column>
+        </Inner>
+        <div class={styles.explorationVisualBg} data-exploration-visual-bg></div>
+    </section>
+    
+    <div class={`${styles.explorationVisualBlock} h-[40px]`} data-exploration-visual-block></div>
+    <div class={`${styles.explorationVisualBlock} h-[20px]`} data-exploration-visual-block></div>
+    <div class={`${styles.explorationVisualBlock} h-[10px]`} data-exploration-visual-block></div>
+    <div class={`${styles.explorationVisualBlock} h-[5px]`} data-exploration-visual-block></div>
+    <div class={`${styles.explorationVisualBlock} h-[2px]`} data-exploration-visual-block></div>
+
+
+    <section class={`${styles.explorationContent} mt-[56px]`}>
+        <section class={styles.explorationCol}>
+            <Inner>
+                <Column>
+                    <div data-col-span="4">
+                        <canvas id="plant-canvas" class={styles.plantCanvas}></canvas>
+                    </div>
+                </Column>
+            </Inner>
+        </section>
+        <section class={`${styles.explorationCol}`}>
+            <Inner>
+                <Line type="horizontal" class="mb-[48px]" variant="black" />
+                <Column>
+                    <div data-col-span="3"></div>
+                    <div data-col-span="4">
+                        <canvas id="fiber-canvas" class={styles.fiberCanvas}></canvas>
+                    </div>
+                </Column>
+            </Inner>
+        </section>
+        <section class={`${styles.explorationCol}`}>
+            <Inner>
+                <Line type="horizontal" class="mb-[48px]" variant="black" />
+                <Column>
+                    <div data-col-span="6"></div>
+                    <div data-col-span="3">
+                        <canvas id="eye-canvas" class={styles.eyeCanvas}></canvas>
+                    </div>
+                </Column>
+            </Inner>
+        </section>
+    </section>
+
+
+</Layout>
+
+<script>
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+// workVisualBgのclip-pathアニメーション
+gsap.to('[data-exploration-visual-bg]', {
+    clipPath: 'inset(0% 0% 0% 0%)',
+    duration: .5,
+    // ease: 'power4.out',
+    ease: 'liner',
+    onComplete: () => {
+        // gsap.to('[data-work-visual-block]', {
+        //     autoAlpha: 1,
+        //     duration: 1,
+        //     ease: 'power3.out',
+        // })
+        const explorationVisualBlocks = gsap.utils.toArray('[data-exploration-visual-block]') as HTMLElement[]
+        explorationVisualBlocks.forEach((block: HTMLElement, index: number) => {
+            gsap.to(block, {
+                delay: 0.1 * index,
+                autoAlpha: 1,
+                duration: .7,
+                clipPath: 'inset(0% 0% 0% 0%)',
+                ease: 'power3.out',
+            })
+        })
+    },
+    // delay: 0.3,
+})
+
+
+// 画像のScrollTriggerアニメーション
+const explorationImages = gsap.utils.toArray('.exploration-image') as HTMLElement[]
+explorationImages.forEach((img: HTMLElement, index: number) => {
+    gsap.to(img, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 1,
+        ease: 'power3.out',
+        // delay: index * 0.1,
+        scrollTrigger: {
+            trigger: img,
+            start: 'top 100%',
+            end: 'bottom 15%',
+            toggleActions: 'play none none none',
+        },
+    })
+})
+
+// Canvasのフェードインアニメーション
+
+const canvas = gsap.utils.toArray('canvas') as HTMLElement[]
+canvas.forEach((canvas: HTMLElement, index: number) => {
+    gsap.to(canvas, {
+        autoAlpha: 1,
+        duration: 1.5,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: canvas,
+            start: 'top 85%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none none',
+        },
+    })
+})
+</script>
+
+<script>
+import * as THREE from 'three'
+
+let scene: THREE.Scene, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer
+let animationSpeed = 1
+let particleCount = 1500
+let branchCount = 8
+let time = 0
+
+function initPlantAnimation() {
+    const canvas = document.getElementById('plant-canvas') as HTMLCanvasElement
+    if (!canvas) return
+
+    // Scene setup
+    scene = new THREE.Scene()
+    
+    // 親要素のサイズを基準にキャンバスサイズを決定
+    const parent = canvas.parentElement
+    if (!parent) return
+    
+    const parentRect = parent.getBoundingClientRect()
+    const size = Math.min(parentRect.width, 400) // 最大400pxまで
+    
+    // キャンバスの描画解像度を設定
+    const dpr = window.devicePixelRatio || 1
+    canvas.width = size * dpr
+    canvas.height = size * dpr
+    
+    // CSSサイズを設定（正方形に）
+    canvas.style.width = size + 'px'
+    canvas.style.height = size + 'px'
+    
+    camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000)
+    renderer = new THREE.WebGLRenderer({ 
+        canvas: canvas,
+        antialias: true
+    })
+    renderer.setSize(size, size, false)
+    renderer.setPixelRatio(dpr)
+    renderer.setClearColor(0x0a0a0a)
+
+    // Camera position
+    camera.position.set(0, 0, 15)
+    camera.lookAt(0, 0, 0)
+
+    // 簡単なマウスコントロール
+    setupPlantMouseControls()
+
+    createPlantStructure()
+    animate()
+}
+
+function createPlantStructure() {
+    // Clear existing objects
+    while(scene.children.length > 0) {
+        const child = scene.children[0]
+        if (child) {
+            scene.remove(child)
+        }
+    }
+
+    // Create stem particles
+    createStem()
+    
+    // Create branch particles
+    createBranches()
+    
+    // Create seed particles
+    createSeeds()
+}
+
+function createStem() {
+    const stemGeometry = new THREE.BufferGeometry()
+    const stemPositions = new Float32Array(100 * 3)
+    const stemColors = new Float32Array(100 * 3)
+    
+    for (let i = 0; i < 100; i++) {
+        // Create a slight curve in the stem
+        const t = i / 99
+        const x = Math.sin(t * Math.PI * 0.2) * 0.3
+        const y = -8 + t * 10
+        const z = 0
+        
+        stemPositions[i * 3] = x
+        stemPositions[i * 3 + 1] = y
+        stemPositions[i * 3 + 2] = z
+        
+        // Brownish color for stem
+        stemColors[i * 3] = 0.4 + Math.random() * 0.2
+        stemColors[i * 3 + 1] = 0.3 + Math.random() * 0.1
+        stemColors[i * 3 + 2] = 0.2 + Math.random() * 0.1
+    }
+    
+    stemGeometry.setAttribute('position', new THREE.BufferAttribute(stemPositions, 3))
+    stemGeometry.setAttribute('color', new THREE.BufferAttribute(stemColors, 3))
+    
+    const stemMaterial = new THREE.PointsMaterial({
+        size: 0.05,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8
+    })
+    
+    const stemPoints = new THREE.Points(stemGeometry, stemMaterial)
+    scene.add(stemPoints)
+}
+
+function createBranches() {
+    const branchGeometry = new THREE.BufferGeometry()
+    const branchPositions = new Float32Array(particleCount * 3)
+    const branchColors = new Float32Array(particleCount * 3)
+    
+    let index = 0
+    
+    for (let branch = 0; branch < branchCount; branch++) {
+        const branchAngle = (branch / branchCount) * Math.PI * 2
+        const branchHeight = -2 + (branch / branchCount) * 4
+        const branchLength = 2 + Math.random() * 3
+        
+        const pointsPerBranch = Math.floor(particleCount / branchCount)
+        
+        for (let i = 0; i < pointsPerBranch && index < particleCount; i++) {
+            const t = i / pointsPerBranch
+            
+            // Create curved branch using sine and cosine
+            const radius = t * branchLength
+            const curvature = Math.sin(t * Math.PI * 2) * 0.5
+            const x = Math.cos(branchAngle) * radius + curvature
+            const y = branchHeight + Math.sin(t * Math.PI) * 1.5
+            const z = Math.sin(branchAngle) * radius + curvature * 0.5
+            
+            branchPositions[index * 3] = x
+            branchPositions[index * 3 + 1] = y
+            branchPositions[index * 3 + 2] = z
+            
+            // Green-brown color for branches
+            branchColors[index * 3] = 0.3 + Math.random() * 0.2
+            branchColors[index * 3 + 1] = 0.5 + Math.random() * 0.3
+            branchColors[index * 3 + 2] = 0.2 + Math.random() * 0.2
+            
+            index++
+        }
+    }
+    
+    branchGeometry.setAttribute('position', new THREE.BufferAttribute(branchPositions, 3))
+    branchGeometry.setAttribute('color', new THREE.BufferAttribute(branchColors, 3))
+    
+    const branchMaterial = new THREE.PointsMaterial({
+        size: 0.02,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.6
+    })
+    
+    const branchPoints = new THREE.Points(branchGeometry, branchMaterial)
+    scene.add(branchPoints)
+}
+
+function createSeeds() {
+    // Create seed spheres at the end of branches
+    for (let branch = 0; branch < branchCount; branch++) {
+        const branchAngle = (branch / branchCount) * Math.PI * 2
+        const branchHeight = -2 + (branch / branchCount) * 4
+        const branchLength = 2 + Math.random() * 3
+        
+        // Create multiple seeds per branch
+        const seedsPerBranch = 3 + Math.floor(Math.random() * 4)
+        
+        for (let s = 0; s < seedsPerBranch; s++) {
+            const t = 0.6 + (s / seedsPerBranch) * 0.4
+            const radius = t * branchLength
+            const curvature = Math.sin(t * Math.PI * 2) * 0.5
+            
+            const x = Math.cos(branchAngle) * radius + curvature
+            const y = branchHeight + Math.sin(t * Math.PI) * 1.5
+            const z = Math.sin(branchAngle) * radius + curvature * 0.5
+            
+            // Create seed sphere
+            const seedGeometry = new THREE.SphereGeometry(0.15 + Math.random() * 0.1, 8, 6)
+            const seedMaterial = new THREE.MeshBasicMaterial({
+                color: new THREE.Color(0.8 + Math.random() * 0.2, 0.7 + Math.random() * 0.2, 0.6 + Math.random() * 0.2),
+                transparent: true,
+                opacity: 0.9
+            })
+            
+            const seedMesh = new THREE.Mesh(seedGeometry, seedMaterial)
+            seedMesh.position.set(x, y, z)
+            scene.add(seedMesh)
+            
+            // Add small particles around seeds
+            createSeedParticles(x, y, z)
+        }
+    }
+}
+
+function createSeedParticles(centerX: number, centerY: number, centerZ: number) {
+    const particleGeometry = new THREE.BufferGeometry()
+    const particlePositions = new Float32Array(50 * 3)
+    const particleColors = new Float32Array(50 * 3)
+    
+    for (let i = 0; i < 50; i++) {
+        const angle = (i / 50) * Math.PI * 2
+        const radius = 0.3 + Math.random() * 0.2
+        const height = (Math.random() - 0.5) * 0.4
+        
+        particlePositions[i * 3] = centerX + Math.cos(angle) * radius
+        particlePositions[i * 3 + 1] = centerY + height
+        particlePositions[i * 3 + 2] = centerZ + Math.sin(angle) * radius
+        
+        // Light colors for seed particles
+        particleColors[i * 3] = 0.9 + Math.random() * 0.1
+        particleColors[i * 3 + 1] = 0.8 + Math.random() * 0.2
+        particleColors[i * 3 + 2] = 0.7 + Math.random() * 0.3
+    }
+    
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
+    particleGeometry.setAttribute('color', new THREE.BufferAttribute(particleColors, 3))
+    
+    const particleMaterial = new THREE.PointsMaterial({
+        size: 0.03,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.7
+    })
+    
+    const particles = new THREE.Points(particleGeometry, particleMaterial)
+    scene.add(particles)
+}
+
+function setupPlantMouseControls() {
+    let mouseX = 0
+    let mouseY = 0
+    let targetRotationX = 0
+    let targetRotationY = 0
+    let currentRotationX = 0
+    let currentRotationY = 0
+    
+    const canvas = document.getElementById('plant-canvas') as HTMLCanvasElement
+    if (!canvas) return
+    
+    canvas.addEventListener('mousemove', (event) => {
+        const rect = canvas.getBoundingClientRect()
+        mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1
+        mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1
+        
+        targetRotationX = mouseY * 0.3
+        targetRotationY = mouseX * 0.3
+    })
+    
+    function updatePlantCamera() {
+        currentRotationX += (targetRotationX - currentRotationX) * 0.05
+        currentRotationY += (targetRotationY - currentRotationY) * 0.05
+        
+        camera.position.x = Math.sin(currentRotationY) * 15
+        camera.position.z = Math.cos(currentRotationY) * 15
+        camera.position.y = currentRotationX * 10
+        
+        camera.lookAt(0, 0, 0)
+    }
+    
+    // グローバルに参照できるようにする
+    ;(window as any).updatePlantCamera = updatePlantCamera
+}
+
+function animate() {
+    requestAnimationFrame(animate)
+    
+    time += 0.01 * animationSpeed
+    
+    // カメラの更新
+    if ((window as any).updatePlantCamera) {
+        ;(window as any).updatePlantCamera()
+    }
+    
+    // Gentle rotation
+    scene.rotation.y = Math.sin(time * 0.2) * 0.1
+    
+    // Animate particle opacity
+    scene.children.forEach((child, index) => {
+        if (child instanceof THREE.Points || child instanceof THREE.Mesh) {
+            if (child.material && 'opacity' in child.material) {
+                child.material.opacity = 0.5 + Math.sin(time + index * 0.1) * 0.3
+            }
+        }
+    })
+    
+    renderer.render(scene, camera)
+}
+
+// Handle window resize for canvas
+let resizeTimeout: number | null = null
+
+function onWindowResize() {
+    // デバウンス処理でパフォーマンス向上
+    if (resizeTimeout) {
+        clearTimeout(resizeTimeout)
+    }
+    
+    resizeTimeout = window.setTimeout(() => {
+        const canvas = document.getElementById('plant-canvas') as HTMLCanvasElement
+        if (!canvas || !renderer || !camera) return
+        
+        // 親要素のサイズを基準にキャンバスサイズを決定
+        const parent = canvas.parentElement
+        if (!parent) return
+        
+        const parentRect = parent.getBoundingClientRect()
+        const newSize = Math.min(parentRect.width, 400) // 最大400pxまで
+        
+        console.log('Canvas resize:', {
+            parentWidth: parentRect.width,
+            newSize: newSize,
+            currentCanvasSize: canvas.style.width
+        })
+        
+        // キャンバスの描画解像度を設定
+        const dpr = window.devicePixelRatio || 1
+        canvas.width = newSize * dpr
+        canvas.height = newSize * dpr
+        
+        // CSSサイズを設定（正方形に）
+        canvas.style.width = newSize + 'px'
+        canvas.style.height = newSize + 'px'
+        
+        // レンダラーのサイズを更新
+        renderer.setSize(newSize, newSize, false) // 3番目の引数でCSSサイズ更新を防ぐ
+        renderer.setPixelRatio(dpr)
+        
+        // カメラの設定を更新
+        camera.aspect = 1
+        camera.updateProjectionMatrix()
+        
+        resizeTimeout = null
+    }, 100) // 100msのデバウンス
+}
+
+// Initialize plant animation after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initPlantAnimation()
+    // 初期化後に一度リサイズ処理を実行して確実にサイズを合わせる
+    setTimeout(() => {
+        onWindowResize()
+    }, 200)
+})
+
+window.addEventListener('resize', onWindowResize)
+</script>
+
+<script>
+import * as THREE from 'three'
+
+// 光ファイバーアニメーション用の変数
+let fiberScene: THREE.Scene, fiberCamera: THREE.PerspectiveCamera, fiberRenderer: THREE.WebGLRenderer
+let fiberSystems: FiberSystem[] = []
+let fiberAnimationId: number | null = null
+
+// パラメータ
+let fiberParams = {
+    fiberCount: 40,
+    swayStrength: 1,
+    speed: 0.8,
+    spread: 1.0
+}
+
+// 光ファイバーシステムクラス
+class FiberSystem {
+    angle: number
+    height: number
+    baseAngle: number
+    time: number
+    swayFrequency: number
+    swayAmplitude: number
+    material: THREE.LineBasicMaterial
+    geometry: THREE.BufferGeometry
+    line: THREE.Line
+    particleGeometry: THREE.BufferGeometry
+    particleMaterial: THREE.PointsMaterial
+    particles: Array<{progress: number, speed: number, brightness: number, phase: number}>
+    points: THREE.Points
+
+    constructor(angle: number, height: number) {
+        this.angle = angle
+        this.height = height
+        this.baseAngle = angle
+        this.time = Math.random() * Math.PI * 2
+        this.swayFrequency = 0.5 + Math.random() * 0.5
+        this.swayAmplitude = 0.02 + Math.random() * 0.03
+        
+        // 線の材質
+        this.material = new THREE.LineBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.8
+        })
+        
+        // 線の形状
+        this.geometry = new THREE.BufferGeometry()
+        this.updateGeometry()
+        
+        this.line = new THREE.Line(this.geometry, this.material)
+        fiberScene.add(this.line)
+        
+        // 光る粒子（線の先端付近）
+        this.particleGeometry = new THREE.BufferGeometry()
+        this.particleMaterial = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 0.05,
+            transparent: true,
+            opacity: 1.0,
+            blending: THREE.AdditiveBlending,
+            map: this.createCircleTexture(),
+            alphaTest: 0.1
+        })
+        
+        this.particles = []
+        this.initParticles()
+        this.updateParticles()
+        
+        this.points = new THREE.Points(this.particleGeometry, this.particleMaterial)
+        fiberScene.add(this.points)
+    }
+    
+    createCircleTexture(): THREE.CanvasTexture {
+        const canvas = document.createElement('canvas')
+        canvas.width = 64
+        canvas.height = 64
+        const context = canvas.getContext('2d')
+        
+        if (!context) {
+            throw new Error('Cannot get 2D context')
+        }
+        
+        // 円形のグラデーション
+        const gradient = context.createRadialGradient(32, 32, 0, 32, 32, 32)
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)')
+        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.5)')
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
+        
+        context.fillStyle = gradient
+        context.fillRect(0, 0, 64, 64)
+        
+        const texture = new THREE.CanvasTexture(canvas)
+        texture.needsUpdate = true
+        return texture
+    }
+    
+    initParticles() {
+        this.particles = []
+        // 各ファイバーに1-3個の光る粒子
+        const particleCount = Math.floor(1 + Math.random() * 3)
+        for (let i = 0; i < particleCount; i++) {
+            this.particles.push({
+                progress: 0.7 + Math.random() * 0.3, // 上部に配置
+                speed: 0.3 + Math.random() * 0.7,
+                brightness: 0.8 + Math.random() * 0.2,
+                phase: Math.random() * Math.PI * 2
+            })
+        }
+    }
+    
+    updateGeometry() {
+        const positions = []
+        const segments = 50 // 線の滑らかさ
+        
+        for (let i = 0; i <= segments; i++) {
+            const progress = i / segments
+            const pos = this.getPositionAtProgress(progress)
+            positions.push(pos.x, pos.y, pos.z)
+        }
+        
+        this.geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
+    }
+    
+    updateParticles() {
+        const positions = []
+        const sizes = []
+        
+        for (let particle of this.particles) {
+            const pos = this.getPositionAtProgress(particle.progress)
+            positions.push(pos.x, pos.y, pos.z)
+            
+            // 明滅効果
+            const flicker = Math.sin(this.time * 3 + particle.phase) * 0.3 + 0.7
+            sizes.push(particle.brightness * flicker)
+        }
+        
+        this.particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
+        this.particleGeometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1))
+    }
+    
+    getPositionAtProgress(progress: number): THREE.Vector3 {
+        // 根元から放射状に広がる軌道
+        const baseRadius = 0.08
+        const topRadius = 0.6
+        const radius = baseRadius + (topRadius - baseRadius) * progress
+        
+        // 高さの計算（なめらかな曲線）
+        const y = progress * this.height - 1
+        
+        // より緩やかなゆらゆらとした動き
+        const swayX = Math.sin(this.time * this.swayFrequency * 0.7 + progress * 1.5) * this.swayAmplitude * Math.pow(progress, 2) * fiberParams.swayStrength
+        const swayZ = Math.cos(this.time * this.swayFrequency * 0.8 + progress * 1.2) * this.swayAmplitude * Math.pow(progress, 2) * fiberParams.swayStrength
+        
+        // さらに緩やかな追加の湾曲
+        const gentleCurveX = Math.sin(this.time * 0.3 + this.baseAngle + progress * 0.8) * 0.015 * progress * fiberParams.swayStrength
+        const gentleCurveZ = Math.cos(this.time * 0.4 + this.baseAngle + progress * 0.6) * 0.015 * progress * fiberParams.swayStrength
+        
+        // 基本の角度に少し螺旋を加える
+        const spiralFactor = progress * 0.2
+        const currentAngle = this.baseAngle + spiralFactor
+        
+        // 拡散の計算
+        const spreadFactor = Math.pow(progress, 1.2) * fiberParams.spread
+        
+        return new THREE.Vector3(
+            (Math.cos(currentAngle) * radius * spreadFactor) + swayX + gentleCurveX,
+            y,
+            (Math.sin(currentAngle) * radius * spreadFactor) + swayZ + gentleCurveZ
+        )
+    }
+    
+    update() {
+        this.time += 0.015 // 少し遅く
+        
+        // 線の形状を更新
+        this.updateGeometry()
+        
+        // 粒子を更新
+        for (let particle of this.particles) {
+            particle.progress += particle.speed * fiberParams.speed * 0.005
+            
+            if (particle.progress > 1) {
+                particle.progress = 0.7 + Math.random() * 0.1
+                particle.speed = 0.3 + Math.random() * 0.7
+                particle.phase = Math.random() * Math.PI * 2
+            }
+        }
+        
+        this.updateParticles()
+    }
+    
+    dispose() {
+        fiberScene.remove(this.line)
+        fiberScene.remove(this.points)
+        this.geometry.dispose()
+        this.material.dispose()
+        this.particleGeometry.dispose()
+        this.particleMaterial.dispose()
+    }
+}
+
+function initFiberAnimation() {
+    const canvas = document.getElementById('fiber-canvas') as HTMLCanvasElement
+    if (!canvas) return
+
+    // Scene setup
+    fiberScene = new THREE.Scene()
+    
+    // 親要素のサイズを基準にキャンバスサイズを決定
+    const parent = canvas.parentElement
+    if (!parent) return
+    
+    const parentRect = parent.getBoundingClientRect()
+    const size = Math.min(parentRect.width, 400) // 最大400pxまで
+    
+    // キャンバスの描画解像度を設定
+    const dpr = window.devicePixelRatio || 1
+    canvas.width = size * dpr
+    canvas.height = size * dpr
+    
+    // CSSサイズを設定（正方形に）
+    canvas.style.width = size + 'px'
+    canvas.style.height = size + 'px'
+    
+    fiberCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000)
+    fiberRenderer = new THREE.WebGLRenderer({ 
+        canvas: canvas,
+        antialias: true
+    })
+    fiberRenderer.setSize(size, size, false)
+    fiberRenderer.setPixelRatio(dpr)
+    fiberRenderer.setClearColor(0x000000)
+
+    // Camera position
+    fiberCamera.position.set(0, 0, 3)
+    fiberCamera.lookAt(0, 0, 0)
+
+    // 簡単なマウスコントロール
+    setupFiberMouseControls()
+
+    // ファイバーシステムの作成
+    createFiberSystems()
+    
+    // アニメーションループ
+    animateFiber()
+}
+
+function createFiberSystems() {
+    // 既存のシステムを削除
+    fiberSystems.forEach(system => system.dispose())
+    fiberSystems = []
+    
+    // 新しいシステムを作成
+    for (let i = 0; i < fiberParams.fiberCount; i++) {
+        const angle = (i / fiberParams.fiberCount) * Math.PI * 2
+        const height = 1.5 + Math.random() * 0.5
+        fiberSystems.push(new FiberSystem(angle, height))
+    }
+}
+
+function setupFiberMouseControls() {
+    let mouseX = 0
+    let mouseY = 0
+    let targetRotationX = 0
+    let targetRotationY = 0
+    let currentRotationX = 0
+    let currentRotationY = 0
+    
+    const canvas = document.getElementById('fiber-canvas') as HTMLCanvasElement
+    if (!canvas) return
+    
+    canvas.addEventListener('mousemove', (event) => {
+        const rect = canvas.getBoundingClientRect()
+        mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1
+        mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1
+        
+        targetRotationX = mouseY * 0.3
+        targetRotationY = mouseX * 0.3
+    })
+    
+    function updateFiberCamera() {
+        currentRotationX += (targetRotationX - currentRotationX) * 0.05
+        currentRotationY += (targetRotationY - currentRotationY) * 0.05
+        
+        fiberCamera.position.x = Math.sin(currentRotationY) * 3
+        fiberCamera.position.z = Math.cos(currentRotationY) * 3
+        fiberCamera.position.y = currentRotationX * 2
+        
+        fiberCamera.lookAt(0, 0, 0)
+    }
+    
+    // グローバルに参照できるようにする
+    ;(window as any).updateFiberCamera = updateFiberCamera
+}
+
+function animateFiber() {
+    fiberAnimationId = requestAnimationFrame(animateFiber)
+    
+    // カメラの更新
+    if ((window as any).updateFiberCamera) {
+        ;(window as any).updateFiberCamera()
+    }
+    
+    // ファイバーシステムの更新
+    fiberSystems.forEach(system => system.update())
+    
+    // レンダリング
+    fiberRenderer.render(fiberScene, fiberCamera)
+}
+
+// Handle window resize for fiber canvas
+let fiberResizeTimeout: number | null = null
+
+function onFiberWindowResize() {
+    // デバウンス処理でパフォーマンス向上
+    if (fiberResizeTimeout) {
+        clearTimeout(fiberResizeTimeout)
+    }
+    
+    fiberResizeTimeout = window.setTimeout(() => {
+        const canvas = document.getElementById('fiber-canvas') as HTMLCanvasElement
+        if (!canvas || !fiberRenderer || !fiberCamera) return
+        
+        // 親要素のサイズを基準にキャンバスサイズを決定
+        const parent = canvas.parentElement
+        if (!parent) return
+        
+        const parentRect = parent.getBoundingClientRect()
+        const newSize = Math.min(parentRect.width, 400) // 最大400pxまで
+        
+        console.log('Fiber canvas resize:', {
+            parentWidth: parentRect.width,
+            newSize: newSize,
+            currentCanvasSize: canvas.style.width
+        })
+        
+        // キャンバスの描画解像度を設定
+        const dpr = window.devicePixelRatio || 1
+        canvas.width = newSize * dpr
+        canvas.height = newSize * dpr
+        
+        // CSSサイズを設定（正方形に）
+        canvas.style.width = newSize + 'px'
+        canvas.style.height = newSize + 'px'
+        
+        // レンダラーのサイズを更新
+        fiberRenderer.setSize(newSize, newSize, false) // 3番目の引数でCSSサイズ更新を防ぐ
+        fiberRenderer.setPixelRatio(dpr)
+        
+        // カメラの設定を更新
+        fiberCamera.aspect = 1
+        fiberCamera.updateProjectionMatrix()
+        
+        fiberResizeTimeout = null
+    }, 100) // 100msのデバウンス
+}
+
+// Initialize fiber animation after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        initFiberAnimation()
+        // 初期化後に一度リサイズ処理を実行して確実にサイズを合わせる
+        setTimeout(() => {
+            onFiberWindowResize()
+        }, 200)
+    }, 300) // 植物アニメーションの後に初期化
+})
+
+window.addEventListener('resize', onFiberWindowResize)
+</script>
+
+<script>
+import * as THREE from 'three'
+
+// パーティクルアイアニメーション用の変数
+let eyeScene: THREE.Scene, eyeCamera: THREE.PerspectiveCamera, eyeRenderer: THREE.WebGLRenderer
+let eyeParticles: THREE.Points, eyeGeometry: THREE.BufferGeometry, eyeMaterial: THREE.ShaderMaterial
+let eyeAnimationEnabled = true
+let eyeColorIndex = 0
+let eyeMouseX = 0, eyeMouseY = 0
+let eyeTime = 0
+let eyeAnimationId: number | null = null
+
+const eyeColors = [
+    [0x4a90e2, 0x2c3e50, 0xf8f8ff], // 青い目
+    [0x52c41a, 0x2c3e50, 0xf8f8ff], // 緑の目
+    [0x8b4513, 0x2c3e50, 0xf8f8ff], // 茶色の目
+    [0x9b59b6, 0x2c3e50, 0xf8f8ff], // 紫の目
+]
+
+function initEyeAnimation() {
+    const canvas = document.getElementById('eye-canvas') as HTMLCanvasElement
+    if (!canvas) return
+
+    // Scene setup
+    eyeScene = new THREE.Scene()
+    
+    // 親要素のサイズを基準にキャンバスサイズを決定
+    const parent = canvas.parentElement
+    if (!parent) return
+    
+    const parentRect = parent.getBoundingClientRect()
+    const size = Math.min(parentRect.width, 400) // 最大400pxまで
+    
+    // キャンバスの描画解像度を設定
+    const dpr = window.devicePixelRatio || 1
+    canvas.width = size * dpr
+    canvas.height = size * dpr
+    
+    // CSSサイズを設定（正方形に）
+    canvas.style.width = size + 'px'
+    canvas.style.height = size + 'px'
+    
+    eyeCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000)
+    eyeRenderer = new THREE.WebGLRenderer({ 
+        canvas: canvas,
+        antialias: true
+    })
+    eyeRenderer.setSize(size, size, false)
+    eyeRenderer.setPixelRatio(dpr)
+    eyeRenderer.setClearColor(0x000000)
+
+    // Camera position
+    eyeCamera.position.z = 5
+
+    // パーティクルシステム作成
+    createEye()
+
+    // ライト追加
+    const ambientLight = new THREE.AmbientLight(0x404040, 0.4)
+    eyeScene.add(ambientLight)
+
+    const pointLight = new THREE.PointLight(0xffffff, 1, 100)
+    pointLight.position.set(0, 0, 10)
+    eyeScene.add(pointLight)
+
+    // マウス追従機能
+    setupEyeMouseControls()
+    
+    // アニメーションループ
+    animateEye()
+}
+
+function createEye() {
+    const particleCount = 3000
+    const positions = new Float32Array(particleCount * 3)
+    const colors_array = new Float32Array(particleCount * 3)
+    const sizes = new Float32Array(particleCount)
+    
+    const currentColors = eyeColors[eyeColorIndex] || eyeColors[0]
+    
+    for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3
+        
+        // 球面座標でパーティクルを配置
+        const radius = Math.random() * 2
+        const theta = Math.random() * Math.PI * 2
+        const phi = Math.random() * Math.PI
+        
+        // 球面座標から直交座標に変換
+        const x = radius * Math.sin(phi) * Math.cos(theta)
+        const y = radius * Math.sin(phi) * Math.sin(theta)
+        const z = radius * Math.cos(phi)
+        
+        positions[i3] = x
+        positions[i3 + 1] = y
+        positions[i3 + 2] = z
+        
+        // 距離に基づいて色を決定
+        const distance = Math.sqrt(x * x + y * y + z * z)
+        let color: THREE.Color
+        
+        if (distance < 0.5) {
+            // 瞳孔 - 黒
+            color = new THREE.Color(currentColors[1] ?? 0x2c3e50)
+        } else if (distance < 1.2) {
+            // 虹彩 - 色付き
+            const mixFactor = (distance - 0.5) / 0.7
+            color = new THREE.Color(currentColors[0] ?? 0x4a90e2).lerp(new THREE.Color(currentColors[1] ?? 0x2c3e50), mixFactor * 0.3)
+        } else {
+            // 白目 - 白
+            color = new THREE.Color(currentColors[2] ?? 0xf8f8ff)
+        }
+        
+        colors_array[i3] = color.r
+        colors_array[i3 + 1] = color.g
+        colors_array[i3 + 2] = color.b
+        
+        // サイズ設定
+        sizes[i] = Math.random() * 0.05 + 0.02
+    }
+    
+    // ジオメトリ作成
+    eyeGeometry = new THREE.BufferGeometry()
+    eyeGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    eyeGeometry.setAttribute('color', new THREE.BufferAttribute(colors_array, 3))
+    eyeGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1))
+    
+    // マテリアル作成
+    eyeMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+            time: { value: 0 },
+            mousePos: { value: new THREE.Vector2(0, 0) }
+        },
+        vertexShader: `
+            attribute float size;
+            varying vec3 vColor;
+            uniform float time;
+            uniform vec2 mousePos;
+            
+            void main() {
+                vColor = color;
+                
+                vec3 pos = position;
+                
+                // マウスの位置に基づいて目の動きを追加
+                pos.x += mousePos.x * 0.1;
+                pos.y += mousePos.y * 0.1;
+                
+                // 軽微な波動効果
+                pos += pos * sin(time + position.x * 10.0) * 0.01;
+                
+                vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+                gl_Position = projectionMatrix * mvPosition;
+                gl_PointSize = size * (300.0 / -mvPosition.z);
+            }
+        `,
+        fragmentShader: `
+            varying vec3 vColor;
+            
+            void main() {
+                float distance = length(gl_PointCoord - vec2(0.5));
+                if (distance > 0.5) discard;
+                
+                float alpha = 1.0 - distance * 2.0;
+                gl_FragColor = vec4(vColor, alpha);
+            }
+        `,
+        transparent: true,
+        vertexColors: true
+    })
+    
+    // パーティクルシステム作成
+    eyeParticles = new THREE.Points(eyeGeometry, eyeMaterial)
+    eyeScene.add(eyeParticles)
+}
+
+function setupEyeMouseControls() {
+    const canvas = document.getElementById('eye-canvas') as HTMLCanvasElement
+    if (!canvas) return
+    
+    canvas.addEventListener('mousemove', (event) => {
+        const rect = canvas.getBoundingClientRect()
+        eyeMouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1
+        eyeMouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1
+    })
+}
+
+function animateEye() {
+    eyeAnimationId = requestAnimationFrame(animateEye)
+    
+    eyeTime += 0.01
+    
+    if (eyeAnimationEnabled && eyeMaterial && eyeMaterial.uniforms) {
+        // 目の回転
+        eyeParticles.rotation.y += 0.001
+        
+        // マウス追従
+        if (eyeMaterial.uniforms.mousePos) {
+            eyeMaterial.uniforms.mousePos.value.set(eyeMouseX * 0.5, eyeMouseY * 0.5)
+        }
+        if (eyeMaterial.uniforms.time) {
+            eyeMaterial.uniforms.time.value = eyeTime
+        }
+        
+        // 軽微な拡縮効果
+        const scale = 1 + Math.sin(eyeTime * 0.5) * 0.05
+        eyeParticles.scale.set(scale, scale, scale)
+    }
+    
+    eyeRenderer.render(eyeScene, eyeCamera)
+}
+
+// Handle window resize for eye canvas
+let eyeResizeTimeout: number | null = null
+
+function onEyeWindowResize() {
+    // デバウンス処理でパフォーマンス向上
+    if (eyeResizeTimeout) {
+        clearTimeout(eyeResizeTimeout)
+    }
+    
+    eyeResizeTimeout = window.setTimeout(() => {
+        const canvas = document.getElementById('eye-canvas') as HTMLCanvasElement
+        if (!canvas || !eyeRenderer || !eyeCamera) return
+        
+        // 親要素のサイズを基準にキャンバスサイズを決定
+        const parent = canvas.parentElement
+        if (!parent) return
+        
+        const parentRect = parent.getBoundingClientRect()
+        const newSize = Math.min(parentRect.width, 400) // 最大400pxまで
+        
+        console.log('Eye canvas resize:', {
+            parentWidth: parentRect.width,
+            newSize: newSize,
+            currentCanvasSize: canvas.style.width
+        })
+        
+        // キャンバスの描画解像度を設定
+        const dpr = window.devicePixelRatio || 1
+        canvas.width = newSize * dpr
+        canvas.height = newSize * dpr
+        
+        // CSSサイズを設定（正方形に）
+        canvas.style.width = newSize + 'px'
+        canvas.style.height = newSize + 'px'
+        
+        // レンダラーのサイズを更新
+        eyeRenderer.setSize(newSize, newSize, false) // 3番目の引数でCSSサイズ更新を防ぐ
+        eyeRenderer.setPixelRatio(dpr)
+        
+        // カメラの設定を更新
+        eyeCamera.aspect = 1
+        eyeCamera.updateProjectionMatrix()
+        
+        eyeResizeTimeout = null
+    }, 100) // 100msのデバウンス
+}
+
+// Initialize eye animation after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        initEyeAnimation()
+        // 初期化後に一度リサイズ処理を実行して確実にサイズを合わせる
+        setTimeout(() => {
+            onEyeWindowResize()
+        }, 200)
+    }, 500) // 他のアニメーションの後に初期化
+})
+
+window.addEventListener('resize', onEyeWindowResize)
+</script>

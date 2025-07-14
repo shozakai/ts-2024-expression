@@ -1,0 +1,93 @@
+---
+const currentPath = Astro.url.pathname;
+import Inner from '../layouts/Inner.astro'
+import Column from '../layouts/Column.astro'
+import Line from './Line.astro'
+import Text from './Text.astro'
+import SplitText from './SplitText.astro'
+---
+
+
+<footer class="c-footer">
+    <Inner>
+        <Column>
+            <div data-col-span="3"></div>
+            <div data-col-span="6">
+                <div class="c-footer__header">
+                    <ul class="c-footer__list">
+                        <li>
+                            <a href="/">
+                                <Text text="INDEX&nbsp;/&nbsp;" tag="span" delay={0.3}/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/work">
+                                <Text text="WORK&nbsp;/&nbsp;" tag="span" delay={0.5}/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/exploration">
+                                <Text text="EXPLORATION" tag="span" delay={0.7}/>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <Line type="horizontal" class="mt-[4px]"/>
+
+                <p class="mt-[36px] text-[3.2rem]">
+                    <a href="mailto:shozakai@gmail.com">
+                        <Text text="shozakai@gmail.com" tag="span" delay={0.9}/>
+                    </a>
+                </p>
+            </div>
+        </Column>
+    </Inner>
+
+    <div class="c-footer__ttl">
+        Hello World
+    </div>
+</footer>
+
+
+
+
+
+<style lang="scss">
+    @use '../styles/_setting/_variables' as *;
+    
+    .c-footer {
+        position: relative;
+        z-index: 1;
+        min-height: 498px;
+        margin-top: 36px;
+        padding: 64px 0 0;
+        background: $color-white;
+        color: $color-black;
+        overflow: hidden;
+
+        :global(.line) {
+            background: $color-black;
+        }
+
+        &__list {
+            display: flex;
+            gap: 0;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        &__ttl {
+            position: absolute;
+            bottom: 0;
+            left: calc(-13 / 1366 * 100vw);
+            display: block;
+            width: 101%;
+            overflow: hidden;
+            font-size: calc(255 / 1366 * 100vw);
+            font-family: var(--font-family-graphyne);
+            line-height: 0.7;
+            white-space: nowrap;
+        }
+    }
+</style>

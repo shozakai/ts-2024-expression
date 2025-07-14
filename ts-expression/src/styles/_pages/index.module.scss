@@ -2,7 +2,9 @@
 @use '../_setting/_variables' as *;
 @use '../_setting/_mixins' as *;
 
-.page-home {}
+:global(.page-home) {
+    overflow: hidden;
+}
 
 .homeVisual {
 }

@@ -18,8 +18,7 @@ body {
     // Tailwindのtext-sクラスを適用
     @apply text-text-s;
     @apply text-text-white;
-    @apply bg-bg-black;
-    overflow: hidden;
+    @apply bg-bg-white;
 }
 
 a {

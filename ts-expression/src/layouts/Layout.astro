@@ -2,6 +2,7 @@
 import type { LayoutProps } from '@/types/meta'
 import { defaultMeta } from '@/types/meta'
 import Header from '@/components/Header.astro'
+import Footer from '@/components/Footer.astro'
 import ParticleRing from '@/components/ParticleRing.astro'
 
 import '../styles/main.scss'
@@ -161,24 +162,27 @@ const bodyClasses = [pageClass, className].filter(Boolean).join(' ')
     <body class={bodyClasses}>
         <Header />
          <!-- パーティクルエフェクトを背景として配置 -->
-         <ParticleRing
-         id="home-particles"
-         class="home-particle-bg"
-         particleCount={6000}
-         innerRadius={120}
-         scatterIntensity={100}
-         ringSharpness={3}
-         backgroundColor={0x000000}
-         opacity={0.95}
-         rotationSpeed={0.0008}
-         enableMouseInteraction={true}
-         enableControls={false}
-         enableBigBangAnimation={true}
-         animationDuration={3.0}
-         animationDelay={0.5}
-         width="100vw"
-         height="100vh"
-        />
+         {pageId !== 'exploration' && 
+            <ParticleRing
+            id="home-particles"
+            class="home-particle-bg"
+            particleCount={6000}
+            innerRadius={120}
+            scatterIntensity={100}
+            ringSharpness={3}
+            backgroundColor={0x000000}
+            opacity={0.95}
+            rotationSpeed={0.0008}
+            enableMouseInteraction={true}
+            enableControls={false}
+            enableBigBangAnimation={true}
+            animationDuration={3.0}
+            animationDelay={0.5}
+            width="100vw"
+            height="100vh"
+            />
+        }
         <slot />
+        {pageId !== 'home' && <Footer />}
     </body>
 </html>

@@ -21,7 +21,8 @@ splitTextLinesElements.forEach((element) => {
   // SplitTextで行ごとに分割
   const splitText = new SplitText(element, {
     type: "lines",
-    linesClass: "split-line"
+    linesClass: "split-line",
+    autoSplit: true,
   });
   
   // 各行を更にwrapして overflow hidden を適用

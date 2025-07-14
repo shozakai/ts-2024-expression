@@ -2,14 +2,23 @@
 @use '../_setting/_variables' as *;
 @use '../_setting/_mixins' as *;
 
-.page-work {}
+:global(.c-footer) {
+    background: $color-black !important;
+    color: $color-white !important;
+    :global(.line) {
+        background: $color-white !important;
+    }
+}
+:global(.home-particle-bg) {
+    background: $color-white !important;
+}
 
-.workVisual {
+.explorationVisual {
     position: relative;
     z-index: 10;
     // min-height: 420px;
     padding-top: 40px;
-    color: $color-black;
+    color: $color-white;
     
 
     :global(.l-inner) {
@@ -25,26 +34,26 @@
         top: 0;
         right: 0;
         z-index: 1;
-        background: $color-black;
+        background: $color-white;
     }
 }
 
-.workVisualBg {
+.explorationVisualBg {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: $color-white;
+    background: $color-black;
     clip-path: inset(0% 0% 100% 0%);
 }
 
-.workVisualBlock {
+.explorationVisualBlock {
     position: relative;
     z-index: 1;
     // width: 100%;
     margin: 10px auto 0;
-    background: $color-white;
+    background: $color-black;
     // opacity: 0;
     clip-path: inset(0% 0% 100% 0%);
     &:nth-of-type(1) {
@@ -68,7 +77,7 @@
 }
 
 
-.workCol {
+.explorationCol {
     margin-top: 36px;
 
     figure {
@@ -85,4 +94,29 @@
            margin-top: 24px; 
         }
     }
+
+    canvas {
+        opacity: 0; // 初期状態では非表示
+    }
+}
+
+
+
+.plantCanvas {
+    display: block;
+    max-width: 100%;
+    
+    background: $color-black;  // 参考コードと同じ背景色
+}
+
+.fiberCanvas {
+    display: block;
+    max-width: 100%;
+    background: $color-black;  // 光ファイバー用の黒背景
+}
+
+.eyeCanvas {
+    display: block;
+    max-width: 100%;
+    background: $color-black;  // パーティクルアイ用の黒背景
 }

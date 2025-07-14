@@ -25,8 +25,9 @@ export default {
       },
       fontSize: {
         'text-s': ['1.4rem', '1.3'],
+        'text-s-b': ['1.4rem', '1.6'],
         'text-l-b': ['2.4rem', '1.6'],
-        'text-h2': ['16rem', '1.3'],
+        'text-h2': ['10rem', '1.3'],
       },
       colors: {
         'text-white': '#ffffff',

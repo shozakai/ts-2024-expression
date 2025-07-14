@@ -1,13 +1,49 @@
 ---
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
 import Layout from '../layouts/Layout.astro'
 import Inner from '../layouts/Inner.astro'
 import Column from '../layouts/Column.astro'
 import Line from '../components/Line.astro'
+import { Image } from "astro:assets";
 import SplitText from '../components/SplitText.astro'
 import SplitTextLines from '../components/SplitTextLines.astro'
 import Text from '../components/Text.astro'
 import styles from '../styles/_pages/work.module.scss'
 import type { MetaInfo } from '@/types/meta'
+
+// Art Week Tokyo2025
+import awt2025_01 from '../assets/images/work/awt2025-01.png'
+import awt2025_02 from '../assets/images/work/awt2025-02.png'
+import awt2025_03 from '../assets/images/work/awt2025-03.png'
+import awt2025_04 from '../assets/images/work/awt2025-04.png'
+
+// hear me
+import hear_01 from '../assets/images/work/hear-01.png'
+import hear_02 from '../assets/images/work/hear-02.png'
+import hear_03 from '../assets/images/work/hear-03.png'
+import hear_04 from '../assets/images/work/hear-04.png'
+
+// NWNW
+import nwnw_01 from '../assets/images/work/nwnw-01.png'
+import nwnw_02 from '../assets/images/work/nwnw-02.png'
+import nwnw_03 from '../assets/images/work/nwnw-03.png'
+import nwnw_04 from '../assets/images/work/nwnw-04.png'
+
+// KAGIROI
+import kagiro_01 from '../assets/images/work/kagiroi-01.png'
+import kagiroi_02 from '../assets/images/work/kagiroi-02.png'
+import kagiroi_03 from '../assets/images/work/kagiroi-03.png'
+import kagiroi_04 from '../assets/images/work/kagiroi-04.png'
+
+// Art Week Tokyo2024
+import awt2024_01 from '../assets/images/work/awt2024-01.png'
+import awt2024_02 from '../assets/images/work/awt2024-02.png'
+import awt2024_03 from '../assets/images/work/awt2024-03.png'
+import awt2024_04 from '../assets/images/work/awt2024-04.png'
+
+
 
 const meta: MetaInfo = {
     title: 'WORK',
@@ -17,22 +53,320 @@ const meta: MetaInfo = {
     type: 'website',
     author: 'Developer',
 }
+
+gsap.registerPlugin(ScrollTrigger);
 ---
 
 <Layout {meta} pageId="work">
-    <div class={styles.workVisual}>
+    <section class={styles.workVisual}>
         <Inner>
             <Column>
                 <div data-col-span="3">
                     <p>20 Results</p>
+                    <Line type="vertical" delay={0.1} />
                 </div>
                 <div data-col-span="6">
-                    <Line type="vertical" />
                     <h1 class="text-text-h2 font-graphyne relative z-10">
-                        <Text text="WORK" tag="span" delay={0.3}/>
+                        <Text text="WORK" tag="span" ease="power4.out" duration={0.8} delay={0.6}/>
                     </h1>
                 </div>
             </Column>
         </Inner>
-    </div>
+        <div class={styles.workVisualBg} data-work-visual-bg></div>
+    </section>
+    
+    <div class={`${styles.workVisualBlock} h-[40px]`} data-work-visual-block></div>
+    <div class={`${styles.workVisualBlock} h-[20px]`} data-work-visual-block></div>
+    <div class={`${styles.workVisualBlock} h-[10px]`} data-work-visual-block></div>
+    <div class={`${styles.workVisualBlock} h-[5px]`} data-work-visual-block></div>
+    <div class={`${styles.workVisualBlock} h-[2px]`} data-work-visual-block></div>
+
+    <section class={`${styles.workContent} mt-[56px]`}>
+        <div class={styles.workHeader}>
+            <Inner>
+                <Column class="mb-[4px]">
+                    <div data-col-span="5">
+                        <Text text="PROJECT NAME" tag="span" delay={0.3}/>
+                    </div>
+                    <div data-col-span="2">
+                        <Text text="DESCRIPTION" tag="span" delay={0.3}/>
+                    </div>
+                    <div data-col-span="2">
+                        <Text text="OTHER" tag="span" delay={0.3}/>
+                    </div>
+                </Column>
+                <Line type="horizontal" />
+            </Inner>
+        </div>
+
+        <section class={styles.workCol}>
+            <Inner>
+                <Column>
+                    <div data-col-span="5">
+                        <div class="flex gap-[24px]">
+                            <div class="flex-1">
+                                <Text text="Art Week Tokyo 2025" tag="span" delay={0.3}/>
+                                <a href="https://www.artweektokyo.com/" target="_blank">
+                                    <Text text="https://www.artweektokyo.com/" tag="span" delay={0.3} class="mt-[24px] underline"/>
+                                </a>
+                            </div>
+                            <figure class="w-[calc(436/1366*100vw)]">
+                                <Image src={awt2025_01} alt="" decoding="async" class="work-image"/>
+                            </figure>
+                        </div>
+                    </div>
+                    <div data-col-span="2">
+                        <SplitTextLines
+                            text="Art Week Tokyo is an annual showcase of the creativity and diversity of contemporary art in Tokyo. The citywide initiative activates more than 50 of the Japanese capital’s leading art institutions and galleries through five days of coordinated programming and special platforms. The free AWT Bus service links all venues, making one of the world’s most dynamic art scenes more accessible than ever before."
+                            tag="p"
+                            class="text-text-s-b"
+                            duration={0.8}
+                            stagger={0.1}
+                            delay={0.3}
+                            ease="power2.out"
+                        />
+                    </div>
+                    <div data-col-span="2">
+                        <figure>
+                            <Image src={awt2025_02} alt="" class="work-image"/>
+                        </figure>
+                        <figure>
+                            <Image src={awt2025_03} alt="" class="work-image"/>
+                        </figure>
+                        <figure>
+                            <Image src={awt2025_04} alt="" class="work-image"/>
+                        </figure>
+                    </div>
+                </Column>
+            </Inner>
+        </section>
+
+        <section class={styles.workCol}>
+            <Inner>
+                <Line type="horizontal" class="mb-[36px]"/>
+                <Column>
+                    <div data-col-span="5">
+                        <div class="flex gap-[24px]">
+                            <div class="flex-1">
+                                <Text text="Hear Me" tag="span" delay={0.3}/>
+                                <a href="https://kiminokoe.jp/" target="_blank">
+                                    <Text text="https://kiminokoe.jp/" tag="span" delay={0.3} class="mt-[24px] underline"/>
+                                </a>
+                            </div>
+                            <figure class="w-[calc(436/1366*100vw)]">
+                                <Image src={hear_01} alt="" decoding="async" class="work-image"/>
+                            </figure>
+                        </div>
+                    </div>
+                    <div data-col-span="2">
+                        <SplitTextLines
+                            text="JP Official site."
+                            tag="p"
+                            class="text-text-s-b"
+                            duration={0.8}
+                            stagger={0.1}
+                            delay={0.3}
+                            ease="power2.out"
+                        />
+                    </div>
+                    <div data-col-span="2">
+                        <figure>
+                            <Image src={hear_02} alt="" class="work-image"/>
+                        </figure>
+                        <figure>
+                            <Image src={hear_03} alt="" class="work-image"/>
+                        </figure>
+                        <figure>
+                            <Image src={hear_04} alt="" class="work-image"/>
+                        </figure>
+                    </div>
+                </Column>
+            </Inner>
+        </section>
+
+        <section class={styles.workCol}>
+            <Inner>
+                <Line type="horizontal" class="mb-[36px]"/>
+                <Column>
+                    <div data-col-span="5">
+                        <div class="flex gap-[24px]">
+                            <div class="flex-1">
+                                <Text text="New Way, New World" tag="span" delay={0.3}/>
+                                <a href="https://new-new.jp/" target="_blank">
+                                    <Text text="https://new-new.jp/" tag="span" delay={0.3} class="mt-[24px] underline"/>
+                                </a>
+                            </div>
+                            <figure class="w-[calc(436/1366*100vw)]">
+                                <Image src={nwnw_01} alt="" decoding="async" class="work-image"/>
+                            </figure>
+                        </div>
+                    </div>
+                    <div data-col-span="2">
+                        <SplitTextLines
+                            text="New Way, New World Official site."
+                            tag="p"
+                            class="text-text-s-b"
+                            duration={0.8}
+                            stagger={0.1}
+                            delay={0.3}
+                            ease="power2.out"
+                        />
+                    </div>
+                    <div data-col-span="2">
+                        <figure>
+                            <Image src={nwnw_02} alt="" class="work-image"/>
+                        </figure>
+                        <figure>
+                            <Image src={nwnw_03} alt="" class="work-image"/>
+                        </figure>
+                        <figure>
+                            <Image src={nwnw_04} alt="" class="work-image"/>
+                        </figure>
+                    </div>
+                </Column>
+            </Inner>
+        </section>
+
+        <section class={styles.workCol}>
+            <Inner>
+                <Line type="horizontal" class="mb-[36px]"/>
+                <Column>
+                    <div data-col-span="5">
+                        <div class="flex gap-[24px]">
+                            <div class="flex-1">
+                                <Text text="KAGIROI" tag="span" delay={0.3}/>
+                                <a href="http://kagiroi.shed-dev.com/" target="_blank">
+                                    <Text text="http://kagiroi.shed-dev.com/" tag="span" delay={0.3} class="mt-[24px] underline"/>
+                                </a>
+                            </div>
+                            <figure class="w-[calc(436/1366*100vw)]">
+                                <Image src={kagiro_01} alt="" decoding="async" class="work-image"/>
+                            </figure>
+                        </div>
+                    </div>
+                    <div data-col-span="2">
+                        <SplitTextLines
+                            text="KAGIROI Web Application."
+                            tag="p"
+                            class="text-text-s-b"
+                            duration={0.8}
+                            stagger={0.1}
+                            delay={0.3}
+                            ease="power2.out"
+                        />
+                    </div>
+                    <div data-col-span="2">
+                        <figure>
+                            <Image src={kagiroi_02} alt="" class="work-image"/>
+                        </figure>
+                        <figure>
+                            <Image src={kagiroi_03} alt="" class="work-image"/>
+                        </figure>
+                        <figure>
+                            <Image src={kagiroi_04} alt="" class="work-image"/>
+                        </figure>
+                    </div>
+                </Column>
+            </Inner>
+        </section>
+
+        <section class={styles.workCol}>
+            <Inner>
+                <Line type="horizontal" class="mb-[36px]"/>
+                <Column>
+                    <div data-col-span="5">
+                        <div class="flex gap-[24px]">
+                            <div class="flex-1">
+                                <Text text="Art Week Tokyo 2024" tag="span" delay={0.3}/>
+                                <a href="https://www.artweektokyo.com/awt2024/" target="_blank">
+                                    <Text text="https://www.artweektokyo.com/awt2024/" tag="span" delay={0.3} class="mt-[24px] underline"/>
+                                </a>
+                            </div>
+                            <figure class="w-[calc(436/1366*100vw)]">
+                                <Image src={awt2024_01} alt="" decoding="async" class="work-image"/>
+                            </figure>
+                        </div>
+                    </div>
+                    <div data-col-span="2">
+                        <SplitTextLines
+                            text="Art Week Tokyo 2024 Official site."
+                            tag="p"
+                            class="text-text-s-b"
+                            duration={0.8}
+                            stagger={0.1}
+                            delay={0.3}
+                            ease="power2.out"
+                        />
+                    </div>
+                    <div data-col-span="2">
+                        <figure>
+                            <Image src={awt2024_02} alt="" class="work-image"/>
+                        </figure>
+                        <figure>
+                            <Image src={awt2024_03} alt="" class="work-image"/>
+                        </figure>
+                        <figure>
+                            <Image src={awt2024_04} alt="" class="work-image"/>
+                        </figure>
+                    </div>
+                </Column>
+            </Inner>
+        </section>
+
+
+
+    </section>
+
 </Layout>
+
+<script>
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+// workVisualBgのclip-pathアニメーション
+gsap.to('[data-work-visual-bg]', {
+    clipPath: 'inset(0% 0% 0% 0%)',
+    duration: .5,
+    // ease: 'power4.out',
+    ease: 'liner',
+    onComplete: () => {
+        // gsap.to('[data-work-visual-block]', {
+        //     autoAlpha: 1,
+        //     duration: 1,
+        //     ease: 'power3.out',
+        // })
+        const workVisualBlocks = gsap.utils.toArray('[data-work-visual-block]') as HTMLElement[]
+        workVisualBlocks.forEach((block: HTMLElement, index: number) => {
+            gsap.to(block, {
+                delay: 0.1 * index,
+                autoAlpha: 1,
+                duration: .7,
+                clipPath: 'inset(0% 0% 0% 0%)',
+                ease: 'power3.out',
+            })
+        })
+    },
+    // delay: 0.3,
+})
+
+
+// 画像のScrollTriggerアニメーション
+const workImages = gsap.utils.toArray('.work-image') as HTMLElement[]
+workImages.forEach((img: HTMLElement, index: number) => {
+    gsap.to(img, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 1,
+        ease: 'power3.out',
+        // delay: index * 0.1,
+        scrollTrigger: {
+            trigger: img,
+            start: 'top 100%',
+            end: 'bottom 15%',
+            toggleActions: 'play none none none',
+        },
+    })
+})
+</script>

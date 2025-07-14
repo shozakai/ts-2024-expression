@@ -3,18 +3,21 @@ export interface Props {
   type: 'horizontal' | 'vertical';
   duration?: number;
   ease?: string;
+  delay?: number;
+  class?: string;
+  variant?: 'white' | 'black';
 }
 
-const { type, duration = 1, ease = "power2.out" } = Astro.props;
+const { type, duration = 1, ease = "power2.out", delay = 0, class: className, variant = 'white' } = Astro.props;
 ---
 
 
-<div class={`line line-${type}`} data-line={type} data-duration={duration} data-ease={ease}></div>
+<div class={`line line-${type} ${className} ${variant === 'black' ? 'bg-bg-black' : 'bg-bg-white'}`} data-line={type} data-duration={duration} data-ease={ease} data-delay={delay}></div>
 
 
 <style lang="scss">
   .line {
-    background-color: white;
+    // background-color: white;
     transform-origin: left center;
     
     &-horizontal {

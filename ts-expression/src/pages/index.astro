@@ -3,7 +3,6 @@ import Layout from '../layouts/Layout.astro'
 import Inner from '../layouts/Inner.astro'
 import SplitText from '../components/SplitText.astro'
 import SplitTextLines from '../components/SplitTextLines.astro'
-import ParticleRing from '../components/ParticleRing.astro'
 import styles from '../styles/_pages/index.module.scss'
 import type { MetaInfo } from '@/types/meta'
 
@@ -19,25 +18,6 @@ const meta: MetaInfo = {
 
 <Layout {meta} pageId="home">
     <div class={styles.homeVisual}>
-        <!-- パーティクルエフェクトを背景として配置 -->
-        <ParticleRing
-            id="home-particles"
-            class="home-particle-bg"
-            particleCount={6000}
-            innerRadius={120}
-            scatterIntensity={100}
-            ringSharpness={3}
-            backgroundColor={0x000000}
-            opacity={0.95}
-            rotationSpeed={0.0008}
-            enableMouseInteraction={true}
-            enableControls={false}
-            enableBigBangAnimation={true}
-            animationDuration={3.0}
-            animationDelay={0.5}
-            width="100vw"
-            height="100vh"
-        />
         
         <Inner>
             <div class={styles.homeCotent}>
@@ -71,7 +51,7 @@ const meta: MetaInfo = {
             tag="span" 
             class={`${styles.homeTtl} relative z-10`}
             duration={0.6}
-            stagger={0.08}
+            stagger={0.05}
             ease="power3.out"
         />
     </div>
