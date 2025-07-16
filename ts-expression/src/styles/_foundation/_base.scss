@@ -5,6 +5,22 @@
 
 html {
     font-size: 62.5%;
+    // Lenisが制御するため、ブラウザのデフォルトスムーズスクロールを無効化
+    scroll-behavior: auto;
+}
+
+// Lenisのスムーズスクロール設定
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
 }
 
 // 基本的なボディスタイル（reset.scssの後に適用）

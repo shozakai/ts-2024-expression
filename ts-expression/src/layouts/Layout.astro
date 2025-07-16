@@ -184,5 +184,30 @@ const bodyClasses = [pageClass, className].filter(Boolean).join(' ')
         }
         <slot />
         {pageId !== 'home' && <Footer />}
+
+        <!-- Lenis Smooth Scrolling Initialization -->
+        <script>
+            import { LenisSetup } from '@/utils/lenis-setup'
+            
+            // DOMContentLoadedイベントでLenisを初期化
+            document.addEventListener('DOMContentLoaded', () => {
+                // Lenisを初期化
+                LenisSetup.init({
+                    duration: 1.2,
+                    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    smooth: true,
+                    mouseMultiplier: 1,
+                    smoothTouch: false, // モバイルでは無効にする（パフォーマンス考慮）
+                })
+
+                // GSAPと統合（ScrollTriggerを使用している場合）
+                LenisSetup.setupWithGSAP()
+            })
+
+            // ページ離脱時にLenisを破棄
+            window.addEventListener('beforeunload', () => {
+                LenisSetup.destroy()
+            })
+        </script>
     </body>
 </html>
