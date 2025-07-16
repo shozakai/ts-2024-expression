@@ -48,37 +48,37 @@ gsap.registerPlugin(ScrollTrigger);
     <div class={`${styles.explorationVisualBlock} h-[5px]`} data-exploration-visual-block></div>
     <div class={`${styles.explorationVisualBlock} h-[2px]`} data-exploration-visual-block></div>
 
-
+1
     <section class={`${styles.explorationContent} mt-[56px]`}>
         <section class={styles.explorationCol}>
             <Inner>
-                <Column>
-                    <div data-col-span="4">
-                        <canvas id="plant-canvas" class={styles.plantCanvas}></canvas>
-                    </div>
-                </Column>
+                <div class={`${styles.explorationObj}`}>
+                    <canvas id="plant-canvas" class={styles.plantCanvas}></canvas>
+                </div>
             </Inner>
         </section>
         <section class={`${styles.explorationCol}`}>
             <Inner>
                 <Line type="horizontal" class="mb-[48px]" variant="black" />
-                <Column>
-                    <div data-col-span="3"></div>
-                    <div data-col-span="4">
-                        <canvas id="fiber-canvas" class={styles.fiberCanvas}></canvas>
-                    </div>
-                </Column>
+                <div class={`${styles.explorationObj} mx-auto`}>
+                    <canvas id="fiber-canvas" class={styles.fiberCanvas}></canvas>
+                </div>
             </Inner>
         </section>
         <section class={`${styles.explorationCol}`}>
             <Inner>
                 <Line type="horizontal" class="mb-[48px]" variant="black" />
-                <Column>
-                    <div data-col-span="6"></div>
-                    <div data-col-span="3">
-                        <canvas id="eye-canvas" class={styles.eyeCanvas}></canvas>
-                    </div>
-                </Column>
+                <div class={`${styles.explorationObj} ml-auto mr[0px]`}>
+                    <canvas id="eye-canvas" class={styles.eyeCanvas}></canvas>
+                </div>
+            </Inner>
+        </section>
+        <section class={styles.explorationCol}>
+            <Inner>
+                <Line type="horizontal" class="mb-[48px]" variant="black" />
+                <div class={`${styles.explorationObj} mx-auto`}>
+                    <div id="watercolor-canvas-container" class={styles.watercolorCanvas}></div>
+                </div>
             </Inner>
         </section>
     </section>
@@ -120,22 +120,7 @@ gsap.to('[data-exploration-visual-bg]', {
 
 
 // 画像のScrollTriggerアニメーション
-const explorationImages = gsap.utils.toArray('.exploration-image') as HTMLElement[]
-explorationImages.forEach((img: HTMLElement, index: number) => {
-    gsap.to(img, {
-        autoAlpha: 1,
-        scale: 1,
-        duration: 1,
-        ease: 'power3.out',
-        // delay: index * 0.1,
-        scrollTrigger: {
-            trigger: img,
-            start: 'top 100%',
-            end: 'bottom 15%',
-            toggleActions: 'play none none none',
-        },
-    })
-})
+
 
 // Canvasのフェードインアニメーション
 
@@ -153,6 +138,9 @@ canvas.forEach((canvas: HTMLElement, index: number) => {
         },
     })
 })
+
+// 水彩画canvasコンテナのフェードインアニメーション
+
 </script>
 
 <script>
@@ -176,7 +164,8 @@ function initPlantAnimation() {
     if (!parent) return
     
     const parentRect = parent.getBoundingClientRect()
-    const size = Math.min(parentRect.width, 400) // 最大400pxまで
+    // const size = Math.min(parentRect.width, 400) // 最大400pxまで
+    const size = parentRect.width
     
     // キャンバスの描画解像度を設定
     const dpr = window.devicePixelRatio || 1
@@ -462,7 +451,8 @@ function onWindowResize() {
         if (!parent) return
         
         const parentRect = parent.getBoundingClientRect()
-        const newSize = Math.min(parentRect.width, 400) // 最大400pxまで
+        // const newSize = Math.min(parentRect.width, 400) // 最大400pxまで
+        const newSize = parentRect.width // 最大400pxまで
         
         console.log('Canvas resize:', {
             parentWidth: parentRect.width,
@@ -718,7 +708,8 @@ function initFiberAnimation() {
     if (!parent) return
     
     const parentRect = parent.getBoundingClientRect()
-    const size = Math.min(parentRect.width, 400) // 最大400pxまで
+    // const size = Math.min(parentRect.width, 400) // 最大400pxまで
+    const size = parentRect.width
     
     // キャンバスの描画解像度を設定
     const dpr = window.devicePixelRatio || 1
@@ -833,7 +824,8 @@ function onFiberWindowResize() {
         if (!parent) return
         
         const parentRect = parent.getBoundingClientRect()
-        const newSize = Math.min(parentRect.width, 400) // 最大400pxまで
+        // const newSize = Math.min(parentRect.width, 400) // 最大400pxまで
+        const newSize = parentRect.width
         
         console.log('Fiber canvas resize:', {
             parentWidth: parentRect.width,
@@ -907,7 +899,8 @@ function initEyeAnimation() {
     if (!parent) return
     
     const parentRect = parent.getBoundingClientRect()
-    const size = Math.min(parentRect.width, 400) // 最大400pxまで
+    // const size = Math.min(parentRect.width, 400) // 最大400pxまで
+    const size = parentRect.width
     
     // キャンバスの描画解像度を設定
     const dpr = window.devicePixelRatio || 1
@@ -955,6 +948,9 @@ function createEye() {
     const sizes = new Float32Array(particleCount)
     
     const currentColors = eyeColors[eyeColorIndex] || eyeColors[0]
+    const irisColor = currentColors[0] || 0x4a90e2
+    const pupilColor = currentColors[1] || 0x2c3e50
+    const scleraColor = currentColors[2] || 0xf8f8ff
     
     for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3
@@ -979,14 +975,14 @@ function createEye() {
         
         if (distance < 0.5) {
             // 瞳孔 - 黒
-            color = new THREE.Color(currentColors[1] ?? 0x2c3e50)
+            color = new THREE.Color(pupilColor)
         } else if (distance < 1.2) {
             // 虹彩 - 色付き
             const mixFactor = (distance - 0.5) / 0.7
-            color = new THREE.Color(currentColors[0] ?? 0x4a90e2).lerp(new THREE.Color(currentColors[1] ?? 0x2c3e50), mixFactor * 0.3)
+            color = new THREE.Color(irisColor).lerp(new THREE.Color(pupilColor), mixFactor * 0.3)
         } else {
             // 白目 - 白
-            color = new THREE.Color(currentColors[2] ?? 0xf8f8ff)
+            color = new THREE.Color(scleraColor)
         }
         
         colors_array[i3] = color.r
@@ -1106,7 +1102,8 @@ function onEyeWindowResize() {
         if (!parent) return
         
         const parentRect = parent.getBoundingClientRect()
-        const newSize = Math.min(parentRect.width, 400) // 最大400pxまで
+        // const newSize = Math.min(parentRect.width, 400) // 最大400pxまで
+        const newSize = parentRect.width
         
         console.log('Eye canvas resize:', {
             parentWidth: parentRect.width,
@@ -1147,4 +1144,402 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 window.addEventListener('resize', onEyeWindowResize)
+</script>
+
+<script>
+// p5.jsを動的に読み込む関数
+function loadP5() {
+    return new Promise((resolve, reject) => {
+        if (typeof (window as any).p5 !== 'undefined') {
+            resolve((window as any).p5)
+            return
+        }
+        
+        const script = document.createElement('script')
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js'
+        script.onload = () => {
+            console.log('p5.js loaded successfully')
+            resolve((window as any).p5)
+        }
+        script.onerror = (error) => {
+            console.error('Failed to load p5.js:', error)
+            reject(error)
+        }
+        document.head.appendChild(script)
+    })
+}
+
+// 水彩画風の花のp5.jsコード
+function createWatercolorSketch(p5: any) {
+    let canvasWidth = 0
+    let canvasHeight = 0
+    
+    return function(p: any) {
+        p.setup = function() {
+            console.log('p5.js setup called')
+            
+            const container = document.getElementById('watercolor-canvas-container')
+            if (!container) {
+                console.error('Container not found')
+                return
+            }
+            
+            // コンテナのサイズを取得
+            const containerRect = container.getBoundingClientRect()
+            // const size = Math.min(containerRect.width, 400) // 最大400pxまで
+            const size = containerRect.width
+            
+            canvasWidth = size
+            canvasHeight = size
+            
+            let canvas = p.createCanvas(canvasWidth, canvasHeight)
+            canvas.parent('watercolor-canvas-container')
+            p.noLoop()
+            
+            // canvasのスタイルを直接設定
+            const canvasElement = canvas.canvas
+            canvasElement.style.display = 'block'
+            canvasElement.style.maxWidth = '100%'
+            canvasElement.style.height = 'auto'
+            
+            console.log('Canvas created:', canvasWidth, canvasHeight)
+            console.log('Canvas element:', canvasElement)
+            
+            // 初期描画
+            p.redraw()
+        }
+
+        p.draw = function() {
+            console.log('p5.js draw called')
+            
+            try {
+                // 水彩紙のような背景
+                createWatercolorPaper()
+                
+                // 背景の色の滲み
+                paintBackgroundWashes()
+                
+                // 幻想的な光の粒子
+                drawSoftParticles()
+                
+                // 水彩風の茎（非常にぼかし）
+                drawBlurredStems()
+                
+                // 水彩風の花（輪郭をぼかし）
+                drawSoftWatercolorFlower(canvasWidth/2, canvasHeight/2 - 50)
+                
+                // 最終的な光の効果
+                drawFinalGlow()
+                
+                console.log('p5.js draw completed successfully')
+            } catch (error) {
+                console.error('Error in p5.js draw:', error)
+            }
+        }
+
+        function createWatercolorPaper() {
+            // 紙の質感
+            p.background(25, 45, 65)
+            
+            // 紙の繊維のような細かいテクスチャ
+            for (let i = 0; i < 1000; i++) {
+                let x = p.random(canvasWidth)
+                let y = p.random(canvasHeight)
+                p.fill(p.random(30, 50), p.random(50, 70), p.random(70, 90), p.random(5, 15))
+                p.noStroke()
+                p.ellipse(x, y, p.random(1, 3), p.random(1, 3))
+            }
+        }
+
+        function paintBackgroundWashes() {
+            // 大きな水彩の洗い
+            for (let i = 0; i < 100; i++) {
+                let x = p.random(-100, canvasWidth + 100)
+                let y = p.random(-100, canvasHeight + 100)
+                let size = p.random(100, 400)
+                
+                // 色の滲み効果を複数の円で表現
+                for (let j = 0; j < 8; j++) {
+                    let offsetX = p.random(-size/4, size/4)
+                    let offsetY = p.random(-size/4, size/4)
+                    let currentSize = size * (1 - j * 0.1)
+                    let alpha = p.random(3, 12) * (1 - j * 0.1)
+                    
+                    p.fill(
+                        p.random(15, 45), 
+                        p.random(35, 85), 
+                        p.random(55, 105), 
+                        alpha
+                    )
+                    p.noStroke()
+                    p.ellipse(x + offsetX, y + offsetY, currentSize, currentSize)
+                }
+            }
+        }
+
+        function drawSoftParticles() {
+            // 柔らかい光の粒子
+            for (let i = 0; i < 60; i++) {
+                let x = p.random(canvasWidth)
+                let y = p.random(canvasHeight)
+                let size = p.random(5, 20)
+                
+                // 各粒子を複数の円で柔らかく描く
+                for (let j = 0; j < 5; j++) {
+                    let currentSize = size * (1 - j * 0.15)
+                    let alpha = p.random(10, 30) * (1 - j * 0.15)
+                    
+                    p.fill(
+                        150 + p.random(-30, 30), 
+                        100 + p.random(-20, 20), 
+                        200 + p.random(-40, 40), 
+                        alpha
+                    )
+                    p.noStroke()
+                    p.ellipse(
+                        x + p.random(-2, 2), 
+                        y + p.random(-2, 2), 
+                        currentSize, 
+                        currentSize
+                    )
+                }
+            }
+        }
+
+        function drawBlurredStems() {
+            // 一本の茎が花につながる
+            let stemPath = {
+                start: {x: canvasWidth/2, y: canvasHeight},
+                end: {x: canvasWidth/2, y: canvasHeight/2 - 50}, // 花の位置に直接つながる
+                thickness: 8
+            }
+            
+            // 茎を複数の層で柔らかく描く
+            for (let layer = 0; layer < 15; layer++) {
+                let thickness = stemPath.thickness + layer * 1.5
+                let alpha = 50 - layer * 3
+                
+                if (alpha > 0) {
+                    p.stroke(
+                        120 + p.random(-40, 40), 
+                        60 + p.random(-30, 30), 
+                        180 + p.random(-50, 50), 
+                        alpha
+                    )
+                    p.strokeWeight(thickness)
+                    p.strokeCap(p.ROUND)
+                    
+                    // 茎を曲線的に描く
+                    p.noFill()
+                    p.beginShape()
+                    for (let t = 0; t <= 1; t += 0.01) {
+                        // 自然な曲線を作る
+                        let x = p.lerp(stemPath.start.x, stemPath.end.x, t) + 
+                               p.sin(t * p.PI) * 15 + p.random(-thickness/3, thickness/3)
+                        let y = p.lerp(stemPath.start.y, stemPath.end.y, t) + p.random(-thickness/3, thickness/3)
+                        p.vertex(x, y)
+                    }
+                    p.endShape()
+                }
+            }
+            
+            // 茎の途中に小さな葉のような要素
+            let leafPositions = [
+                {x: canvasWidth/2 - 25, y: canvasHeight/2 + 100},
+                {x: canvasWidth/2 + 20, y: canvasHeight/2 + 50}
+            ]
+            
+            for (let leaf of leafPositions) {
+                for (let layer = 0; layer < 6; layer++) {
+                    let size = 15 - layer * 2
+                    let alpha = 40 - layer * 6
+                    
+                    if (alpha > 0) {
+                        p.fill(
+                            100 + p.random(-30, 30), 
+                            80 + p.random(-20, 20), 
+                            120 + p.random(-30, 30), 
+                            alpha
+                        )
+                        p.noStroke()
+                        p.ellipse(
+                            leaf.x + p.random(-2, 2), 
+                            leaf.y + p.random(-2, 2), 
+                            size * 2, 
+                            size
+                        )
+                    }
+                }
+            }
+        }
+
+        function drawSoftWatercolorFlower(x: number, y: number) {
+            p.push()
+            p.translate(x, y)
+            
+            // 花の全体的な光の輪（非常にぼかし）
+            for (let i = 0; i < 15; i++) {
+                let size = 350 - i * 20
+                let alpha = 8 - i * 0.5
+                
+                if (alpha > 0) {
+                    p.fill(255, 100, 150, alpha)
+                    p.noStroke()
+                    p.ellipse(p.random(-5, 5), p.random(-5, 5), size, size)
+                }
+            }
+            
+            // 花弁を非常に柔らかく描く
+            let petalCount = 12
+            for (let i = 0; i < petalCount; i++) {
+                let angle = (p.TWO_PI / petalCount) * i + p.random(-0.2, 0.2)
+                
+                p.push()
+                p.rotate(angle)
+                
+                // 各花弁を複数の層で描く
+                for (let layer = 0; layer < 15; layer++) {
+                    let petalLength = 60 + p.random(-15, 15) - layer * 2
+                    let petalWidth = 40 + p.random(-10, 10) - layer * 1.5
+                    let alpha = 45 - layer * 3
+                    
+                    if (alpha > 0) {
+                        p.fill(
+                            220 + p.random(-40, 40) - layer * 3,
+                            40 + p.random(-20, 20) + layer * 2,
+                            60 + p.random(-30, 30) + layer * 3,
+                            alpha
+                        )
+                        p.noStroke()
+                        
+                        // 花弁の形を複数の楕円で柔らかく表現
+                        for (let j = 0; j < 3; j++) {
+                            p.ellipse(
+                                petalLength/2 + p.random(-4, 4), 
+                                p.random(-4, 4), 
+                                petalLength * (1 - j * 0.1), 
+                                petalWidth * (1 - j * 0.1)
+                            )
+                        }
+                    }
+                }
+                
+                p.pop()
+            }
+            
+            // 花の中心部も柔らかく
+            for (let i = 0; i < 20; i++) {
+                let size = 35 - i * 1.5
+                let alpha = 80 - i * 4
+                
+                if (alpha > 0) {
+                    p.fill(
+                        120 + i * 5, 
+                        20 + i * 3, 
+                        30 + i * 4, 
+                        alpha
+                    )
+                    p.noStroke()
+                    p.ellipse(p.random(-3, 3), p.random(-3, 3), size, size)
+                }
+            }
+            
+            // 中心の光点も柔らかく
+            for (let i = 0; i < 5; i++) {
+                let size = 12 - i * 2
+                let alpha = 120 - i * 20
+                
+                p.fill(255, 200, 220, alpha)
+                p.ellipse(p.random(-1, 1), p.random(-1, 1), size, size)
+            }
+            
+            p.pop()
+        }
+
+        function drawFinalGlow() {
+            // 全体に柔らかな光のオーバーレイ
+            for (let i = 0; i < 30; i++) {
+                let x = p.random(canvasWidth)
+                let y = p.random(canvasHeight)
+                let size = p.random(50, 200)
+                
+                for (let j = 0; j < 5; j++) {
+                    let currentSize = size * (1 - j * 0.2)
+                    let alpha = p.random(2, 8) * (1 - j * 0.2)
+                    
+                    p.fill(150, 100, 200, alpha)
+                    p.noStroke()
+                    p.ellipse(
+                        x + p.random(-10, 10), 
+                        y + p.random(-10, 10), 
+                        currentSize, 
+                        currentSize
+                    )
+                }
+            }
+        }
+
+        p.mousePressed = function() {
+            console.log('Mouse pressed, redrawing...')
+            p.redraw()
+        }
+        
+        // リサイズ処理
+        p.windowResized = function() {
+            const container = document.getElementById('watercolor-canvas-container')
+            if (!container) return
+            
+            const containerRect = container.getBoundingClientRect()
+            // const newSize = Math.min(containerRect.width, 400)
+            const newSize = containerRect.width
+            
+            canvasWidth = newSize
+            canvasHeight = newSize
+            
+            p.resizeCanvas(canvasWidth, canvasHeight)
+            p.redraw()
+        }
+    }
+}
+
+// p5.jsインスタンスを作成
+let watercolorInstance: any = null
+
+// 水彩画アニメーション初期化
+async function initWatercolorAnimation() {
+    try {
+        console.log('Initializing watercolor animation...')
+        
+        // コンテナが存在するか確認
+        const container = document.getElementById('watercolor-canvas-container')
+        if (!container) {
+            console.error('Container #watercolor-canvas-container not found')
+            return
+        }
+        
+        // p5.jsを読み込む
+        await loadP5()
+        
+        // p5.jsインスタンスを作成
+        const p5 = (window as any).p5
+        if (!p5) {
+            console.error('p5.js not loaded')
+            return
+        }
+        
+        const sketch = createWatercolorSketch(p5)
+        watercolorInstance = new p5(sketch)
+        
+        console.log('Watercolor animation initialized successfully')
+    } catch (error) {
+        console.error('Failed to initialize watercolor animation:', error)
+    }
+}
+
+// Initialize watercolor animation after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        initWatercolorAnimation()
+    }, 800) // 他のアニメーションの後に初期化
+})
 </script>

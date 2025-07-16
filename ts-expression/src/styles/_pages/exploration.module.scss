@@ -76,6 +76,11 @@
     }
 }
 
+.explorationObj {
+    width: calc(412 / 1366 * 100vw);
+}
+
+
 
 .explorationCol {
     margin-top: 36px;
@@ -119,4 +124,12 @@
     display: block;
     max-width: 100%;
     background: $color-black;  // パーティクルアイ用の黒背景
+}
+
+.watercolorCanvas {
+    display: block;
+    max-width: 100%;
+    canvas {
+        opacity: 1; // 初期状態では非表示
+    }
 }
