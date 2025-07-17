@@ -13,20 +13,20 @@ import Text from './Text.astro'
             <Column>
                 <p data-col-span="3" >
                     <a href="/">
-                        <Text text="■ INDEX" tag="span" delay={0.3}/>
+                        <Text text={currentPath === '/' ? '■ INDEX' : 'INDEX'} tag="span" delay={0.3}/>
                     </a>
                 </p>
     
                 <p data-col-span="3" >
                     <a href="/work">
-                        <Text text="WORK" tag="span" delay={0.3}/>
+                        <Text text={currentPath === '/work' ? '■ WORK' : 'WORK'} tag="span" delay={0.3}/>
                     </a>
                 </p>
                     
                 <div data-col-span="3" class="flex justify-between gap-[8px]">
                     <p>
                         <a href="/exploration">
-                            <Text text="EXPLORATION" tag="span" delay={0.3}/>
+                            <Text text={currentPath === '/exploration' ? '■ EXPLORATION' : 'EXPLORATION'} tag="span" delay={0.3}/>
                         </a>
                     </p>
                     <p>
