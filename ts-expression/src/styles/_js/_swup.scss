@@ -1,0 +1,84 @@
+// ====================================
+// swup Page Transitions
+// ====================================
+
+// swup コンテナの基本スタイル
+#swup {
+  // コンテナ自体のスタイルは特に指定しない
+}
+
+// ページトランジション用のアニメーションクラス
+.transition-fade {
+  // デフォルト状態では特にスタイルを指定しない
+}
+
+// swupが追加するクラスに対するアニメーション定義
+
+// ページ変更中の共通設定
+html.is-changing .transition-fade {
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+}
+
+// ページ離脱時のアニメーション
+html.is-animating.is-leaving .transition-fade {
+  opacity: 0;
+}
+
+// ページ進入時のアニメーション  
+html.is-animating.is-rendering .transition-fade {
+  opacity: 0;
+}
+
+// アニメーション完了後
+html.is-changing .transition-fade {
+  opacity: 1;
+}
+
+// よりアドバンスドなスライドアニメーション（オプション）
+.transition-slide {
+  // デフォルト状態
+}
+
+html.is-changing .transition-slide {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+  opacity: 1;
+}
+
+html.is-animating.is-leaving .transition-slide {
+  transform: translateX(-30px);
+  opacity: 0;
+}
+
+html.is-animating.is-rendering .transition-slide {
+  transform: translateX(30px);
+  opacity: 0;
+}
+
+// レスポンシブ対応：モバイルではより控えめなアニメーション
+@media (max-width: 768px) {
+  html.is-changing .transition-fade,
+  html.is-changing .transition-slide {
+    transition-duration: 0.25s;
+  }
+  
+  html.is-animating.is-leaving .transition-slide,
+  html.is-animating.is-rendering .transition-slide {
+    transform: translateX(0);
+  }
+}
+
+// アクセシビリティ対応：motion設定を尊重
+@media (prefers-reduced-motion: reduce) {
+  html.is-changing .transition-fade,
+  html.is-changing .transition-slide {
+    transition-duration: 0.1s;
+  }
+  
+  html.is-animating.is-leaving .transition-slide,
+  html.is-animating.is-rendering .transition-slide {
+    transform: translateX(0);
+  }
+} 

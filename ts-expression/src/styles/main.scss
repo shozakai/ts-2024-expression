@@ -8,3 +8,7 @@
 // 基本スタイル
 @use '_foundation/_reset';
 @use '_foundation/_base';
+
+// JavaScript関連のスタイル
+@use '_js/_animation';
+@use '_js/_swup';

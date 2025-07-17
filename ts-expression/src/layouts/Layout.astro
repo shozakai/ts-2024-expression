@@ -1,6 +1,7 @@
 ---
 import type { LayoutProps } from '@/types/meta'
 import { defaultMeta } from '@/types/meta'
+import { getPageConfig, mergePageConfig, type PageConfig, type PageId } from '@/types/pageConfig'
 import Header from '@/components/Header.astro'
 import Footer from '@/components/Footer.astro'
 import ParticleRing from '@/components/ParticleRing.astro'
@@ -10,7 +11,8 @@ import '../styles/main.scss'
 interface Props extends LayoutProps {
     title?: string
     description?: string
-    pageId?: string // ページ固有のID（例：'home', 'about', 'contact'）
+    pageId?: PageId | string // ページ固有のID
+    pageConfigOverride?: Partial<PageConfig> // ページ設定の上書き
 }
 
 const {
@@ -20,12 +22,22 @@ const {
     title,
     description,
     pageId,
+    pageConfigOverride,
 } = Astro.props
+
+// ページ設定を取得
+const basePageConfig = getPageConfig(pageId)
+const pageConfig = pageConfigOverride 
+    ? mergePageConfig(basePageConfig, pageConfigOverride)
+    : basePageConfig
 
 // titleとdescriptionの直接的な指定をサポート（後方互換性のため）
 const finalMeta = {
     ...defaultMeta,
     ...meta,
+    // ページ設定からのメタ情報を適用
+    ...(pageConfig.metaOverrides && pageConfig.metaOverrides),
+    // 直接指定された値で上書き（最高優先度）
     ...(title && { title }),
     ...(description && { description }),
 }
@@ -43,7 +55,8 @@ const imageUrl = finalMeta.image
 
 // ページ固有のクラス名を生成
 const pageClass = pageId ? `page-${pageId}` : ''
-const bodyClasses = [pageClass, className].filter(Boolean).join(' ')
+const configClasses = pageConfig.bodyClasses || []
+const bodyClasses = [pageClass, ...configClasses, className].filter(Boolean).join(' ')
 ---
 
 <!doctype html>
@@ -160,30 +173,36 @@ const bodyClasses = [pageClass, className].filter(Boolean).join(' ')
 
     </head>
     <body class={bodyClasses}>
-        <Header />
-         <!-- パーティクルエフェクトを背景として配置 -->
-         {pageId !== 'exploration' && 
+        <!-- パーティクルエフェクトを背景として配置 -->
+        {pageConfig.showParticleRing && 
             <ParticleRing
-            id="home-particles"
-            class="home-particle-bg"
-            particleCount={6000}
-            innerRadius={120}
-            scatterIntensity={100}
-            ringSharpness={3}
-            backgroundColor={0x000000}
-            opacity={0.95}
-            rotationSpeed={0.0008}
-            enableMouseInteraction={true}
+            id="page-particles"
+            class="page-particle-bg"
+            particleCount={pageConfig.particleSettings?.particleCount || 6000}
+            innerRadius={pageConfig.particleSettings?.innerRadius || 120}
+            scatterIntensity={pageConfig.particleSettings?.scatterIntensity || 100}
+            ringSharpness={pageConfig.particleSettings?.ringSharpness || 3}
+            backgroundColor={pageConfig.particleSettings?.backgroundColor || 0x000000}
+            opacity={pageConfig.particleSettings?.opacity || 0.95}
+            rotationSpeed={pageConfig.particleSettings?.rotationSpeed || 0.0008}
+            enableMouseInteraction={pageConfig.particleSettings?.enableMouseInteraction ?? true}
             enableControls={false}
-            enableBigBangAnimation={true}
-            animationDuration={3.0}
-            animationDelay={0.5}
+            enableBigBangAnimation={pageConfig.particleSettings?.enableBigBangAnimation ?? true}
+            animationDuration={pageConfig.particleSettings?.animationDuration || 3.0}
+            animationDelay={pageConfig.particleSettings?.animationDelay || 0.5}
             width="100vw"
             height="100vh"
             />
         }
-        <slot />
-        {pageId !== 'home' && <Footer />}
+        
+        {pageConfig.showHeader && <Header />}
+        
+        <!-- swup コンテナ -->
+        <main id="swup" class="transition-fade">
+            <slot />
+        </main>
+        
+        {pageConfig.showFooter && <Footer />}
 
         <!-- Lenis Smooth Scrolling Initialization -->
         <script>
@@ -207,6 +226,32 @@ const bodyClasses = [pageClass, className].filter(Boolean).join(' ')
             // ページ離脱時にLenisを破棄
             window.addEventListener('beforeunload', () => {
                 LenisSetup.destroy()
+            })
+        </script>
+
+        <!-- swup Page Transitions Initialization -->
+        <script>
+            import { SwupSetup } from '@/scripts/swup-setup'
+            
+            // DOMContentLoadedイベントでswupを初期化
+            document.addEventListener('DOMContentLoaded', () => {
+                // swupを初期化
+                SwupSetup.init({})
+
+                // swupの準備完了イベントをリッスン
+                document.addEventListener('swup:pageReady', () => {
+                    console.log('New page ready - reinitializing scripts')
+                    
+                    // Lenisの再初期化（必要に応じて）
+                    if (window.lenis) {
+                        window.lenis.resize()
+                    }
+                })
+            })
+
+            // ページ離脱時にswupを破棄
+            window.addEventListener('beforeunload', () => {
+                SwupSetup.destroy()
             })
         </script>
     </body>

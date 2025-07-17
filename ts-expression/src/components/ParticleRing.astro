@@ -84,7 +84,22 @@ const {
 <script>
     import { initParticleRing } from '../scripts/particleRingInit'
     
-    initParticleRing()
+    // swupが存在する場合は、swupのイベントシステムに委ねる
+    // そうでない場合は直接初期化する
+    if (typeof window !== 'undefined') {
+        // swupが既に初期化されているかチェック
+        const hasSwup = document.body.getAttribute('data-swup-initialized') === 'true'
+        
+        if (!hasSwup) {
+            // swupが無い場合は直接初期化
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initParticleRing)
+            } else {
+                initParticleRing()
+            }
+        }
+        // swupがある場合は、swupのイベントリスナーが初期化を担当
+    }
 </script>
 
 <style>
