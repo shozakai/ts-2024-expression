@@ -77,6 +77,14 @@ gsap.registerPlugin(ScrollTrigger);
             <Inner>
                 <Line type="horizontal" class="mb-[48px]" variant="black" />
                 <div class={`${styles.explorationObj} mx-auto`}>
+                    <canvas id="wave-canvas" class={styles.waveCanvas}></canvas>
+                </div>
+            </Inner>
+        </section>
+        <section class={`${styles.explorationCol}`}>
+            <Inner>
+                <Line type="horizontal" class="mb-[48px]" variant="black" />
+                <div class={`${styles.explorationObj}`}>
                     <div id="watercolor-canvas-container" class={styles.watercolorCanvas}></div>
                 </div>
             </Inner>
@@ -948,9 +956,9 @@ function createEye() {
     const sizes = new Float32Array(particleCount)
     
     const currentColors = eyeColors[eyeColorIndex] || eyeColors[0]
-    const irisColor = currentColors[0] || 0x4a90e2
-    const pupilColor = currentColors[1] || 0x2c3e50
-    const scleraColor = currentColors[2] || 0xf8f8ff
+    const irisColor = currentColors?.[0] || 0x4a90e2
+    const pupilColor = currentColors?.[1] || 0x2c3e50
+    const scleraColor = currentColors?.[2] || 0xf8f8ff
     
     for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3
@@ -1238,21 +1246,22 @@ function createWatercolorSketch(p5: any) {
         }
 
         function createWatercolorPaper() {
-            // 紙の質感
-            p.background(25, 45, 65)
+            // 黒い背景
+            p.background(10, 10, 15)
             
-            // 紙の繊維のような細かいテクスチャ
+            // 紙の繊維のような細かいテクスチャ（グレー）
             for (let i = 0; i < 1000; i++) {
                 let x = p.random(canvasWidth)
                 let y = p.random(canvasHeight)
-                p.fill(p.random(30, 50), p.random(50, 70), p.random(70, 90), p.random(5, 15))
+                let gray = p.random(15, 25)
+                p.fill(gray, gray, gray, p.random(5, 15))
                 p.noStroke()
                 p.ellipse(x, y, p.random(1, 3), p.random(1, 3))
             }
         }
 
         function paintBackgroundWashes() {
-            // 大きな水彩の洗い
+            // 大きな水彩の洗い（グレートーン）
             for (let i = 0; i < 100; i++) {
                 let x = p.random(-100, canvasWidth + 100)
                 let y = p.random(-100, canvasHeight + 100)
@@ -1264,13 +1273,9 @@ function createWatercolorSketch(p5: any) {
                     let offsetY = p.random(-size/4, size/4)
                     let currentSize = size * (1 - j * 0.1)
                     let alpha = p.random(3, 12) * (1 - j * 0.1)
+                    let gray = p.random(20, 40)
                     
-                    p.fill(
-                        p.random(15, 45), 
-                        p.random(35, 85), 
-                        p.random(55, 105), 
-                        alpha
-                    )
+                    p.fill(gray, gray, gray, alpha)
                     p.noStroke()
                     p.ellipse(x + offsetX, y + offsetY, currentSize, currentSize)
                 }
@@ -1278,7 +1283,7 @@ function createWatercolorSketch(p5: any) {
         }
 
         function drawSoftParticles() {
-            // 柔らかい光の粒子
+            // 柔らかい光の粒子（白っぽいグレー）
             for (let i = 0; i < 60; i++) {
                 let x = p.random(canvasWidth)
                 let y = p.random(canvasHeight)
@@ -1288,13 +1293,9 @@ function createWatercolorSketch(p5: any) {
                 for (let j = 0; j < 5; j++) {
                     let currentSize = size * (1 - j * 0.15)
                     let alpha = p.random(10, 30) * (1 - j * 0.15)
+                    let gray = p.random(120, 180)
                     
-                    p.fill(
-                        150 + p.random(-30, 30), 
-                        100 + p.random(-20, 20), 
-                        200 + p.random(-40, 40), 
-                        alpha
-                    )
+                    p.fill(gray, gray, gray, alpha)
                     p.noStroke()
                     p.ellipse(
                         x + p.random(-2, 2), 
@@ -1321,9 +1322,9 @@ function createWatercolorSketch(p5: any) {
                 
                 if (alpha > 0) {
                     p.stroke(
-                        120 + p.random(-40, 40), 
-                        60 + p.random(-30, 30), 
-                        180 + p.random(-50, 50), 
+                        p.random(80, 120), 
+                        p.random(80, 120), 
+                        p.random(80, 120), 
                         alpha
                     )
                     p.strokeWeight(thickness)
@@ -1356,9 +1357,9 @@ function createWatercolorSketch(p5: any) {
                     
                     if (alpha > 0) {
                         p.fill(
-                            100 + p.random(-30, 30), 
-                            80 + p.random(-20, 20), 
-                            120 + p.random(-30, 30), 
+                            p.random(60, 100), 
+                            p.random(60, 100), 
+                            p.random(60, 100), 
                             alpha
                         )
                         p.noStroke()
@@ -1377,13 +1378,14 @@ function createWatercolorSketch(p5: any) {
             p.push()
             p.translate(x, y)
             
-            // 花の全体的な光の輪（非常にぼかし）
+            // 花の全体的な光の輪（白いグロー）
             for (let i = 0; i < 15; i++) {
                 let size = 350 - i * 20
                 let alpha = 8 - i * 0.5
                 
                 if (alpha > 0) {
-                    p.fill(255, 100, 150, alpha)
+                    let gray = 200 - i * 5
+                    p.fill(gray, gray, gray, alpha)
                     p.noStroke()
                     p.ellipse(p.random(-5, 5), p.random(-5, 5), size, size)
                 }
@@ -1404,10 +1406,11 @@ function createWatercolorSketch(p5: any) {
                     let alpha = 45 - layer * 3
                     
                     if (alpha > 0) {
+                        let grayBase = 180 - layer * 5
                         p.fill(
-                            220 + p.random(-40, 40) - layer * 3,
-                            40 + p.random(-20, 20) + layer * 2,
-                            60 + p.random(-30, 30) + layer * 3,
+                            grayBase + p.random(-20, 20),
+                            grayBase + p.random(-20, 20),
+                            grayBase + p.random(-20, 20),
                             alpha
                         )
                         p.noStroke()
@@ -1427,29 +1430,26 @@ function createWatercolorSketch(p5: any) {
                 p.pop()
             }
             
-            // 花の中心部も柔らかく
+            // 花の中心部も柔らかく（暗いグレー）
             for (let i = 0; i < 20; i++) {
                 let size = 35 - i * 1.5
                 let alpha = 80 - i * 4
                 
                 if (alpha > 0) {
-                    p.fill(
-                        120 + i * 5, 
-                        20 + i * 3, 
-                        30 + i * 4, 
-                        alpha
-                    )
+                    let gray = 40 + i * 2
+                    p.fill(gray, gray, gray, alpha)
                     p.noStroke()
                     p.ellipse(p.random(-3, 3), p.random(-3, 3), size, size)
                 }
             }
             
-            // 中心の光点も柔らかく
+            // 中心の光点も柔らかく（明るいグレー）
             for (let i = 0; i < 5; i++) {
                 let size = 12 - i * 2
                 let alpha = 120 - i * 20
+                let gray = 220 - i * 10
                 
-                p.fill(255, 200, 220, alpha)
+                p.fill(gray, gray, gray, alpha)
                 p.ellipse(p.random(-1, 1), p.random(-1, 1), size, size)
             }
             
@@ -1457,7 +1457,7 @@ function createWatercolorSketch(p5: any) {
         }
 
         function drawFinalGlow() {
-            // 全体に柔らかな光のオーバーレイ
+            // 全体に柔らかな光のオーバーレイ（グレートーン）
             for (let i = 0; i < 30; i++) {
                 let x = p.random(canvasWidth)
                 let y = p.random(canvasHeight)
@@ -1466,8 +1466,9 @@ function createWatercolorSketch(p5: any) {
                 for (let j = 0; j < 5; j++) {
                     let currentSize = size * (1 - j * 0.2)
                     let alpha = p.random(2, 8) * (1 - j * 0.2)
+                    let gray = p.random(80, 120)
                     
-                    p.fill(150, 100, 200, alpha)
+                    p.fill(gray, gray, gray, alpha)
                     p.noStroke()
                     p.ellipse(
                         x + p.random(-10, 10), 
@@ -1542,4 +1543,194 @@ document.addEventListener('DOMContentLoaded', () => {
         initWatercolorAnimation()
     }, 800) // 他のアニメーションの後に初期化
 })
+</script>
+
+<script>
+import * as THREE from 'three'
+
+// 波状ラインアート用の変数
+let waveScene: THREE.Scene, waveCamera: THREE.PerspectiveCamera, waveRenderer: THREE.WebGLRenderer
+let waveLines: Array<{line: THREE.Line, geometry: THREE.BufferGeometry, baseY: number, phase: number}> = []
+let waveTime = 0
+let waveAnimationId: number | null = null
+
+let waveSettings = {
+    amplitude: 0.5,
+    speed: 1,
+    lineCount: 25,
+    waveLength: 4,
+    segments: 200
+}
+
+function initWaveAnimation() {
+    const canvas = document.getElementById('wave-canvas') as HTMLCanvasElement
+    if (!canvas) return
+
+    // Scene setup
+    waveScene = new THREE.Scene()
+    
+    // 親要素のサイズを基準にキャンバスサイズを決定
+    const parent = canvas.parentElement
+    if (!parent) return
+    
+    const parentRect = parent.getBoundingClientRect()
+    const size = parentRect.width
+    
+    // キャンバスの描画解像度を設定
+    const dpr = window.devicePixelRatio || 1
+    canvas.width = size * dpr
+    canvas.height = size * dpr
+    
+    // CSSサイズを設定（正方形に）
+    canvas.style.width = size + 'px'
+    canvas.style.height = size + 'px'
+    
+    waveCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000)
+    waveRenderer = new THREE.WebGLRenderer({ 
+        canvas: canvas,
+        antialias: true
+    })
+    waveRenderer.setSize(size, size, false)
+    waveRenderer.setPixelRatio(dpr)
+    waveRenderer.setClearColor(0x000000)
+
+    // Camera position
+    waveCamera.position.z = 3
+    waveCamera.position.y = 0
+
+    // ラインの作成
+    createWaveLines()
+    
+    // アニメーションループ
+    animateWave()
+}
+
+function createWaveLines() {
+    // 既存のラインを削除
+    waveLines.forEach(lineObj => waveScene.remove(lineObj.line))
+    waveLines = []
+
+    const material = new THREE.LineBasicMaterial({ 
+        color: 0xffffff,
+        linewidth: 2
+    })
+
+    for (let i = 0; i < waveSettings.lineCount; i++) {
+        const geometry = new THREE.BufferGeometry()
+        const positions = new Float32Array(waveSettings.segments * 3)
+        
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+        
+        const line = new THREE.Line(geometry, material)
+        waveScene.add(line)
+        
+        waveLines.push({
+            line: line,
+            geometry: geometry,
+            baseY: (i / (waveSettings.lineCount - 1) - 0.5) * 2, // -1 から 1 の範囲
+            phase: i * 0.1
+        })
+    }
+}
+
+function updateWaveLines() {
+    waveLines.forEach((lineObj, index) => {
+        const positionAttribute = lineObj.geometry.attributes.position
+        if (!positionAttribute) return
+        
+        const positions = positionAttribute.array as Float32Array
+        
+        for (let i = 0; i < waveSettings.segments; i++) {
+            const x = (i / (waveSettings.segments - 1) - 0.5) * 6 // -3 から 3 の範囲
+            
+            // 波の計算 - 複数の波を重ねる
+            const wave1 = Math.sin(x * waveSettings.waveLength + waveTime * waveSettings.speed + lineObj.phase)
+            const wave2 = Math.sin(x * waveSettings.waveLength * 2 + waveTime * waveSettings.speed * 0.7 + lineObj.phase) * 0.3
+            const wave3 = Math.sin(x * waveSettings.waveLength * 0.5 + waveTime * waveSettings.speed * 1.3 + lineObj.phase) * 0.2
+            
+            const waveHeight = (wave1 + wave2 + wave3) * waveSettings.amplitude
+            
+            // 山の形状を作るための重み（先端部分も動くように調整）
+            const distanceFromCenter = Math.abs(lineObj.baseY)
+            const mountainWeight = Math.pow(1 - distanceFromCenter * 0.7, 1.5) * 0.8 + 0.2
+            
+            const y = lineObj.baseY + waveHeight * mountainWeight
+            
+            positions[i * 3] = x
+            positions[i * 3 + 1] = y
+            positions[i * 3 + 2] = 0
+        }
+        
+        positionAttribute.needsUpdate = true
+    })
+}
+
+function animateWave() {
+    waveAnimationId = requestAnimationFrame(animateWave)
+    
+    waveTime += 0.01
+    updateWaveLines()
+    
+    waveRenderer.render(waveScene, waveCamera)
+}
+
+// Handle window resize for wave canvas
+let waveResizeTimeout: number | null = null
+
+function onWaveWindowResize() {
+    // デバウンス処理でパフォーマンス向上
+    if (waveResizeTimeout) {
+        clearTimeout(waveResizeTimeout)
+    }
+    
+    waveResizeTimeout = window.setTimeout(() => {
+        const canvas = document.getElementById('wave-canvas') as HTMLCanvasElement
+        if (!canvas || !waveRenderer || !waveCamera) return
+        
+        // 親要素のサイズを基準にキャンバスサイズを決定
+        const parent = canvas.parentElement
+        if (!parent) return
+        
+        const parentRect = parent.getBoundingClientRect()
+        const newSize = parentRect.width
+        
+        console.log('Wave canvas resize:', {
+            parentWidth: parentRect.width,
+            newSize: newSize,
+            currentCanvasSize: canvas.style.width
+        })
+        
+        // キャンバスの描画解像度を設定
+        const dpr = window.devicePixelRatio || 1
+        canvas.width = newSize * dpr
+        canvas.height = newSize * dpr
+        
+        // CSSサイズを設定（正方形に）
+        canvas.style.width = newSize + 'px'
+        canvas.style.height = newSize + 'px'
+        
+        // レンダラーのサイズを更新
+        waveRenderer.setSize(newSize, newSize, false) // 3番目の引数でCSSサイズ更新を防ぐ
+        waveRenderer.setPixelRatio(dpr)
+        
+        // カメラの設定を更新
+        waveCamera.aspect = 1
+        waveCamera.updateProjectionMatrix()
+        
+        waveResizeTimeout = null
+    }, 100) // 100msのデバウンス
+}
+
+// Initialize wave animation after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        initWaveAnimation()
+        // 初期化後に一度リサイズ処理を実行して確実にサイズを合わせる
+        setTimeout(() => {
+            onWaveWindowResize()
+        }, 200)
+    }, 1000) // 他のアニメーションの後に初期化
+})
+
+window.addEventListener('resize', onWaveWindowResize)
 </script>
