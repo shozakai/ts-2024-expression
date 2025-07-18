@@ -63,7 +63,7 @@ gsap.registerPlugin(ScrollTrigger);
             <Column>
                 <div data-col-span="3" class="relative z-10">
                     <div class={styles.workVisualNumber}>
-                        <Text text="<span class='text-[5.6rem]'>5</span> <span class='text-[3.2rem]'>&nbsp;Results</span>" tag="p" ease="power4.out" duration={0.8} delay={1} class="text-text-black" allowHTML={true}/>
+                        <Text text="<span class='text-[5.6rem]'>5</span> <span class='text-[3.2rem]'>&nbsp;Results</span>" tag="p" ease="power4.out" duration={0.8} delay={1} class="text-text-black font-semibold" allowHTML={true}/>
                     </div>
                     <Line type="vertical" delay={0.1} />
                 </div>
@@ -113,7 +113,9 @@ gsap.registerPlugin(ScrollTrigger);
                                 </a>
                             </div>
                             <figure class="w-[calc(436/1366*100vw)]">
-                                <Image src={awt2025_01} alt="" decoding="async" class="work-image"/>
+                                <a href="https://www.artweektokyo.com/" target="_blank">
+                                    <Image src={awt2025_01} alt="" decoding="async" class="work-image"/>
+                                </a>
                             </figure>
                         </div>
                     </div>
@@ -156,7 +158,9 @@ gsap.registerPlugin(ScrollTrigger);
                                 </a>
                             </div>
                             <figure class="w-[calc(436/1366*100vw)]">
-                                <Image src={hear_01} alt="" decoding="async" class="work-image"/>
+                                <a href="https://kiminokoe.jp/" target="_blank">
+                                    <Image src={hear_01} alt="" decoding="async" class="work-image"/>
+                                </a>
                             </figure>
                         </div>
                     </div>
@@ -199,7 +203,9 @@ gsap.registerPlugin(ScrollTrigger);
                                 </a>
                             </div>
                             <figure class="w-[calc(436/1366*100vw)]">
-                                <Image src={nwnw_01} alt="" decoding="async" class="work-image"/>
+                                <a href="https://new-new.jp/" target="_blank">
+                                    <Image src={nwnw_01} alt="" decoding="async" class="work-image"/>
+                                </a>
                             </figure>
                         </div>
                     </div>
@@ -242,7 +248,9 @@ gsap.registerPlugin(ScrollTrigger);
                                 </a>
                             </div>
                             <figure class="w-[calc(436/1366*100vw)]">
-                                <Image src={kagiro_01} alt="" decoding="async" class="work-image"/>
+                                <a href="http://kagiroi.shed-dev.com/" target="_blank">
+                                    <Image src={kagiro_01} alt="" decoding="async" class="work-image"/>
+                                </a>
                             </figure>
                         </div>
                     </div>
@@ -285,7 +293,9 @@ gsap.registerPlugin(ScrollTrigger);
                                 </a>
                             </div>
                             <figure class="w-[calc(436/1366*100vw)]">
-                                <Image src={awt2024_01} alt="" decoding="async" class="work-image"/>
+                                <a href="https://www.artweektokyo.com/awt2024/" target="_blank">
+                                    <Image src={awt2024_01} alt="" decoding="async" class="work-image"/>
+                                </a>
                             </figure>
                         </div>
                     </div>
@@ -360,7 +370,7 @@ workImages.forEach((img: HTMLElement, index: number) => {
     gsap.to(img, {
         autoAlpha: 1,
         scale: 1,
-        duration: 1,
+        duration: 1.5,
         // clipPath: 'polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%)',
         filter: 'blur(0px)',
         ease: 'power3.out',

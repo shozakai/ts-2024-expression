@@ -1,0 +1,72 @@
+---
+import type { StarFieldOptions } from '../scripts/starField'
+
+export interface Props {
+    id?: string
+    class?: string
+    particleCount?: number
+    particleSize?: number
+    density?: number
+    motionStrength?: number
+    vortexStrength?: number
+    enableAnimation?: boolean
+    enableMouseInteraction?: boolean
+    mouseMovementIntensity?: number
+    backgroundColor?: number
+    width?: string
+    height?: string
+}
+
+const {
+    id = 'star-field',
+    class: className = '',
+    particleCount = 8000,
+    particleSize = 1.2,
+    density = 100,
+    motionStrength = 1.0,
+    vortexStrength = 1.0,
+    enableAnimation = true,
+    enableMouseInteraction = true,
+    mouseMovementIntensity = 3.0,
+    backgroundColor = 0x000000,
+    width = '100vw',
+    height = '100vh',
+} = Astro.props
+---
+
+<div 
+    id={id} 
+    class={`star-field-container ${className}`}
+    data-particle-count={particleCount}
+    data-particle-size={particleSize}
+    data-density={density}
+    data-motion-strength={motionStrength}
+    data-vortex-strength={vortexStrength}
+    data-enable-animation={enableAnimation}
+    data-enable-mouse-interaction={enableMouseInteraction}
+    data-mouse-movement-intensity={mouseMovementIntensity}
+    data-background-color={backgroundColor}
+>
+</div>
+
+<script>
+    import { initStarField } from '../scripts/starFieldInit'
+    
+    initStarField()
+</script>
+
+<style>
+    .star-field-container {
+        background-color: #000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .star-field-container canvas {
+        display: block;
+    }
+</style> 

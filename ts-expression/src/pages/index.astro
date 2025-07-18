@@ -22,7 +22,7 @@ const meta: MetaInfo = {
         <Inner>
             <div class={styles.homeCotent}>
                 <SplitTextLines
-                    text="My name is NS.<br>I'm a front engineer and project<br>director at Shed inc.<br>Nice to meet you."
+                    text="Hi, I'm NS. <br>I'm a front engineer and project<br>director at <a href='https://www.shed-inc.com/' target='_blank'>● Shed inc.</a>"
                     tag="p"
                     class="text-text-l-b mb-[48px] relative z-10"
                     duration={0.8}
@@ -32,17 +32,15 @@ const meta: MetaInfo = {
                     ease="power2.out"
                 />
                 <p class="text-text-l-b relative z-10">
-                    <a href="/work">
-                        <SplitTextLines
-                        text="● Want to know more?"
-                        tag="span"
-                        class=""
-                        duration={0.8}
-                        stagger={0.1}
-                        delay={1.4}
-                        ease="power2.out"
-                        />
-                    </a>
+                    <SplitTextLines
+                    text="<a href='/work'>● Want to know more?</a>"
+                    tag="span"
+                    class=""
+                    duration={0.8}
+                    stagger={0.1}
+                    delay={1.2}
+                    ease="power2.out"
+                    />
                 </p>
             </div>
         </Inner>

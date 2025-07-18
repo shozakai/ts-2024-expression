@@ -4,6 +4,7 @@ import { defaultMeta } from '@/types/meta'
 import Header from '@/components/Header.astro'
 import Footer from '@/components/Footer.astro'
 import ParticleRing from '@/components/ParticleRing.astro'
+import StarField from '@/components/StarField.astro'
 
 import '../styles/main.scss'
 
@@ -51,7 +52,7 @@ const bodyClasses = [pageClass, className].filter(Boolean).join(' ')
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
         <meta name="generator" content={Astro.generator} />
 
         <!-- Primary Meta Tags -->
@@ -162,7 +163,7 @@ const bodyClasses = [pageClass, className].filter(Boolean).join(' ')
     <body class={bodyClasses}>
         <Header />
          <!-- パーティクルエフェクトを背景として配置 -->
-         {pageId !== 'exploration' && 
+         {pageId === 'home' && 
             <ParticleRing
             id="home-particles"
             class="home-particle-bg"
@@ -178,6 +179,24 @@ const bodyClasses = [pageClass, className].filter(Boolean).join(' ')
             enableBigBangAnimation={true}
             animationDuration={3.0}
             animationDelay={0.5}
+            width="100vw"
+            height="100vh"
+            />
+        }
+        
+        {pageId === 'work' && 
+            <StarField
+            id="work-stars"
+            class="work-star-bg"
+            particleCount={10000}
+            particleSize={.6}
+            density={50}
+            motionStrength={.1}
+            vortexStrength={1.0}
+            enableAnimation={true}
+            enableMouseInteraction={true}
+            mouseMovementIntensity={1.5}
+            backgroundColor={0x111111}
             width="100vw"
             height="100vh"
             />

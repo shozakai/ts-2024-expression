@@ -1,10 +1,9 @@
 ---
-const currentPath = Astro.url.pathname;
 import Inner from '../layouts/Inner.astro'
 import Column from '../layouts/Column.astro'
 import Line from './Line.astro'
 import Text from './Text.astro'
-import SplitText from './SplitText.astro'
+import SplitTextLines from './SplitTextLines.astro'
 ---
 
 
@@ -34,10 +33,17 @@ import SplitText from './SplitText.astro'
                 </div>
                 <Line type="horizontal" class="mt-[4px]"/>
 
-                <p class="mt-[36px] text-[3.2rem]">
-                    <a href="mailto:shozakai@gmail.com">
-                        <Text text="shozakai@gmail.com" tag="span" delay={0.9}/>
-                    </a>
+                <p class=" c-footer__mail mt-[36px] text-[3.2rem]">
+                    <SplitTextLines
+                        text="<a href='mailto:shozakai@gmail.com'>● shozakai@gmail.com</a>"
+                        tag="span"
+                        class="text-text-l-b mb-[48px] relative z-10"
+                        duration={0.8}
+                        stagger={0.1}
+                        delay={.3}
+                        delay={.8}
+                        ease="power2.out"
+                    />
                 </p>
             </div>
         </Column>
@@ -54,6 +60,7 @@ import SplitText from './SplitText.astro'
 
 <style lang="scss">
     @use '../styles/_setting/_variables' as *;
+    @use '../styles/_setting/_mixins' as *;
     
     .c-footer {
         position: relative;
@@ -88,6 +95,12 @@ import SplitText from './SplitText.astro'
             font-family: var(--font-family-graphyne);
             line-height: 0.7;
             white-space: nowrap;
+        }
+
+        &__mail {
+            a {
+                @include underlineLink($color-black);
+            }
         }
     }
 </style>
