@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { gsap } from 'gsap'
 
 export interface StarFieldOptions {
     particleCount?: number
@@ -10,6 +11,10 @@ export interface StarFieldOptions {
     enableMouseInteraction?: boolean
     mouseMovementIntensity?: number
     backgroundColor?: number
+    enableBigBangAnimation?: boolean
+    animationDuration?: number
+    animationDelay?: number
+    explosionRange?: number
 }
 
 export class StarField {
@@ -33,6 +38,16 @@ export class StarField {
     private container: HTMLElement
     private time: number = 0
     
+    // ビッグバンアニメーション関連
+    private enableBigBangAnimation: boolean
+    private animationDuration: number
+    private animationDelay: number
+    private explosionRange: number
+    private animationProgress: number = 0
+    private initialPositions: Float32Array | null = null
+    private finalPositions: Float32Array | null = null
+    private animationTween: gsap.core.Tween | null = null
+    
     constructor(container: HTMLElement, options: StarFieldOptions = {}) {
         this.container = container
         this.particleCount = options.particleCount ?? 8000
@@ -43,6 +58,10 @@ export class StarField {
         this.enableAnimation = options.enableAnimation ?? true
         this.enableMouseInteraction = options.enableMouseInteraction ?? true
         this.mouseMovementIntensity = options.mouseMovementIntensity ?? 3.0
+        this.enableBigBangAnimation = options.enableBigBangAnimation ?? false
+        this.animationDuration = options.animationDuration ?? 2.0
+        this.animationDelay = options.animationDelay ?? 0.5
+        this.explosionRange = options.explosionRange ?? 150
         
         this.init()
         this.createParticleSystem()
@@ -85,11 +104,47 @@ export class StarField {
         for (let i = 0; i < this.particleCount; i++) {
             const i3 = i * 3
             
-            // より集中した分布のための調整
-            const spread = this.density
-            positions[i3] = (Math.random() - 0.5) * spread
-            positions[i3 + 1] = (Math.random() - 0.5) * spread
-            positions[i3 + 2] = (Math.random() - 0.5) * spread
+            // 最終位置の計算（ビッグバン時はより広い範囲）
+            const spread = this.enableBigBangAnimation ? this.explosionRange : this.density
+            const finalX = (Math.random() - 0.5) * spread
+            const finalY = (Math.random() - 0.5) * spread
+            const finalZ = (Math.random() - 0.5) * spread
+            
+            if (this.enableBigBangAnimation) {
+                // ビッグバンアニメーション用の初期位置（球状に密集）
+                const maxRadius = 8.0  // 密集度を薄く（以前の2.0から8.0に）
+                
+                // 球面座標でランダムな位置を生成
+                const radius = Math.random() * maxRadius
+                const theta = Math.random() * Math.PI * 2  // 0 to 2π
+                const phi = Math.acos(2 * Math.random() - 1)  // 0 to π（均等分布）
+                
+                // 球面座標から直交座標への変換
+                positions[i3] = radius * Math.sin(phi) * Math.cos(theta)
+                positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta)
+                positions[i3 + 2] = radius * Math.cos(phi)
+                
+                // 最終位置を保存
+                if (!this.finalPositions) {
+                    this.finalPositions = new Float32Array(this.particleCount * 3)
+                }
+                this.finalPositions[i3] = finalX
+                this.finalPositions[i3 + 1] = finalY
+                this.finalPositions[i3 + 2] = finalZ
+                
+                // 初期位置を保存（参照用）
+                if (!this.initialPositions) {
+                    this.initialPositions = new Float32Array(this.particleCount * 3)
+                }
+                this.initialPositions[i3] = positions[i3]
+                this.initialPositions[i3 + 1] = positions[i3 + 1]
+                this.initialPositions[i3 + 2] = positions[i3 + 2]
+            } else {
+                // 通常の分布
+                positions[i3] = finalX
+                positions[i3 + 1] = finalY
+                positions[i3 + 2] = finalZ
+            }
 
             // サイズにランダムな変動を加える
             sizes[i] = Math.random() * this.particleSize * 0.8 + this.particleSize * 0.2
@@ -286,6 +341,11 @@ export class StarField {
         // パーティクルシステムを作成
         this.particleSystem = new THREE.Points(geometry, material)
         this.scene.add(this.particleSystem)
+        
+        // ビッグバンアニメーションを開始
+        if (this.enableBigBangAnimation) {
+            this.startBigBangAnimation()
+        }
     }
     
     private setupEventListeners(): void {
@@ -370,11 +430,65 @@ export class StarField {
         if (options.mouseMovementIntensity !== undefined) {
             this.mouseMovementIntensity = options.mouseMovementIntensity
         }
+        
+        if (options.enableBigBangAnimation !== undefined) {
+            this.enableBigBangAnimation = options.enableBigBangAnimation
+        }
+        
+        if (options.animationDuration !== undefined) {
+            this.animationDuration = options.animationDuration
+        }
+        
+        if (options.animationDelay !== undefined) {
+            this.animationDelay = options.animationDelay
+        }
+        
+        if (options.explosionRange !== undefined) {
+            this.explosionRange = options.explosionRange
+        }
     }
     
+    private startBigBangAnimation(): void {
+        if (!this.particleSystem || !this.finalPositions) return
+        
+        this.animationTween = gsap.to(this, {
+            animationProgress: 1,
+            duration: this.animationDuration,
+            delay: this.animationDelay,
+            ease: "power2.out",
+            onUpdate: () => {
+                this.updateParticlePositions()
+            }
+        })
+    }
+    
+    private updateParticlePositions(): void {
+        if (!this.particleSystem || !this.initialPositions || !this.finalPositions) return
+        
+        const positions = this.particleSystem.geometry.attributes.position
+        
+        for (let i = 0; i < this.particleCount; i++) {
+            const i3 = i * 3
+            
+            // 初期位置から最終位置への補間
+            positions.array[i3] = this.initialPositions[i3] + 
+                (this.finalPositions[i3] - this.initialPositions[i3]) * this.animationProgress
+            positions.array[i3 + 1] = this.initialPositions[i3 + 1] + 
+                (this.finalPositions[i3 + 1] - this.initialPositions[i3 + 1]) * this.animationProgress
+            positions.array[i3 + 2] = this.initialPositions[i3 + 2] + 
+                (this.finalPositions[i3 + 2] - this.initialPositions[i3 + 2]) * this.animationProgress
+        }
+        
+        positions.needsUpdate = true
+    }
+
     public dispose(): void {
         if (this.animationId) {
             cancelAnimationFrame(this.animationId)
+        }
+        
+        if (this.animationTween) {
+            this.animationTween.kill()
         }
         
         if (this.particleSystem && this.scene) {

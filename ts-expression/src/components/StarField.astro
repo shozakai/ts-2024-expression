@@ -13,6 +13,10 @@ export interface Props {
     enableMouseInteraction?: boolean
     mouseMovementIntensity?: number
     backgroundColor?: number
+    enableBigBangAnimation?: boolean
+    animationDuration?: number
+    animationDelay?: number
+    explosionRange?: number
     width?: string
     height?: string
 }
@@ -29,6 +33,10 @@ const {
     enableMouseInteraction = true,
     mouseMovementIntensity = 3.0,
     backgroundColor = 0x000000,
+    enableBigBangAnimation = true,
+    animationDuration = 2.0,
+    animationDelay = 0.5,
+    explosionRange = 150,
     width = '100vw',
     height = '100vh',
 } = Astro.props
@@ -46,6 +54,10 @@ const {
     data-enable-mouse-interaction={enableMouseInteraction}
     data-mouse-movement-intensity={mouseMovementIntensity}
     data-background-color={backgroundColor}
+    data-enable-big-bang-animation={enableBigBangAnimation}
+    data-animation-duration={animationDuration}
+    data-animation-delay={animationDelay}
+    data-explosion-range={explosionRange}
 >
 </div>
 

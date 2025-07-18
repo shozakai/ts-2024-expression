@@ -26,7 +26,11 @@ export function initStarField(): void {
                 enableAnimation: element.dataset.enableAnimation !== 'false',
                 enableMouseInteraction: element.dataset.enableMouseInteraction !== 'false',
                 mouseMovementIntensity: parseFloat(element.dataset.mouseMovementIntensity || '3.0'),
-                backgroundColor: parseInt(element.dataset.backgroundColor || '0x000000')
+                backgroundColor: parseInt(element.dataset.backgroundColor || '0x000000'),
+                enableBigBangAnimation: element.dataset.enableBigBangAnimation !== 'false',
+                animationDuration: parseFloat(element.dataset.animationDuration || '2.0'),
+                animationDelay: parseFloat(element.dataset.animationDelay || '0.5'),
+                explosionRange: parseFloat(element.dataset.explosionRange || '150')
             }
             
             // StarFieldインスタンスを作成
